@@ -5,10 +5,8 @@
 
 void example1() {
   bk_tree::bk_tree<bk_tree::metrics::hamming_distance> tree;
-  std::vector<std::string> input{"tall", "tell",  "teel",
-                                 "feel", "tally", "tuck", 
-								 "belly", "kelly", "kill",
-								 "tal"};
+  std::vector<std::string> input{"tall", "tell",  "teel",  "feel", "tally",
+                                 "tuck", "belly", "kelly", "kill", "tal"};
   for (auto &s : input) {
     tree.insert(s);
   }
@@ -23,10 +21,8 @@ void example1() {
 
 void example2() {
   bk_tree::bk_tree<bk_tree::metrics::edit_distance> tree;
-  std::vector<std::string> input{"tall", "tell",  "teel",
-                                 "feel", "tally", "tuck",
-								 "belly", "kelly", "kill",
-								 "tal"};
+  std::vector<std::string> input{"tall", "tell",  "teel",  "feel", "tally",
+                                 "tuck", "belly", "kelly", "kill", "tal"};
   for (auto &s : input) {
     tree.insert(s);
   }
