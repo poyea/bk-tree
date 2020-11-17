@@ -50,8 +50,10 @@ public:
     if (n == 0) {
       return static_cast<int>(m);
     }
-    std::vector<std::vector<int>> a_matrix(m, std::vector<int>(n));
-    m_matrix = a_matrix;
+    if (m_matrix.size() <= m or m_matrix[0].size() <= n) {
+      std::vector<std::vector<int>> a_matrix(m + 1, std::vector<int>(n + 1));
+      m_matrix.swap(a_matrix);
+    }
     for (ui i = 1; i <= m; ++i) {
       m_matrix[i][0] = static_cast<int>(i);
     }

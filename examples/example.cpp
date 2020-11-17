@@ -3,18 +3,57 @@
 #include <vector>
 #include "bktree.hpp"
 
-int main(){
-	bk_tree::bk_tree<bk_tree::metrics::hamming_distance> tree;
-	std::vector<std::string> input {"tall", "tell", "teel", "feel", "tally", "tuck"};
-	for(auto& s: input){
-		tree.insert(s);
-	}
-	std::vector<std::pair<std::string, int>> results;
-	for(int limit = 1; limit <= 3; limit++){
-		results = tree.find("tale", limit);
-		for(auto& p: results){
-			std::cout << p.first << " " << p.second << std::endl;
-		}
-	}
-	return 0;
+void example1() {
+  bk_tree::bk_tree<bk_tree::metrics::hamming_distance> tree;
+  std::vector<std::string> input{"tall", "tell",  "teel",
+                                 "feel", "tally", "tuck", 
+								 "belly", "kelly", "kill",
+								 "tal"};
+  for (auto &s : input) {
+    tree.insert(s);
+  }
+  std::vector<std::pair<std::string, int>> results;
+  for (int limit = 1; limit <= 3; limit++) {
+    results = tree.find("tale", limit);
+    for (auto &p : results) {
+      std::cout << p.first << " " << p.second << std::endl;
+    }
+  }
+}
+
+void example2() {
+  bk_tree::bk_tree<bk_tree::metrics::edit_distance> tree;
+  std::vector<std::string> input{"tall", "tell",  "teel",
+                                 "feel", "tally", "tuck",
+								 "belly", "kelly", "kill",
+								 "tal"};
+  for (auto &s : input) {
+    tree.insert(s);
+  }
+  std::vector<std::pair<std::string, int>> results;
+  for (int limit = 1; limit <= 3; limit++) {
+    results = tree.find("tale", limit);
+    for (auto &p : results) {
+      std::cout << p.first << " " << p.second << std::endl;
+    }
+  }
+}
+
+int main() {
+  int N = -1;
+  while (1) {
+    std::cin >> N;
+    switch (N) {
+    case 1:
+      example1();
+      break;
+    case 2:
+      example2();
+      break;
+    default:
+      return 0;
+    }
+  }
+
+  return 0;
 }
