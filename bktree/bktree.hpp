@@ -87,11 +87,11 @@ template <typename Metric> class tree_node {
   typedef Metric metric_type;
   typedef tree_node<metric_type> node_type;
 
-  mutable std::map<int, std::unique_ptr<node_type>> m_children;
+  std::map<int, std::unique_ptr<node_type>> m_children;
   std::string m_word;
 
   tree_node(const std::string &value) : m_word(value) {}
-  bool insert(const std::string &value, const metric_type &distance) const;
+  bool insert(const std::string &value, const metric_type &distance);
   vecpair m_find_wrapper(const std::string &value, const int &limit,
                          const metric_type &metric) const;
   void find(vecpair &output, const std::string &value, const int &limit,
@@ -120,7 +120,7 @@ public:
 
 template <typename Metric>
 bool tree_node<Metric>::insert(const std::string &value,
-                               const metric_type &distance_metric) const {
+                               const metric_type &distance_metric) {
   const int distance_between = distance_metric(value, this->m_word);
   bool inserted = false;
   if (distance_between > 0) {
