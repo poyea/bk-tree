@@ -4,14 +4,14 @@
 #include "bktree.hpp"
 
 void example1() {
-  bk_tree::bk_tree<bk_tree::metrics::hamming_distance> tree;
+  bk_tree::BKTree<bk_tree::metrics::HammingDistance> tree;
   std::vector<std::string> input{"tall", "tell",  "teel",  "feel", "tally",
                                  "tuck", "belly", "kelly", "kill", "tal"};
   for (auto &s : input) {
     tree.insert(s);
   }
   std::cout << "Size: " << tree.size() << std::endl << std::endl;
-  std::vector<std::pair<std::string, int>> results;
+  bk_tree::ResultList results;
   for (int limit = 1; limit <= 3; limit++) {
     std::cout << "Limit: " << limit << std::endl;
     results = tree.find("tale", limit);
@@ -23,14 +23,14 @@ void example1() {
 }
 
 void example2() {
-  bk_tree::bk_tree<bk_tree::metrics::edit_distance> tree;
+  bk_tree::BKTree<bk_tree::metrics::EditDistance> tree;
   std::vector<std::string> input{"tall", "tell",  "teel",  "feel", "tally",
                                  "tuck", "belly", "kelly", "kill", "tal"};
   for (auto &s : input) {
     tree.insert(s);
   }
   std::cout << "Size: " << tree.size() << std::endl << std::endl;
-  std::vector<std::pair<std::string, int>> results;
+  bk_tree::ResultList results;
   for (int limit = 1; limit <= 3; limit++) {
     std::cout << "Limit: " << limit << std::endl;
     results = tree.find("tale", limit);
