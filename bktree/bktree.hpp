@@ -1,7 +1,11 @@
 #pragma once
 
+#ifndef BK_ED_MATRIX_INITIAL_SIZE
 #define BK_ED_MATRIX_INITIAL_SIZE 1
+#endif
+#ifndef BK_TREE_INITIAL_SIZE
 #define BK_TREE_INITIAL_SIZE 0
+#endif
 #include <algorithm>
 #include <map>
 #include <memory>
@@ -60,12 +64,13 @@ public:
     }
     for (IntegerType j = 1; j <= n; ++j) {
       for (IntegerType i = 1; i <= m; ++i) {
-        m_matrix[i][j] = std::min({
-            m_matrix[i][j - 1] + 1, // Insertion
-            m_matrix[i - 1][j] + 1, // Deletion
-            m_matrix[i - 1][j - 1] +
-                (s[i - 1] == t[j - 1] ? 0 : 1) // Substitution
-        });
+        m_matrix[i][j] =
+            std::min({// Insertion
+                      m_matrix[i][j - 1] + 1,
+                      // Deletion
+                      m_matrix[i - 1][j] + 1,
+                      // Substitution
+                      m_matrix[i - 1][j - 1] + (s[i - 1] == t[j - 1] ? 0 : 1)});
       }
     }
     return m_matrix[m][n];
