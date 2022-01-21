@@ -76,6 +76,51 @@ public:
     return m_matrix[m][n];
   }
 };
+
+///
+/// Damerau–Levenshtein metric
+///
+class DamerauLevenshteinDistance {
+  mutable std::vector<std::vector<int>> m_matrix;
+
+public:
+  explicit DamerauLevenshteinDistance(
+      size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
+      : m_matrix(initial_size, std::vector<int>(initial_size)){};
+  IntegerType operator()(const std::string &s, const std::string &t) const {
+    const IntegerType m = s.size();
+    const IntegerType n = t.size();
+    if (m == 0 || n == 0) {
+      return n + m;
+    }
+    if (m_matrix.size() <= m || m_matrix[0].size() <= n) {
+      std::vector<std::vector<int>> a_matrix(m + 1, std::vector<int>(n + 1));
+      m_matrix.swap(a_matrix);
+    }
+    for (IntegerType i = 1; i <= m; ++i) {
+      m_matrix[i][0] = i;
+    }
+    for (IntegerType j = 1; j <= n; ++j) {
+      m_matrix[0][j] = j;
+    }
+    for (IntegerType j = 1; j <= n; ++j) {
+      for (IntegerType i = 1; i <= m; ++i) {
+        m_matrix[i][j] =
+            std::min({// Insertion
+                      m_matrix[i][j - 1] + 1,
+                      // Deletion
+                      m_matrix[i - 1][j] + 1,
+                      // Substitution
+                      m_matrix[i - 1][j - 1] + (s[i - 1] == t[j - 1] ? 0 : 1)});
+        if (i > 1 && j > 1 && s[i] == t[j - 1] && s[i - 1] == t[j]) {
+          // Transposition
+          m_matrix[i][j] = std::min(m_matrix[i][j], m_matrix[i - 2][j - 2] + 1);
+        }
+      }
+    }
+    return m_matrix[m][n];
+  }
+};
 }; // namespace metrics
 
 template <typename Metric> class BKTree;
