@@ -1,7 +1,11 @@
-# <p align="center">bk-tree</p>
-<p align="center">Header-only Burkhard-Keller tree implementation in C++</p>
 
-![CMake](https://github.com/poyea/bk-tree/workflows/CMake/badge.svg)
+<img align="left" width="150" height="150" src="https://user-images.githubusercontent.com/24757020/150530071-e3792d5e-700b-4e50-84fe-9948b3afe8fa.png" alt="Palm Tree">
+
+# bk-tree ![CMake](https://github.com/poyea/bk-tree/workflows/CMake/badge.svg)
+
+Header-only Burkhard-Keller tree implementation in C++, with minimal examples.
+
+<br/>
 
 ## Building the example
 ```bash
