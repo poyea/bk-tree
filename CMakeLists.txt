@@ -15,4 +15,4 @@ file(GLOB all_SRCS
         "${PROJECT_SOURCE_DIR}/examples/*.cpp"
         )
 
-add_executable(bk_tree ${all_SRCS})
+add_executable(bk_tree_examples ${all_SRCS})

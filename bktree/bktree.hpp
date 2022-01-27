@@ -13,7 +13,9 @@
 #include <vector>
 
 namespace bk_tree {
+
 using IntegerType = u_int64_t;
+
 namespace metrics {
 
 ///
@@ -121,6 +123,7 @@ public:
     return m_matrix[m][n];
   }
 };
+
 }; // namespace metrics
 
 template <typename Metric> class BKTree;
@@ -136,15 +139,16 @@ template <typename Metric> class BKTreeNode {
   using MetricType = Metric;
   using NodeType = BKTreeNode<MetricType>;
 
-  std::map<int, std::unique_ptr<NodeType>> m_children;
-  std::string m_word;
-
   BKTreeNode(const std::string &value) : m_word(value) {}
-  bool insert(const std::string &value, const MetricType &distance);
+  bool m_insert(const std::string &value, const MetricType &distance);
+  bool m_erase(const std::string &value, const MetricType &distance);
+  void m_find(ResultList &output, const std::string &value, const int &limit,
+              const MetricType &metric) const;
   ResultList m_find_wrapper(const std::string &value, const int &limit,
                             const MetricType &metric) const;
-  void find(ResultList &output, const std::string &value, const int &limit,
-            const MetricType &metric) const;
+
+  std::map<int, std::unique_ptr<NodeType>> m_children;
+  std::string m_word;
 };
 
 ///
@@ -154,22 +158,26 @@ template <typename Metric> class BKTree {
   using MetricType = Metric;
   using NodeType = typename BKTreeNode<MetricType>::NodeType;
 
-  const MetricType m_metric;
-  std::unique_ptr<NodeType> m_root;
-  size_t m_tree_size;
-
 public:
-  bool insert(const std::string &value);
-  ResultList find(const std::string &value, const int &limit) const;
-  inline size_t size() const;
   BKTree(const MetricType &distance = Metric())
       : m_root(nullptr), m_metric(distance), m_tree_size(BK_TREE_INITIAL_SIZE) {
   }
+
+  bool insert(const std::string &value);
+  bool erase(const std::string &value);
+  size_t size() const noexcept { return m_tree_size; }
+  bool empty() const noexcept { return m_tree_size == 0; }
+  ResultList find(const std::string &value, const int &limit) const;
+
+private:
+  const MetricType m_metric;
+  std::unique_ptr<NodeType> m_root;
+  size_t m_tree_size;
 };
 
 template <typename Metric>
-bool BKTreeNode<Metric>::insert(const std::string &value,
-                                const MetricType &distance_metric) {
+bool BKTreeNode<Metric>::m_insert(const std::string &value,
+                                  const MetricType &distance_metric) {
   const int distance_between = distance_metric(value, m_word);
   bool inserted = false;
   if (distance_between > 0) {
@@ -179,10 +187,45 @@ bool BKTreeNode<Metric>::insert(const std::string &value,
           distance_between, std::unique_ptr<NodeType>(new NodeType(value))));
       inserted = true;
     } else {
-      inserted = it->second->insert(value, distance_metric);
+      inserted = it->second->m_insert(value, distance_metric);
     }
   }
   return inserted;
+}
+
+template <typename Metric>
+bool BKTreeNode<Metric>::m_erase(const std::string &value,
+                                 const MetricType &distance_metric) {
+  // Fixme: handle erasing root node
+  const int distance_between = distance_metric(value, m_word);
+  bool erased = false;
+  if (distance_between > 0) {
+    auto it = m_children.find(distance_between);
+    if (it != m_children.end()) {
+      if (it->second->m_word == value) {
+        m_children.erase(it);
+        erased = true;
+      } else {
+        erased = it->second->m_erase(value, distance_metric);
+      }
+    }
+  }
+  return erased;
+}
+
+template <typename Metric>
+void BKTreeNode<Metric>::m_find(ResultList &output, const std::string &value,
+                                const int &limit,
+                                const MetricType &metric) const {
+  const int distance = metric(value, m_word);
+  if (distance <= limit) {
+    output.push_back({m_word, distance});
+  }
+  for (auto iter = m_children.begin(); iter != m_children.end(); ++iter) {
+    if (distance - limit <= iter->first and iter->first <= distance + limit) {
+      iter->second->m_find(output, value, limit, metric);
+    }
+  }
 }
 
 template <typename Metric>
@@ -190,23 +233,8 @@ ResultList BKTreeNode<Metric>::m_find_wrapper(const std::string &value,
                                               const int &limit,
                                               const MetricType &metric) const {
   ResultList output;
-  find(output, value, limit, metric);
+  m_find(output, value, limit, metric);
   return output;
-}
-
-template <typename Metric>
-void BKTreeNode<Metric>::find(ResultList &output, const std::string &value,
-                              const int &limit,
-                              const MetricType &metric) const {
-  const int distance = metric(value, m_word);
-  if (distance <= limit) {
-    output.push_back({m_word, distance});
-  }
-  for (auto iter = m_children.begin(); iter != m_children.end(); ++iter) {
-    if (distance - limit <= iter->first and iter->first <= distance + limit) {
-      iter->second->find(output, value, limit, metric);
-    }
-  }
 }
 
 template <typename Metric>
@@ -216,7 +244,7 @@ bool BKTree<Metric>::insert(const std::string &value) {
     m_root = std::unique_ptr<NodeType>(new NodeType(value));
     m_tree_size = 1;
     inserted = true;
-  } else if (m_root->insert(value, m_metric)) {
+  } else if (m_root->m_insert(value, m_metric)) {
     ++m_tree_size;
     inserted = true;
   }
@@ -224,13 +252,21 @@ bool BKTree<Metric>::insert(const std::string &value) {
 }
 
 template <typename Metric>
+bool BKTree<Metric>::erase(const std::string &value) {
+  bool erased = false;
+  if (m_root == nullptr) {
+    erased = true;
+  } else if (m_root->m_erase(value, m_metric)) {
+    --m_tree_size;
+    erased = true;
+  }
+  return erased;
+}
+
+template <typename Metric>
 ResultList BKTree<Metric>::find(const std::string &value,
                                 const int &limit) const {
   return m_root->m_find_wrapper(value, limit, m_metric);
-}
-
-template <typename Metric> inline size_t BKTree<Metric>::size() const {
-  return m_tree_size;
 }
 
 }; // namespace bk_tree
