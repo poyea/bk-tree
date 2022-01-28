@@ -7,13 +7,22 @@ Header-only Burkhard-Keller tree implementation in C++, with minimal examples.
 
 <br/>
 
-## Building the example
+## Building the examples
 ```bash
 $ cmake --version 
 cmake version 3.16.3
-$ CXX=clang++ cmake . -B build
+$ mkdir build
 $ cd build
+$ CXX=clang++ cmake ..
 $ make
+```
+
+## Building the tests
+```bash
+$ cd build
+$ CXX=clang++ cmake .. -DTESTS=ON
+$ make
+$ make test
 ```
 
 ## License
