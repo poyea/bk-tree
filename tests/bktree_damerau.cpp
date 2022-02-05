@@ -4,9 +4,9 @@
 
 namespace bk_tree_test {
 
-class BKTree_Hamming_TEST : public ::testing::Test {
+class BKTree_Damerau_TEST : public ::testing::Test {
 protected:
-  BKTree_Hamming_TEST() {
+  BKTree_Damerau_TEST() {
     std::vector<std::string> input{"tall", "tell",  "teel",  "feel", "tally",
                                    "tuck", "belly", "kelly", "kill", "tal"};
     for (auto &s : input) {
@@ -14,7 +14,7 @@ protected:
     }
   }
 
-  virtual ~BKTree_Hamming_TEST() {}
+  virtual ~BKTree_Damerau_TEST() {}
 
   virtual void SetUp() {
     // post-construction
@@ -24,13 +24,13 @@ protected:
     // pre-destruction
   }
 
-  bk_tree::BKTree<bk_tree::metrics::HammingDistance> tree;
+  bk_tree::BKTree<bk_tree::metrics::DamerauLevenshteinDistance> tree;
   bk_tree::ResultList results;
 };
 
-TEST_F(BKTree_Hamming_TEST, TreeSize) { EXPECT_EQ(tree.size(), 6); }
+TEST_F(BKTree_Damerau_TEST, TreeSize) { EXPECT_EQ(tree.size(), 10); }
 
-TEST_F(BKTree_Hamming_TEST, TreeFind) {
+TEST_F(BKTree_Damerau_TEST, TreeFind) {
   const std::string &word = "tale";
   for (int limit = 1; limit <= 3; limit++) {
     results = tree.find(word, limit);
