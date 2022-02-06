@@ -10,14 +10,15 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/example
 )
 
-file(GLOB ALL_SRC
+file(GLOB EXAMPLE_SRC_FILES ${PROJECT_SOURCE_DIR}/examples/*.cpp)
+foreach(file ${EXAMPLE_SRC_FILES})
+    file(GLOB FILE_SRC
         "${PROJECT_SOURCE_DIR}/bktree/*.hpp"
-        "${PROJECT_SOURCE_DIR}/examples/*.cpp"
+        ${file}
         )
-
-add_library(bk_tree_src ${ALL_SRC})
-
-add_executable(bk_tree_examples ${ALL_SRC})
+    get_filename_component(FILE_NAME ${file} NAME_WLE)
+    add_executable(${FILE_NAME} ${FILE_SRC})
+endforeach()
 
 # For BK tree test build
 # See README.md for details
