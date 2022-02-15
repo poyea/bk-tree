@@ -170,8 +170,8 @@ public:
   [[nodiscard]] ResultList find(const std::string &value, const int &limit) const;
 
 private:
-  const MetricType m_metric;
   std::unique_ptr<NodeType> m_root;
+  const MetricType m_metric;
   size_t m_tree_size;
 };
 
