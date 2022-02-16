@@ -167,7 +167,8 @@ public:
   bool erase(const std::string &value);
   size_t size() const noexcept { return m_tree_size; }
   bool empty() const noexcept { return m_tree_size == 0; }
-  [[nodiscard]] ResultList find(const std::string &value, const int &limit) const;
+  [[nodiscard]] ResultList find(const std::string &value,
+                                const int &limit) const;
 
 private:
   std::unique_ptr<NodeType> m_root;
