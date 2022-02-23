@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef BK_ED_MATRIX_INITIAL_SIZE
-#define BK_ED_MATRIX_INITIAL_SIZE 1
+#ifndef BK_MATRIX_INITIAL_SIZE
+#define BK_MATRIX_INITIAL_SIZE 1
 #endif
 #ifndef BK_TREE_INITIAL_SIZE
 #define BK_TREE_INITIAL_SIZE 0
@@ -17,6 +17,38 @@ namespace bk_tree {
 using IntegerType = u_int64_t;
 
 namespace metrics {
+
+///
+/// Longest Common Subsequence distance metric
+///
+class LCSDistance {
+  mutable std::vector<std::vector<int>> m_matrix;
+
+public:
+  explicit LCSDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
+      : m_matrix(initial_size, std::vector<int>(initial_size)){};
+  IntegerType operator()(const std::string &s, const std::string &t) const {
+    const IntegerType m = s.size();
+    const IntegerType n = t.size();
+    if (m == 0 || n == 0) {
+      return 0;
+    }
+    if (m_matrix.size() <= m || m_matrix[0].size() <= n) {
+      std::vector<std::vector<int>> a_matrix(m + 1, std::vector<int>(n + 1));
+      m_matrix.swap(a_matrix);
+    }
+    for (IntegerType i = 1; i <= m; ++i) {
+      for (IntegerType j = 1; j <= n; ++j) {
+        if (s[i - 1] == t[j - 1]) {
+          m_matrix[i][j] = m_matrix[i - 1][j - 1] + 1;
+        } else {
+          m_matrix[i][j] = std::max(m_matrix[i - 1][j], m_matrix[i][j - 1]);
+        }
+      }
+    }
+    return m_matrix[m][n];
+  }
+};
 
 ///
 /// Hamming distance metric
@@ -46,7 +78,7 @@ class EditDistance {
   mutable std::vector<std::vector<int>> m_matrix;
 
 public:
-  explicit EditDistance(size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
+  explicit EditDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<int>(initial_size)){};
   IntegerType operator()(const std::string &s, const std::string &t) const {
     const IntegerType m = s.size();
@@ -87,7 +119,7 @@ class DamerauLevenshteinDistance {
 
 public:
   explicit DamerauLevenshteinDistance(
-      size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
+      size_t initial_size = BK_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<int>(initial_size)){};
   IntegerType operator()(const std::string &s, const std::string &t) const {
     const IntegerType m = s.size();
