@@ -3,6 +3,12 @@
 #ifndef BK_MATRIX_INITIAL_SIZE
 #define BK_MATRIX_INITIAL_SIZE 1
 #endif
+#ifndef BK_LCS_MATRIX_INITIAL_SIZE
+#define BK_LCS_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE
+#endif
+#ifndef BK_ED_MATRIX_INITIAL_SIZE
+#define BK_ED_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE
+#endif
 #ifndef BK_TREE_INITIAL_SIZE
 #define BK_TREE_INITIAL_SIZE 0
 #endif
@@ -25,7 +31,7 @@ class LCSDistance {
   mutable std::vector<std::vector<int>> m_matrix;
 
 public:
-  explicit LCSDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
+  explicit LCSDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<int>(initial_size)){};
   IntegerType operator()(const std::string &s, const std::string &t) const {
     const IntegerType m = s.size();
@@ -78,7 +84,7 @@ class EditDistance {
   mutable std::vector<std::vector<int>> m_matrix;
 
 public:
-  explicit EditDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
+  explicit EditDistance(size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<int>(initial_size)){};
   IntegerType operator()(const std::string &s, const std::string &t) const {
     const IntegerType m = s.size();
