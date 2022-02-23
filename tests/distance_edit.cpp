@@ -25,6 +25,9 @@ TEST_F(Distance_Edit_TEST, EditDistances) {
   EXPECT_TRUE(dist("peter", "piter") == 1);
   EXPECT_TRUE(dist("peter", "pitar") == 2);
   EXPECT_TRUE(dist("peter", "pita") == 3);
+  EXPECT_TRUE(dist("kitten", "sitting") == 3);
+  EXPECT_TRUE(dist("ab", "abc") == 1);
+  EXPECT_TRUE(dist("stall", "table") == 3);
   EXPECT_TRUE(dist("peter", "") == 5);
   EXPECT_TRUE(dist("", "peter") == 5);
   EXPECT_TRUE(dist("", "") == 0);

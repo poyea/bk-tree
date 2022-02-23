@@ -30,6 +30,8 @@ TEST_F(Distance_Hamming_TEST, HammingDistances) {
   EXPECT_TRUE(dist("", "peter") ==
               std::numeric_limits<bk_tree::IntegerType>::max());
   EXPECT_TRUE(dist("", "") == 0);
+  EXPECT_TRUE(dist("a", "b") == 1);
+  EXPECT_TRUE(dist("a", "a") == 0);
 }
 
 } // namespace bk_tree_test
