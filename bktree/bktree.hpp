@@ -63,12 +63,11 @@ class HammingDistance {
 public:
   explicit HammingDistance() = default;
   IntegerType operator()(const std::string &s, const std::string &t) const {
-    const IntegerType m = s.size();
-    const IntegerType n = t.size();
+    const IntegerType m = s.size(), n = t.size();
     if (m != n) {
       return std::numeric_limits<IntegerType>::max();
     }
-    const IntegerType m_comparsion_size = std::min(m, n);
+    const IntegerType m_comparsion_size = m;
     IntegerType counter = 0;
     for (IntegerType i = 0; i < m_comparsion_size; ++i) {
       counter += (s[i] != t[i]);
