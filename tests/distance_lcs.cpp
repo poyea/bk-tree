@@ -33,7 +33,8 @@ TEST_F(Distance_LCS_TEST, LCSDistances) {
   EXPECT_TRUE(dist("a", "b") == 0);
 
   EXPECT_TRUE(3 + 5 - 2 * dist("abcde", "ace") == edit_dist("abcde", "ace"));
-  EXPECT_TRUE(5 + 5 - 2 * dist("abcde", "abcde") == edit_dist("abcde", "abcde"));
+  EXPECT_TRUE(5 + 5 - 2 * dist("abcde", "abcde") ==
+              edit_dist("abcde", "abcde"));
 }
 
 } // namespace bk_tree_test

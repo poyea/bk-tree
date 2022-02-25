@@ -25,6 +25,30 @@ using IntegerType = u_int64_t;
 namespace metrics {
 
 ///
+/// Lee distance metric
+///
+class LeeDistance {
+  IntegerType m_alphabet_size;
+
+public:
+  explicit LeeDistance(IntegerType alphabet_size)
+      : m_alphabet_size(alphabet_size){};
+  IntegerType operator()(const std::string &s, const std::string &t) const {
+    const IntegerType m = s.size(), n = t.size();
+    if (m != n) {
+      return std::numeric_limits<IntegerType>::max();
+    }
+    const IntegerType m_comparsion_size = m;
+    IntegerType counter = 0, diff;
+    for (IntegerType i = 0; i < m_comparsion_size; ++i) {
+      diff = std::abs(s[i] - t[i]);
+      counter += std::min(diff, m_alphabet_size - diff);
+    }
+    return counter;
+  }
+};
+
+///
 /// Longest Common Subsequence distance metric
 ///
 class LCSDistance {
