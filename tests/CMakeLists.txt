@@ -6,7 +6,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-file(GLOB TEST_SRC_FILES ./*.cpp)
+file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
 foreach(file ${TEST_SRC_FILES})
     get_filename_component(FILE_NAME ${file} NAME_WLE)
     add_executable(test_${FILE_NAME} ${file})

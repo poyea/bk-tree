@@ -33,6 +33,6 @@ endforeach()
 # See README.md for details
 if(TESTS)
     enable_testing()
-    message("Building Tests.")
+    message("-- Building Tests")
     add_subdirectory(tests)
 endif()
