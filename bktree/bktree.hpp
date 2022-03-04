@@ -242,7 +242,7 @@ bool BKTreeNode<Metric>::m_insert(const std::string &value,
                                   const MetricType &distance_metric) {
   const int distance_between = distance_metric(value, m_word);
   bool inserted = false;
-  if (distance_between > 0) {
+  if (distance_between >= 0) {
     auto it = m_children.find(distance_between);
     if (it == m_children.end()) {
       m_children.emplace(std::make_pair(
