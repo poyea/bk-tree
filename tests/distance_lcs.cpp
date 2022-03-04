@@ -24,6 +24,7 @@ protected:
 
 TEST_F(Distance_LCS_TEST, LCSDistances) {
   EXPECT_TRUE(dist("ABCD", "ACBAD") == 3);
+  EXPECT_TRUE(dist("ABCD", "AEFG") == 1);
   EXPECT_TRUE(dist("", "") == 0);
   EXPECT_TRUE(dist("a", "a") == 1);
   EXPECT_TRUE(dist("abcde", "ace") == 3);
