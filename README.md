@@ -25,7 +25,7 @@ $ make test
 ```
 
 ## License
-MIT
+This repository is licensed under MIT. See also [LICENSE](LICENSE) for details.
 
 ## References
 
