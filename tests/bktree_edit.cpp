@@ -7,6 +7,7 @@ namespace bk_tree_test {
 class BKTree_Edit_TEST : public ::testing::Test {
 protected:
   BKTree_Edit_TEST() {
+    // Test adopted from: https://en.wikipedia.org/wiki/BK-tree#Example
     std::vector<std::string> input{"book", "books", "cake", "boo", "boon",
                                    "cook", "cake",  "cape", "cart"};
     for (auto &s : input) {
