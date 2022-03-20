@@ -1,3 +1,4 @@
+//
 // bk-tree   Header-only Burkhard-Keller tree library 
 // Copyright (C) 2020-2022  John Law
 //
@@ -13,6 +14,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with bk-tree.  If not, see <https://www.gnu.org/licenses/>.
+//
 
 #pragma once
 
