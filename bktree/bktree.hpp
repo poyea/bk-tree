@@ -1,5 +1,5 @@
 //
-// bk-tree   Header-only Burkhard-Keller tree library 
+// bk-tree   Header-only Burkhard-Keller tree library
 // Copyright (C) 2020-2022  John Law
 //
 // bk-tree is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #pragma once
 
 #ifndef BK_MATRIX_INITIAL_SIZE
-#define BK_MATRIX_INITIAL_SIZE 1
+#define BK_MATRIX_INITIAL_SIZE 0
 #endif
 #ifndef BK_LCS_MATRIX_INITIAL_SIZE
 #define BK_LCS_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE
@@ -38,7 +38,7 @@
 
 namespace bk_tree {
 
-using IntegerType = u_int64_t;
+using IntegerType = std::uint64_t;
 
 namespace metrics {
 
@@ -52,11 +52,11 @@ public:
   explicit LeeDistance(IntegerType alphabet_size)
       : m_alphabet_size(alphabet_size){};
   IntegerType operator()(const std::string &s, const std::string &t) const {
-    const IntegerType m = s.size(), n = t.size();
-    if (m != n) {
+    const IntegerType M = s.size(), N = t.size();
+    if (M != N) {
       return std::numeric_limits<IntegerType>::max();
     }
-    const IntegerType m_comparsion_size = m;
+    const IntegerType m_comparsion_size = M;
     IntegerType counter = 0, diff;
     for (IntegerType i = 0; i < m_comparsion_size; ++i) {
       diff = std::abs(s[i] - t[i]);
@@ -76,17 +76,16 @@ public:
   explicit LCSDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<int>(initial_size)){};
   IntegerType operator()(const std::string &s, const std::string &t) const {
-    const IntegerType m = s.size();
-    const IntegerType n = t.size();
-    if (m == 0 || n == 0) {
+    const IntegerType M = s.size(), N = t.size();
+    if (M == 0 || N == 0) {
       return 0;
     }
-    if (m_matrix.size() <= m || m_matrix[0].size() <= n) {
-      std::vector<std::vector<int>> a_matrix(m + 1, std::vector<int>(n + 1));
+    if (m_matrix.size() <= M || m_matrix[0].size() <= N) {
+      std::vector<std::vector<int>> a_matrix(M + 1, std::vector<int>(N + 1));
       m_matrix.swap(a_matrix);
     }
-    for (IntegerType i = 1; i <= m; ++i) {
-      for (IntegerType j = 1; j <= n; ++j) {
+    for (IntegerType i = 1; i <= M; ++i) {
+      for (IntegerType j = 1; j <= N; ++j) {
         if (s[i - 1] == t[j - 1]) {
           m_matrix[i][j] = m_matrix[i - 1][j - 1] + 1;
         } else {
@@ -94,7 +93,7 @@ public:
         }
       }
     }
-    return m_matrix[m][n];
+    return m_matrix[M][N];
   }
 };
 
@@ -105,11 +104,11 @@ class HammingDistance {
 public:
   explicit HammingDistance() = default;
   IntegerType operator()(const std::string &s, const std::string &t) const {
-    const IntegerType m = s.size(), n = t.size();
-    if (m != n) {
+    const IntegerType M = s.size(), N = t.size();
+    if (M != N) {
       return std::numeric_limits<IntegerType>::max();
     }
-    const IntegerType m_comparsion_size = m;
+    const IntegerType m_comparsion_size = M;
     IntegerType counter = 0;
     for (IntegerType i = 0; i < m_comparsion_size; ++i) {
       counter += (s[i] != t[i]);
@@ -128,23 +127,22 @@ public:
   explicit EditDistance(size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<int>(initial_size)){};
   IntegerType operator()(const std::string &s, const std::string &t) const {
-    const IntegerType m = s.size();
-    const IntegerType n = t.size();
-    if (m == 0 || n == 0) {
-      return n + m;
+    const IntegerType M = s.size(), N = t.size();
+    if (M == 0 || N == 0) {
+      return N + M;
     }
-    if (m_matrix.size() <= m || m_matrix[0].size() <= n) {
-      std::vector<std::vector<int>> a_matrix(m + 1, std::vector<int>(n + 1));
+    if (m_matrix.size() <= M || m_matrix[0].size() <= N) {
+      std::vector<std::vector<int>> a_matrix(M + 1, std::vector<int>(N + 1));
       m_matrix.swap(a_matrix);
     }
-    for (IntegerType i = 1; i <= m; ++i) {
+    for (IntegerType i = 1; i <= M; ++i) {
       m_matrix[i][0] = i;
     }
-    for (IntegerType j = 1; j <= n; ++j) {
+    for (IntegerType j = 1; j <= N; ++j) {
       m_matrix[0][j] = j;
     }
-    for (IntegerType j = 1; j <= n; ++j) {
-      for (IntegerType i = 1; i <= m; ++i) {
+    for (IntegerType j = 1; j <= N; ++j) {
+      for (IntegerType i = 1; i <= M; ++i) {
         m_matrix[i][j] =
             std::min({// Insertion
                       m_matrix[i][j - 1] + 1,
@@ -154,7 +152,7 @@ public:
                       m_matrix[i - 1][j - 1] + (s[i - 1] == t[j - 1] ? 0 : 1)});
       }
     }
-    return m_matrix[m][n];
+    return m_matrix[M][N];
   }
 };
 
@@ -169,23 +167,22 @@ public:
       size_t initial_size = BK_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<int>(initial_size)){};
   IntegerType operator()(const std::string &s, const std::string &t) const {
-    const IntegerType m = s.size();
-    const IntegerType n = t.size();
-    if (m == 0 || n == 0) {
-      return n + m;
+    const IntegerType M = s.size(), N = t.size();
+    if (M == 0 || N == 0) {
+      return N + M;
     }
-    if (m_matrix.size() <= m || m_matrix[0].size() <= n) {
-      std::vector<std::vector<int>> a_matrix(m + 1, std::vector<int>(n + 1));
+    if (m_matrix.size() <= M || m_matrix[0].size() <= N) {
+      std::vector<std::vector<int>> a_matrix(M + 1, std::vector<int>(N + 1));
       m_matrix.swap(a_matrix);
     }
-    for (IntegerType i = 1; i <= m; ++i) {
+    for (IntegerType i = 1; i <= M; ++i) {
       m_matrix[i][0] = i;
     }
-    for (IntegerType j = 1; j <= n; ++j) {
+    for (IntegerType j = 1; j <= N; ++j) {
       m_matrix[0][j] = j;
     }
-    for (IntegerType j = 1; j <= n; ++j) {
-      for (IntegerType i = 1; i <= m; ++i) {
+    for (IntegerType j = 1; j <= N; ++j) {
+      for (IntegerType i = 1; i <= M; ++i) {
         m_matrix[i][j] =
             std::min({// Insertion
                       m_matrix[i][j - 1] + 1,
@@ -199,7 +196,7 @@ public:
         }
       }
     }
-    return m_matrix[m][n];
+    return m_matrix[M][N];
   }
 };
 
@@ -346,6 +343,9 @@ bool BKTree<Metric>::erase(const std::string &value) {
 template <typename Metric>
 ResultList BKTree<Metric>::find(const std::string &value,
                                 const int &limit) const {
+  if (!m_root) {
+    return ResultList();
+  }
   return m_root->m_find_wrapper(value, limit, m_metric);
 }
 
