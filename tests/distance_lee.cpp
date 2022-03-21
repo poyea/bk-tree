@@ -18,7 +18,7 @@ protected:
     // pre-destruction
   }
 
-  void set_alphabet_size(int size) {
+  void set_alphabet_size(bk_tree::IntegerType size) {
     dist = bk_tree::metrics::LeeDistance(size);
   }
 
