@@ -206,6 +206,7 @@ template <typename Metric>
 class BKTree;
 template <typename Metric>
 class BKTreeNode;
+
 using ResultEntry = std::pair<std::string, int>;
 using ResultList = std::vector<ResultEntry>;
 
@@ -303,7 +304,7 @@ void BKTreeNode<Metric>::m_find(ResultList &output, const std::string &value,
     output.push_back({m_word, distance});
   }
   for (auto iter = m_children.begin(); iter != m_children.end(); ++iter) {
-    if (distance - limit <= iter->first and iter->first <= distance + limit) {
+    if (std::abs(iter->first - distance) <= limit) {
       iter->second->m_find(output, value, limit, metric);
     }
   }
