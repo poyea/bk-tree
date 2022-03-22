@@ -202,15 +202,18 @@ public:
 
 }; // namespace metrics
 
-template <typename Metric> class BKTree;
-template <typename Metric> class BKTreeNode;
+template <typename Metric>
+class BKTree;
+template <typename Metric>
+class BKTreeNode;
 using ResultEntry = std::pair<std::string, int>;
 using ResultList = std::vector<ResultEntry>;
 
 ///
 /// Template class for BK-tree node
 ///
-template <typename Metric> class BKTreeNode {
+template <typename Metric>
+class BKTreeNode {
   friend class BKTree<Metric>;
   using MetricType = Metric;
   using NodeType = BKTreeNode<MetricType>;
@@ -230,7 +233,8 @@ template <typename Metric> class BKTreeNode {
 ///
 /// Template class for BK-tree
 ///
-template <typename Metric> class BKTree {
+template <typename Metric>
+class BKTree {
   using MetricType = Metric;
   using NodeType = typename BKTreeNode<MetricType>::NodeType;
 
