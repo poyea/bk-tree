@@ -10,7 +10,7 @@ file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
 foreach(file ${TEST_SRC_FILES})
     get_filename_component(FILE_NAME ${file} NAME_WLE)
     add_executable(test_${FILE_NAME} ${file})
-    target_link_libraries(test_${FILE_NAME} gtest gtest_main)        
+    target_link_libraries(test_${FILE_NAME} gtest gtest_main)
     add_test(
         NAME BKTree_TEST_${FILE_NAME}
         COMMAND test_${FILE_NAME}
