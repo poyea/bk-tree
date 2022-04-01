@@ -6,22 +6,29 @@ Header-only Burkhard-Keller tree implementation in C++, with minimal examples.
 
 <br/>
 
-## Building the examples
-```bash
-$ cmake --version 
-cmake version 3.16.3
-$ mkdir build
-$ cd build
-$ CXX=clang++ cmake ..
-$ make
-```
+## Example
 
-## Building the tests
-```bash
-$ cd build
-$ CXX=clang++ cmake .. -DTESTS=ON
-$ make
-$ make test
+```cpp
+#include "bktree.hpp"
+#include <iostream>
+
+int main() {
+  using metric_t = bk_tree::metrics::DamerauLevenshteinDistance;
+  using tree_t = bk_tree::BKTree<metric_t>;
+  tree_t tree;
+
+  tree.insert("tall");
+  tree.insert("tell");
+  tree.insert("teel");
+  tree.insert("feel");
+
+  std::cout << "Tree size: " << tree.size() << std::endl; // Tree size: 4
+
+  auto result = tree.find("tale", 1);
+  for (auto &p : result) {
+    std::cout << p.first << " " << p.second << std::endl; // tall 1
+  }
+}
 ```
 
 ## License
