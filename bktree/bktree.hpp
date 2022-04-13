@@ -293,7 +293,6 @@ bool BKTreeNode<Metric>::m_insert(std::string_view value,
 template <typename Metric>
 bool BKTreeNode<Metric>::m_erase(std::string_view value,
                                  const MetricType &distance_metric) {
-  // Fixme: handle erasing root node
   const int distance_between = distance_metric(value, m_word);
   bool erased = false;
   if (distance_between > 0) {
@@ -353,7 +352,7 @@ bool BKTree<Metric>::erase(std::string_view value) {
   bool erased = false;
   if (m_root == nullptr) {
     erased = true;
-  } else if (m_root->m_erase(value, m_metric)) {
+  } else if (m_root->m_word == value || m_root->m_erase(value, m_metric)) {
     --m_tree_size;
     erased = true;
   }

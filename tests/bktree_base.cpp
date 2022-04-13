@@ -30,4 +30,17 @@ TEST_F(BKTree_Base_TEST, TreeFind) {
   EXPECT_TRUE(results.empty());
 }
 
+TEST_F(BKTree_Base_TEST, TreeErase) {
+  const std::string &word = "word";
+  tree.insert(word);
+  tree.erase(word);
+  EXPECT_TRUE(tree.empty());
+
+  const std::string &wordy = "wordy";
+  tree.insert(word);
+  tree.insert(wordy);
+  tree.erase(word);
+  EXPECT_TRUE(tree.size() == 1);
+}
+
 } // namespace bk_tree_test
