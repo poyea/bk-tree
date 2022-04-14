@@ -28,6 +28,10 @@ int main() {
   for (auto &p : result) {
     std::cout << p.first << " " << p.second << std::endl; // tall 1
   }
+
+  tree.erase("tall");
+  result = tree.find("tale", 1);
+  std::cout << result.size() << std::endl; // 0
 }
 ```
 
