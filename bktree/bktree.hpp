@@ -352,7 +352,15 @@ bool BKTree<Metric>::erase(std::string_view value) {
   bool erased = false;
   if (m_root == nullptr) {
     erased = true;
-  } else if (m_root->m_word == value || m_root->m_erase(value, m_metric)) {
+  } else if (m_root->m_word == value) {
+    if (m_tree_size > 1) {
+      m_root = std::move(m_root->m_children.begin()->second);
+    } else {
+      m_root.reset(nullptr);
+    }
+    --m_tree_size;
+    erased = true;
+  } else if (m_root->m_erase(value, m_metric)) {
     --m_tree_size;
     erased = true;
   }
