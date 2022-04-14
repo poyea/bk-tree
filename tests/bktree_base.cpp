@@ -36,19 +36,19 @@ TEST_F(BKTree_Base_TEST, TreeEraseSingle) {
   EXPECT_TRUE(tree.empty());
 }
 
-// TEST_F(BKTree_Base_TEST, TreeEraseRoot) {
-//   tree.insert("word");
-//   tree.insert("wordy");
-//   tree.erase("word");
-//   EXPECT_TRUE(tree.size() == 1);
-//   results = tree.find("wordy", 1);
-//   EXPECT_TRUE(results.size() == 1);
+TEST_F(BKTree_Base_TEST, TreeEraseRoot) {
+  tree.insert("word");
+  tree.insert("wordy");
+  tree.erase("word");
+  EXPECT_TRUE(tree.size() == 1);
+  results = tree.find("wordy", 1);
+  EXPECT_TRUE(results.size() == 1);
 
-//   tree.erase("wordy");
-//   EXPECT_TRUE(tree.size() == 0);
-//   results = tree.find("wordy", 1);
-//   EXPECT_TRUE(results.size() == 0);
-// }
+  tree.erase("wordy");
+  EXPECT_TRUE(tree.size() == 0);
+  results = tree.find("wordy", 1);
+  EXPECT_TRUE(results.size() == 0);
+}
 
 TEST_F(BKTree_Base_TEST, TreeEraseRootNary) {
   tree.insert("word");

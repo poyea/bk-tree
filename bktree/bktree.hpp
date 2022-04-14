@@ -235,8 +235,7 @@ class BKTreeNode {
 
   BKTreeNode(std::string_view value) : m_word(value) {}
   bool m_insert(std::string_view value, const MetricType &distance);
-  bool m_erase(std::string_view value, const MetricType &distance,
-               const std::unique_ptr<NodeType> &root);
+  bool m_erase(std::string_view value, const MetricType &distance);
   void m_find(ResultList &output, std::string_view value, const int &limit,
               const MetricType &metric) const;
   ResultList m_find_wrapper(std::string_view value, const int &limit,
@@ -293,29 +292,22 @@ bool BKTreeNode<Metric>::m_insert(std::string_view value,
 
 template <typename Metric>
 bool BKTreeNode<Metric>::m_erase(std::string_view value,
-                                 const MetricType &distance_metric,
-                                 const std::unique_ptr<NodeType> &root) {
+                                 const MetricType &distance_metric) {
   const int distance_between = distance_metric(value, m_word);
   bool erased = false;
   if (distance_between > 0) {
     auto it = m_children.find(distance_between);
     if (it != m_children.end()) {
       if (it->second->m_word == value) {
-        std::vector<std::string_view> words;
-        for (auto cit = it->second->m_children.begin();
-             cit != it->second->m_children.end(); ++cit) {
-          if (cit->second->m_word != value) {
-            words.push_back(cit->second->m_word);
-          }
-        }
-        it->second.reset(nullptr);
+        auto node = std::move(it->second);
         m_children.erase(it);
-        erased = true;
-        for (auto &w : words) {
-          root->m_insert(w, distance_metric);
+        for (auto cit = node->m_children.begin(); cit != node->m_children.end();
+             ++cit) {
+          m_insert(cit->second->m_word, distance_metric);
         }
+        erased = true;
       } else {
-        erased = it->second->m_erase(value, distance_metric, root);
+        erased = it->second->m_erase(value, distance_metric);
       }
     }
   }
@@ -378,7 +370,7 @@ bool BKTree<Metric>::erase(std::string_view value) {
     }
     --m_tree_size;
     erased = true;
-  } else if (m_root->m_erase(value, m_metric, m_root)) {
+  } else if (m_root->m_erase(value, m_metric)) {
     --m_tree_size;
     erased = true;
   }
