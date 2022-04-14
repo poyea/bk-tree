@@ -301,9 +301,8 @@ bool BKTreeNode<Metric>::m_erase(std::string_view value,
       if (it->second->m_word == value) {
         auto node = std::move(it->second);
         m_children.erase(it);
-        for (auto cit = node->m_children.begin(); cit != node->m_children.end();
-             ++cit) {
-          m_insert(cit->second->m_word, distance_metric);
+        for (auto const &[_, node] : node->m_children) {
+          m_insert(node->m_word, distance_metric);
         }
         erased = true;
       } else {
@@ -322,9 +321,9 @@ void BKTreeNode<Metric>::m_find(ResultList &output, std::string_view value,
   if (distance <= limit) {
     output.push_back({m_word, distance});
   }
-  for (auto iter = m_children.begin(); iter != m_children.end(); ++iter) {
-    if (std::abs(iter->first - distance) <= limit) {
-      iter->second->m_find(output, value, limit, metric);
+  for (auto const &[dist, node] : m_children) {
+    if (std::abs(dist - distance) <= limit) {
+      node->m_find(output, value, limit, metric);
     }
   }
 }
@@ -360,9 +359,12 @@ bool BKTree<Metric>::erase(std::string_view value) {
   } else if (m_root->m_word == value) {
     if (m_tree_size > 1) {
       auto &replacement_node = m_root->m_children.begin()->second;
-      for (auto it = std::next(m_root->m_children.begin());
-           it != m_root->m_children.end(); ++it) {
-        replacement_node->m_insert(it->second->m_word, m_metric);
+      for (bool first = true; auto const &[_, node] : m_root->m_children) {
+        if (first) {
+          first = false;
+          continue;
+        }
+        replacement_node->m_insert(node->m_word, m_metric);
       }
       m_root = std::move(replacement_node);
     } else {
