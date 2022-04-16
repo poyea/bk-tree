@@ -54,7 +54,7 @@ public:
 ///
 /// Lee distance metric
 /// d(x, y) = sum_{i=1}^{n}\min(|x_i - y_i|, m - |x_i - y_i|)
-/// where m is the alphabet size, x and y are of same length.
+/// where m is the alphabet size, x and y are of the same length.
 /// When m = 2 or m = 3, Lee Distance is the same as Hamming Distance.
 ///
 class LeeDistance : Distance {
@@ -82,11 +82,11 @@ public:
 ///
 /// Longest Common Subsequence distance metric
 /// d(x_m, y_n) where
-/// m is the length of x, y is the length of y,
-/// d(x_i, x_j) = 0, if i == 0 or j == 0
-///     = d(x_{i-1}, x_{j-1}) + 1, if i > 0 and j > 0 and x_i == y_i
-///     = \max(d(x_{i-1}, x_j), d(x_i, x_{j-1})), if i > 0 and j > 0 and x_i !=
-///     y_i
+/// m is the length of x, n is the length of y,
+/// d(x_i, y_j)
+///     = 0, if i == 0 or j == 0
+///     = d(x_{i-1}, y_{j-1}) + 1, if x_i == y_j
+///     = \max(d(x_{i-1}, y_j), d(x_i, y_{j-1})), if x_i != y_j
 ///
 class LCSDistance : Distance {
   mutable std::vector<std::vector<int>> m_matrix;
@@ -120,7 +120,7 @@ public:
 ///
 /// Hamming distance metric
 /// d(x, y) = sum_{i=1}^{n} x_i ^ y_i
-/// where ^ is the XOR operator.
+/// where ^ is the XOR operator, x and y are of the same length.
 ///
 class HammingDistance : Distance {
 public:
@@ -142,6 +142,15 @@ public:
 
 ///
 /// Edit distance metric
+/// d(x_m, y_n) where
+/// m is the length of x, n is the length of y,
+/// d(x_i, y_0) = i,
+/// d(x_0, y_i) = i,
+/// d(x_i, y_j) = \min(
+///         d(x_i, y_{j-1}) + 1,
+///         d(x_{i-1}, y_j) + 1,
+///         d(x_{i-1}, y_{j-1}) + (x_i != y_j)
+///     )
 ///
 class EditDistance : Distance {
   mutable std::vector<std::vector<int>> m_matrix;
@@ -173,7 +182,7 @@ public:
                       // Deletion
                       m_matrix[i - 1][j] + 1,
                       // Substitution
-                      m_matrix[i - 1][j - 1] + (s[i - 1] == t[j - 1] ? 0 : 1)});
+                      m_matrix[i - 1][j - 1] + (s[i - 1] != t[j - 1])});
       }
     }
     return m_matrix[M][N];
