@@ -81,6 +81,12 @@ public:
 
 ///
 /// Longest Common Subsequence distance metric
+/// d(x_m, y_n) where
+/// m is the length of x, y is the length of y,
+/// d(x_i, x_j) = 0, if i == 0 or j == 0
+///     = d(x_{i-1}, x_{j-1}) + 1, if i > 0 and j > 0 and x_i == y_i
+///     = \max(d(x_{i-1}, x_j), d(x_i, x_{j-1})), if i > 0 and j > 0 and x_i !=
+///     y_i
 ///
 class LCSDistance : Distance {
   mutable std::vector<std::vector<int>> m_matrix;
@@ -113,6 +119,8 @@ public:
 
 ///
 /// Hamming distance metric
+/// d(x, y) = sum_{i=1}^{n} x_i ^ y_i
+/// where ^ is the XOR operator.
 ///
 class HammingDistance : Distance {
 public:
