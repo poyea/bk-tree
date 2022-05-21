@@ -61,10 +61,8 @@ class LeeDistance : Distance {
   IntegerType m_alphabet_size;
 
 public:
-  explicit LeeDistance(IntegerType alphabet_size)
-      : m_alphabet_size(alphabet_size){};
-  IntegerType operator()(std::string_view s,
-                         std::string_view t) const override {
+  explicit LeeDistance(IntegerType alphabet_size) : m_alphabet_size(alphabet_size){};
+  IntegerType operator()(std::string_view s, std::string_view t) const override {
     const IntegerType M = s.size(), N = t.size();
     if (M != N) {
       return std::numeric_limits<IntegerType>::max();
@@ -94,8 +92,7 @@ class LCSDistance : Distance {
 public:
   explicit LCSDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<int>(initial_size)){};
-  IntegerType operator()(std::string_view s,
-                         std::string_view t) const override {
+  IntegerType operator()(std::string_view s, std::string_view t) const override {
     const IntegerType M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return 0;
@@ -125,8 +122,7 @@ public:
 class HammingDistance : Distance {
 public:
   explicit HammingDistance() = default;
-  IntegerType operator()(std::string_view s,
-                         std::string_view t) const override {
+  IntegerType operator()(std::string_view s, std::string_view t) const override {
     const IntegerType M = s.size(), N = t.size();
     if (M != N) {
       return std::numeric_limits<IntegerType>::max();
@@ -158,8 +154,7 @@ class EditDistance : Distance {
 public:
   explicit EditDistance(size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<int>(initial_size)){};
-  IntegerType operator()(std::string_view s,
-                         std::string_view t) const override {
+  IntegerType operator()(std::string_view s, std::string_view t) const override {
     const IntegerType M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return N + M;
@@ -176,13 +171,12 @@ public:
     }
     for (IntegerType j = 1; j <= N; ++j) {
       for (IntegerType i = 1; i <= M; ++i) {
-        m_matrix[i][j] =
-            std::min({// Insertion
-                      m_matrix[i][j - 1] + 1,
-                      // Deletion
-                      m_matrix[i - 1][j] + 1,
-                      // Substitution
-                      m_matrix[i - 1][j - 1] + (s[i - 1] != t[j - 1])});
+        m_matrix[i][j] = std::min({// Insertion
+                                   m_matrix[i][j - 1] + 1,
+                                   // Deletion
+                                   m_matrix[i - 1][j] + 1,
+                                   // Substitution
+                                   m_matrix[i - 1][j - 1] + (s[i - 1] != t[j - 1])});
       }
     }
     return m_matrix[M][N];
@@ -196,11 +190,9 @@ class DamerauLevenshteinDistance : Distance {
   mutable std::vector<std::vector<int>> m_matrix;
 
 public:
-  explicit DamerauLevenshteinDistance(
-      size_t initial_size = BK_MATRIX_INITIAL_SIZE)
+  explicit DamerauLevenshteinDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<int>(initial_size)){};
-  IntegerType operator()(std::string_view s,
-                         std::string_view t) const override {
+  IntegerType operator()(std::string_view s, std::string_view t) const override {
     const IntegerType M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return N + M;
@@ -277,8 +269,7 @@ class BKTree {
 
 public:
   BKTree(const MetricType &distance = Metric())
-      : m_root(nullptr), m_metric(distance), m_tree_size(BK_TREE_INITIAL_SIZE) {
-  }
+      : m_root(nullptr), m_metric(distance), m_tree_size(BK_TREE_INITIAL_SIZE) {}
 
   bool insert(std::string_view value);
   bool erase(std::string_view value);
@@ -335,8 +326,7 @@ bool BKTreeNode<Metric>::m_erase(std::string_view value,
 
 template <typename Metric>
 void BKTreeNode<Metric>::m_find(ResultList &output, std::string_view value,
-                                const int &limit,
-                                const MetricType &metric) const {
+                                const int &limit, const MetricType &metric) const {
   const int distance = metric(value, m_word);
   if (distance <= limit) {
     output.push_back({m_word, distance});
@@ -349,8 +339,7 @@ void BKTreeNode<Metric>::m_find(ResultList &output, std::string_view value,
 }
 
 template <typename Metric>
-ResultList BKTreeNode<Metric>::m_find_wrapper(std::string_view value,
-                                              const int &limit,
+ResultList BKTreeNode<Metric>::m_find_wrapper(std::string_view value, const int &limit,
                                               const MetricType &metric) const {
   ResultList output;
   m_find(output, value, limit, metric);
@@ -400,8 +389,7 @@ bool BKTree<Metric>::erase(std::string_view value) {
 }
 
 template <typename Metric>
-ResultList BKTree<Metric>::find(std::string_view value,
-                                const int &limit) const {
+ResultList BKTree<Metric>::find(std::string_view value, const int &limit) const {
   if (!m_root) {
     return ResultList();
   }

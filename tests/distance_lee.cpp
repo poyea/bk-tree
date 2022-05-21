@@ -27,10 +27,8 @@ protected:
 };
 
 TEST_F(Distance_Lee_TEST, LeeDistances) {
-  EXPECT_TRUE(dist("peter", "") ==
-              std::numeric_limits<bk_tree::IntegerType>::max());
-  EXPECT_TRUE(dist("", "peter") ==
-              std::numeric_limits<bk_tree::IntegerType>::max());
+  EXPECT_TRUE(dist("peter", "") == std::numeric_limits<bk_tree::IntegerType>::max());
+  EXPECT_TRUE(dist("", "peter") == std::numeric_limits<bk_tree::IntegerType>::max());
 
   EXPECT_TRUE(dist("abcde", "ace") == hamming_dist("abcde", "ace"));
   EXPECT_TRUE(dist("abcde", "abcde") == hamming_dist("abcde", "abcde"));
