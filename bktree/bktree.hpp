@@ -53,7 +53,7 @@ public:
 
 ///
 /// Lee distance metric
-/// d(x, y) = sum_{i=1}^{n}\min(|x_i - y_i|, m - |x_i - y_i|)
+/// d(x, y) = sum_{i=1}^{n} \min(|x_i - y_i|, m - |x_i - y_i|)
 /// where m is the alphabet size, x and y are of the same length.
 /// When m = 2 or m = 3, Lee Distance is the same as Hamming Distance.
 ///
@@ -82,8 +82,8 @@ public:
 /// d(x_m, y_n) where
 /// m is the length of x, n is the length of y,
 /// d(x_i, y_j)
-///     = 0, if i == 0 or j == 0
-///     = d(x_{i-1}, y_{j-1}) + 1, if x_i == y_j
+///     =                                     0 , if i == 0 or j == 0
+///     =               d(x_{i-1}, y_{j-1}) + 1 , if x_i == y_j
 ///     = \max(d(x_{i-1}, y_j), d(x_i, y_{j-1})), if x_i != y_j
 ///
 class LCSDistance : Distance {
@@ -140,8 +140,8 @@ public:
 /// Edit distance metric
 /// d(x_m, y_n) where
 /// m is the length of x, n is the length of y,
-/// d(x_i, y_0) = i,
-/// d(x_0, y_i) = i,
+/// d(x_i, y_0) = i
+/// d(x_0, y_j) = j
 /// d(x_i, y_j) = \min(
 ///         d(x_i, y_{j-1}) + 1,
 ///         d(x_{i-1}, y_j) + 1,
@@ -171,12 +171,9 @@ public:
     }
     for (IntegerType j = 1; j <= N; ++j) {
       for (IntegerType i = 1; i <= M; ++i) {
-        m_matrix[i][j] = std::min({// Insertion
-                                   m_matrix[i][j - 1] + 1,
-                                   // Deletion
-                                   m_matrix[i - 1][j] + 1,
-                                   // Substitution
-                                   m_matrix[i - 1][j - 1] + (s[i - 1] != t[j - 1])});
+        m_matrix[i][j] = std::min(
+            {m_matrix[i][j - 1] + 1 /*Insertion*/, m_matrix[i - 1][j] + 1 /*Deletion*/,
+             m_matrix[i - 1][j - 1] + (s[i - 1] != t[j - 1]) /*Substitution*/});
       }
     }
     return m_matrix[M][N];
@@ -209,13 +206,9 @@ public:
     }
     for (IntegerType j = 1; j <= N; ++j) {
       for (IntegerType i = 1; i <= M; ++i) {
-        m_matrix[i][j] =
-            std::min({// Insertion
-                      m_matrix[i][j - 1] + 1,
-                      // Deletion
-                      m_matrix[i - 1][j] + 1,
-                      // Substitution
-                      m_matrix[i - 1][j - 1] + (s[i - 1] == t[j - 1] ? 0 : 1)});
+        m_matrix[i][j] = std::min(
+            {m_matrix[i][j - 1] + 1 /*Insertion*/, m_matrix[i - 1][j] + 1 /*Deletion*/,
+             m_matrix[i - 1][j - 1] + (s[i - 1] == t[j - 1] ? 0 : 1) /*Substitution*/});
         if (i > 1 && j > 1 && s[i] == t[j - 1] && s[i - 1] == t[j]) {
           // Transposition
           m_matrix[i][j] = std::min(m_matrix[i][j], m_matrix[i - 2][j - 2] + 1);
