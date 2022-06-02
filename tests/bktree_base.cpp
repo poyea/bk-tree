@@ -51,10 +51,16 @@ TEST_F(BKTree_Base_TEST, TreeEraseRoot) {
 }
 
 TEST_F(BKTree_Base_TEST, TreeEraseRootNary) {
-  tree.insert("word");
-  tree.insert("wordy");
-  tree.insert("wordo");
-  tree.insert("worda");
+  {
+    std::string s1{"word"};
+    std::string s2{"wordy"};
+    std::string s3{"wordo"};
+    std::string s4{"worda"};
+    tree.insert(s1);
+    tree.insert(s2);
+    tree.insert(s3);
+    tree.insert(s4);
+  }
   EXPECT_TRUE(tree.size() == 4);
   results = tree.find("word", 1);
   EXPECT_TRUE(results.size() == 4);
