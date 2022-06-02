@@ -52,6 +52,18 @@ public:
 };
 
 ///
+/// Uniform metric
+/// d(x, y) = 1 for any x, y
+///
+class UniformDistance : Distance {
+public:
+  explicit UniformDistance(){};
+  IntegerType operator()(std::string_view, std::string_view) const override {
+    return IntegerType{1};
+  }
+};
+
+///
 /// Lee distance metric
 /// d(x, y) = sum_{i=1}^{n} \min(|x_i - y_i|, m - |x_i - y_i|)
 /// where m is the alphabet size, x and y are of the same length.
