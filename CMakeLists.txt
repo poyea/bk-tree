@@ -30,9 +30,14 @@ foreach(file ${EXAMPLE_SRC_FILES})
 endforeach()
 
 # For BK tree test build
-# See README.md for details
 if(TESTS)
     enable_testing()
     message("-- Building Tests")
     add_subdirectory(tests)
+endif()
+
+# For BK tree benchmark build
+if(BENCHMARKS)
+    message("-- Building Benchmarks")
+    add_subdirectory(benchmarks)
 endif()
