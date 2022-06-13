@@ -43,9 +43,14 @@ jobs:
     - name: Test
       working-directory: ${{runner.workspace}}/build
       shell: bash
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: |
         CXX=clang++ cmake . -DTESTS=ON
         make
         ctest -C $BUILD_TYPE
+    
+    - name: Benchmarks
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: |
+        CXX=clang++ cmake . -DBENCHMARKS=ON
+        make
