@@ -99,18 +99,19 @@ public:
 ///     = \max(d(x_{i-1}, y_j), d(x_i, y_{j-1})), if x_i != y_j
 ///
 class LCSDistance : Distance {
-  mutable std::vector<std::vector<int>> m_matrix;
+  mutable std::vector<std::vector<std::uint64_t>> m_matrix;
 
 public:
   explicit LCSDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
-      : m_matrix(initial_size, std::vector<int>(initial_size)){};
+      : m_matrix(initial_size, std::vector<std::uint64_t>(initial_size)){};
   IntegerType operator()(std::string_view s, std::string_view t) const override {
     const IntegerType M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return 0;
     }
     if (m_matrix.size() <= M || m_matrix[0].size() <= N) {
-      std::vector<std::vector<int>> a_matrix(M + 1, std::vector<int>(N + 1));
+      std::vector<std::vector<std::uint64_t>> a_matrix(
+          M + 1, std::vector<std::uint64_t>(N + 1));
       m_matrix.swap(a_matrix);
     }
     for (IntegerType i = 1; i <= M; ++i) {
@@ -161,18 +162,19 @@ public:
 ///     )
 ///
 class EditDistance : Distance {
-  mutable std::vector<std::vector<int>> m_matrix;
+  mutable std::vector<std::vector<std::uint64_t>> m_matrix;
 
 public:
   explicit EditDistance(size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
-      : m_matrix(initial_size, std::vector<int>(initial_size)){};
+      : m_matrix(initial_size, std::vector<std::uint64_t>(initial_size)){};
   IntegerType operator()(std::string_view s, std::string_view t) const override {
     const IntegerType M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return N + M;
     }
     if (m_matrix.size() <= M || m_matrix[0].size() <= N) {
-      std::vector<std::vector<int>> a_matrix(M + 1, std::vector<int>(N + 1));
+      std::vector<std::vector<std::uint64_t>> a_matrix(
+          M + 1, std::vector<std::uint64_t>(N + 1));
       m_matrix.swap(a_matrix);
     }
     for (IntegerType i = 1; i <= M; ++i) {
@@ -196,18 +198,19 @@ public:
 /// Damerau–Levenshtein metric
 ///
 class DamerauLevenshteinDistance : Distance {
-  mutable std::vector<std::vector<int>> m_matrix;
+  mutable std::vector<std::vector<std::uint64_t>> m_matrix;
 
 public:
   explicit DamerauLevenshteinDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
-      : m_matrix(initial_size, std::vector<int>(initial_size)){};
+      : m_matrix(initial_size, std::vector<std::uint64_t>(initial_size)){};
   IntegerType operator()(std::string_view s, std::string_view t) const override {
     const IntegerType M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return N + M;
     }
     if (m_matrix.size() <= M || m_matrix[0].size() <= N) {
-      std::vector<std::vector<int>> a_matrix(M + 1, std::vector<int>(N + 1));
+      std::vector<std::vector<std::uint64_t>> a_matrix(
+          M + 1, std::vector<std::uint64_t>(N + 1));
       m_matrix.swap(a_matrix);
     }
     for (IntegerType i = 1; i <= M; ++i) {
