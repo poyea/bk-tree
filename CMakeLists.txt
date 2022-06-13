@@ -7,7 +7,11 @@ project(bk-tree
     DESCRIPTION "Header-only Burkhard-Keller tree library"
     HOMEPAGE_URL "https://github.com/poyea/bk-tree")
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+if (NOT MSVC)
+    add_compile_options(-fsanitize=address)
+    add_link_options(-fsanitize=address)
+endif()
+
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(CMAKE_CXX_STANDARD 20)
