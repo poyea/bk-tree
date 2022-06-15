@@ -7,20 +7,17 @@ project(bk-tree
     DESCRIPTION "Header-only Burkhard-Keller tree library"
     HOMEPAGE_URL "https://github.com/poyea/bk-tree")
 
-if (NOT MSVC)
-    add_compile_options(-fsanitize=address)
+if(MSVC)
+    add_compile_options(/O2 /permissive- /W4)
+else()
+    add_compile_options(-O3 -Wall -Wextra -Wpedantic -fsanitize=address)
     add_link_options(-fsanitize=address)
 endif()
 
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(ENABLE_DEVELOPER_MODE TRUE CACHE BOOL "Enable 'developer mode'")
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/bktree
-    ${PROJECT_SOURCE_DIR}/example
 )
 
 file(GLOB EXAMPLE_SRC_FILES ${PROJECT_SOURCE_DIR}/examples/*.cpp)

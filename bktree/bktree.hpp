@@ -234,7 +234,7 @@ public:
   }
 };
 
-}; // namespace metrics
+} // namespace metrics
 
 template <typename Metric>
 class BKTree;
@@ -402,4 +402,4 @@ ResultList BKTree<Metric>::find(std::string_view value, const int &limit) const 
   return m_root->m_find_wrapper(value, limit, m_metric);
 }
 
-}; // namespace bk_tree
+} // namespace bk_tree
