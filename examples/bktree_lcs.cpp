@@ -10,7 +10,9 @@ void example() {
   for (auto &s : input) {
     tree.insert(s);
   }
+
   std::cout << "Tree size: " << tree.size() << std::endl << std::endl;
+
   bk_tree::ResultList results;
   for (int limit = 1; limit <= 3; limit++) {
     std::cout << "Limit: " << limit << std::endl;

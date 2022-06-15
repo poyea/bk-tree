@@ -341,6 +341,45 @@ public:
   BKTree(const metric_type &distance = Metric())
       : m_root(nullptr), m_metric(distance), m_tree_size(BK_TREE_INITIAL_SIZE) {}
 
+  BKTree(const BKTree &other) : BKTree(other.m_metric) {
+    if (other.m_root == nullptr) {
+      return;
+    }
+    std::queue<std::unique_ptr<node_type> const *> bq;
+    bq.push(&(other.m_root));
+    while (!bq.empty()) {
+      for (std::size_t $ = 0, N = bq.size(); $ < N; ++$) {
+        auto *nptr = bq.front();
+        bq.pop();
+        this->insert((*nptr)->m_word);
+        for (auto &[_, child_node] : (*nptr)->m_children) {
+          bq.push(&child_node);
+        }
+      }
+    }
+  }
+
+  BKTree(BKTree &&other) noexcept
+      : m_root(std::exchange(other.m_root, nullptr)), m_tree_size(other.m_tree_size) {}
+
+  BKTree &operator=(const BKTree &other) {
+    if (this == &other) {
+      return *this;
+    }
+    BKTree temp(other);
+    std::swap(m_root, temp.m_root);
+    std::swap(m_tree_size, temp.m_tree_size);
+    return *this;
+  }
+
+  BKTree &operator=(BKTree &&other) noexcept {
+    std::swap(m_root, other.m_root);
+    std::swap(m_tree_size, other.m_tree_size);
+    return *this;
+  }
+
+  ~BKTree() = default;
+
   bool insert(std::string_view value);
   bool erase(std::string_view value);
   size_t size() const noexcept { return m_tree_size; }

@@ -32,8 +32,21 @@ protected:
 TEST_F(BKTree_Edit_TEST, TreeSize) { EXPECT_EQ(tree.size(), 9); }
 
 TEST_F(BKTree_Edit_TEST, TreeFind) {
+  auto t1(tree);
+  EXPECT_EQ(t1.size(), 9);
+
+  auto t2 = tree;
+  EXPECT_EQ(t2.size(), 9);
+
+  bk_tree::BKTree<bk_tree::metrics::EditDistance> t3(tree), t4;
+  t4 = t3;
+  auto t5 = std::move(t3);
+  EXPECT_EQ(t3.size(), 9);
+  EXPECT_EQ(t4.size(), 9);
+  EXPECT_EQ(t5.size(), 9);
+
   const std::string &word = "book";
-  results = tree.find(word, 1);
+  results = t5.find(word, 1);
   for (auto &p : results) {
     EXPECT_TRUE(1 >= p.second);
     EXPECT_TRUE(p.first == "books" || p.first == "boo" || p.first == "boon" ||

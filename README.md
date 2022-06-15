@@ -15,12 +15,14 @@ Header-only Burkhard-Keller tree implementation in C++, with minimal examples.
 int main() {
   using metric_t = bk_tree::metrics::DamerauLevenshteinDistance;
   using tree_t = bk_tree::BKTree<metric_t>;
-  tree_t tree;
+  tree_t temp;
 
-  tree.insert("tall");
-  tree.insert("tell");
-  tree.insert("teel");
-  tree.insert("feel");
+  temp.insert("tall");
+  temp.insert("tell");
+  temp.insert("teel");
+  temp.insert("feel");
+
+  tree_t tree(temp);
 
   // 🌟 Loop like a STL container (range-based optional)
   for (auto const &node : tree) {
