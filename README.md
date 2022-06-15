@@ -22,14 +22,25 @@ int main() {
   tree.insert("teel");
   tree.insert("feel");
 
+  // 🌟 Loop like a STL container (range-based optional)
+  for (auto const &node : tree) {
+    std::cout << *node << ' ';        // tall tell teel feel
+    std::cout << node->word() << ' '; // tall tell teel feel
+  }
+  std::cout << std::endl;
+
   std::cout << "Tree size: " << tree.size() << std::endl; // Tree size: 4
 
   auto result = tree.find("tale", 1);
+
+  // 🌟 Find all possible results
   for (auto &p : result) {
     std::cout << p.first << " " << p.second << std::endl; // tall 1
   }
 
+  // 🌟 Erase a node by word
   tree.erase("tall");
+
   result = tree.find("tale", 1);
   std::cout << result.size() << std::endl; // 0
 }

@@ -61,6 +61,19 @@ TEST_F(BKTree_Base_TEST, TreeEraseRootNary) {
     tree.insert(s3);
     tree.insert(s4);
   }
+
+  for (auto const &node : tree) {
+    EXPECT_TRUE(node->word().length() <= 5 and not node->word().empty());
+  }
+
+  for (auto it = tree.begin(); it != tree.end(); ++it) {
+    EXPECT_TRUE((*it)->word().length() <= 5 and not(*it)->word().empty());
+  }
+
+  for (auto it = tree.begin(); it != tree.end(); it++) {
+    EXPECT_TRUE((*it)->word().length() <= 5 and not(*it)->word().empty());
+  }
+
   EXPECT_TRUE(tree.size() == 4);
   results = tree.find("word", 1);
   EXPECT_TRUE(results.size() == 4);
@@ -98,6 +111,9 @@ TEST_F(BKTree_Base_TEST, TreeEraseRootNary) {
 
   tree.erase("wordy");
   EXPECT_TRUE(tree.size() == 0);
+  tree.erase("wordy");
+  EXPECT_TRUE(tree.size() == 0);
+
   results = tree.find("word", 1);
   EXPECT_TRUE(set_of_strings.size() == 0);
   EXPECT_TRUE(results.size() == 0);

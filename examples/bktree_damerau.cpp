@@ -10,6 +10,12 @@ void example() {
   for (auto &s : input) {
     tree.insert(s);
   }
+
+  for (auto const &node : tree) {
+    std::cout << node->word() << ' ';
+  }
+  std::cout << '\n';
+
   std::cout << "Tree size: " << tree.size() << std::endl << std::endl;
   std::cout << "Can erase 'tell'? " << std::boolalpha << tree.erase("tell")
             << std::endl;

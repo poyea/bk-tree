@@ -31,14 +31,17 @@
 #define BK_TREE_INITIAL_SIZE 0
 #endif
 #include <algorithm>
+#include <cstddef>
+#include <iterator>
 #include <map>
 #include <memory>
+#include <queue>
 #include <string>
 #include <vector>
 
 namespace bk_tree {
 
-using IntegerType = std::uint64_t;
+using integer_type = std::uint64_t;
 
 namespace metrics {
 
@@ -48,7 +51,7 @@ namespace metrics {
 class Distance {
 public:
   virtual ~Distance() = default;
-  virtual IntegerType operator()(std::string_view, std::string_view) const = 0;
+  virtual integer_type operator()(std::string_view, std::string_view) const = 0;
 };
 
 ///
@@ -58,8 +61,8 @@ public:
 class UniformDistance : Distance {
 public:
   explicit UniformDistance(){};
-  IntegerType operator()(std::string_view, std::string_view) const override {
-    return IntegerType{1};
+  integer_type operator()(std::string_view, std::string_view) const override {
+    return integer_type{1};
   }
 };
 
@@ -70,18 +73,18 @@ public:
 /// When m = 2 or m = 3, Lee Distance is the same as Hamming Distance.
 ///
 class LeeDistance : Distance {
-  IntegerType m_alphabet_size;
+  integer_type m_alphabet_size;
 
 public:
-  explicit LeeDistance(IntegerType alphabet_size) : m_alphabet_size(alphabet_size){};
-  IntegerType operator()(std::string_view s, std::string_view t) const override {
-    const IntegerType M = s.size(), N = t.size();
+  explicit LeeDistance(integer_type alphabet_size) : m_alphabet_size(alphabet_size){};
+  integer_type operator()(std::string_view s, std::string_view t) const override {
+    const integer_type M = s.size(), N = t.size();
     if (M != N) {
-      return std::numeric_limits<IntegerType>::max();
+      return std::numeric_limits<integer_type>::max();
     }
-    const IntegerType m_comparsion_size = M;
-    IntegerType counter = 0, diff;
-    for (IntegerType i = 0; i < m_comparsion_size; ++i) {
+    const integer_type m_comparsion_size = M;
+    integer_type counter = 0, diff;
+    for (integer_type i = 0; i < m_comparsion_size; ++i) {
       diff = std::abs(s[i] - t[i]);
       counter += std::min(diff, m_alphabet_size - diff);
     }
@@ -99,23 +102,23 @@ public:
 ///     = \max(d(x_{i-1}, y_j), d(x_i, y_{j-1})), if x_i != y_j
 ///
 class LCSDistance : Distance {
-  mutable std::vector<std::vector<IntegerType>> m_matrix;
+  mutable std::vector<std::vector<integer_type>> m_matrix;
 
 public:
   explicit LCSDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
-      : m_matrix(initial_size, std::vector<IntegerType>(initial_size)){};
-  IntegerType operator()(std::string_view s, std::string_view t) const override {
-    const IntegerType M = s.size(), N = t.size();
+      : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
+  integer_type operator()(std::string_view s, std::string_view t) const override {
+    const integer_type M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return 0;
     }
     if (m_matrix.size() <= M || m_matrix[0].size() <= N) {
-      std::vector<std::vector<IntegerType>> a_matrix(M + 1,
-                                                     std::vector<IntegerType>(N + 1));
+      std::vector<std::vector<integer_type>> a_matrix(M + 1,
+                                                      std::vector<integer_type>(N + 1));
       m_matrix.swap(a_matrix);
     }
-    for (IntegerType i = 1; i <= M; ++i) {
-      for (IntegerType j = 1; j <= N; ++j) {
+    for (integer_type i = 1; i <= M; ++i) {
+      for (integer_type j = 1; j <= N; ++j) {
         if (s[i - 1] == t[j - 1]) {
           m_matrix[i][j] = m_matrix[i - 1][j - 1] + 1;
         } else {
@@ -135,14 +138,14 @@ public:
 class HammingDistance : Distance {
 public:
   explicit HammingDistance() = default;
-  IntegerType operator()(std::string_view s, std::string_view t) const override {
-    const IntegerType M = s.size(), N = t.size();
+  integer_type operator()(std::string_view s, std::string_view t) const override {
+    const integer_type M = s.size(), N = t.size();
     if (M != N) {
-      return std::numeric_limits<IntegerType>::max();
+      return std::numeric_limits<integer_type>::max();
     }
-    const IntegerType m_comparsion_size = M;
-    IntegerType counter = 0;
-    for (IntegerType i = 0; i < m_comparsion_size; ++i) {
+    const integer_type m_comparsion_size = M;
+    integer_type counter = 0;
+    for (integer_type i = 0; i < m_comparsion_size; ++i) {
       counter += (s[i] != t[i]);
     }
     return counter;
@@ -162,29 +165,29 @@ public:
 ///     )
 ///
 class EditDistance : Distance {
-  mutable std::vector<std::vector<IntegerType>> m_matrix;
+  mutable std::vector<std::vector<integer_type>> m_matrix;
 
 public:
   explicit EditDistance(size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
-      : m_matrix(initial_size, std::vector<IntegerType>(initial_size)){};
-  IntegerType operator()(std::string_view s, std::string_view t) const override {
-    const IntegerType M = s.size(), N = t.size();
+      : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
+  integer_type operator()(std::string_view s, std::string_view t) const override {
+    const integer_type M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return N + M;
     }
     if (m_matrix.size() <= M || m_matrix[0].size() <= N) {
-      std::vector<std::vector<IntegerType>> a_matrix(M + 1,
-                                                     std::vector<IntegerType>(N + 1));
+      std::vector<std::vector<integer_type>> a_matrix(M + 1,
+                                                      std::vector<integer_type>(N + 1));
       m_matrix.swap(a_matrix);
     }
-    for (IntegerType i = 1; i <= M; ++i) {
+    for (integer_type i = 1; i <= M; ++i) {
       m_matrix[i][0] = i;
     }
-    for (IntegerType j = 1; j <= N; ++j) {
+    for (integer_type j = 1; j <= N; ++j) {
       m_matrix[0][j] = j;
     }
-    for (IntegerType j = 1; j <= N; ++j) {
-      for (IntegerType i = 1; i <= M; ++i) {
+    for (integer_type j = 1; j <= N; ++j) {
+      for (integer_type i = 1; i <= M; ++i) {
         m_matrix[i][j] = std::min(
             {m_matrix[i][j - 1] + 1 /*Insertion*/, m_matrix[i - 1][j] + 1 /*Deletion*/,
              m_matrix[i - 1][j - 1] + (s[i - 1] != t[j - 1]) /*Substitution*/});
@@ -198,35 +201,35 @@ public:
 /// Damerau–Levenshtein metric
 ///
 class DamerauLevenshteinDistance : Distance {
-  mutable std::vector<std::vector<IntegerType>> m_matrix;
+  mutable std::vector<std::vector<integer_type>> m_matrix;
 
 public:
   explicit DamerauLevenshteinDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
-      : m_matrix(initial_size, std::vector<IntegerType>(initial_size)){};
-  IntegerType operator()(std::string_view s, std::string_view t) const override {
-    const IntegerType M = s.size(), N = t.size();
+      : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
+  integer_type operator()(std::string_view s, std::string_view t) const override {
+    const integer_type M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return N + M;
     }
     if (m_matrix.size() <= M || m_matrix[0].size() <= N) {
-      std::vector<std::vector<IntegerType>> a_matrix(M + 1,
-                                                     std::vector<IntegerType>(N + 1));
+      std::vector<std::vector<integer_type>> a_matrix(M + 1,
+                                                      std::vector<integer_type>(N + 1));
       m_matrix.swap(a_matrix);
     }
-    for (IntegerType i = 1; i <= M; ++i) {
+    for (integer_type i = 1; i <= M; ++i) {
       m_matrix[i][0] = i;
     }
-    for (IntegerType j = 1; j <= N; ++j) {
+    for (integer_type j = 1; j <= N; ++j) {
       m_matrix[0][j] = j;
     }
-    for (IntegerType j = 1; j <= N; ++j) {
-      for (IntegerType i = 1; i <= M; ++i) {
+    for (integer_type j = 1; j <= N; ++j) {
+      for (integer_type i = 1; i <= M; ++i) {
         m_matrix[i][j] = std::min(
             {m_matrix[i][j - 1] + 1 /*Insertion*/, m_matrix[i - 1][j] + 1 /*Deletion*/,
              m_matrix[i - 1][j - 1] + (s[i - 1] == t[j - 1] ? 0 : 1) /*Substitution*/});
         if (i > 1 && j > 1 && s[i] == t[j - 1] && s[i - 1] == t[j]) {
-          // Transposition
-          m_matrix[i][j] = std::min(m_matrix[i][j], m_matrix[i - 2][j - 2] + 1);
+          m_matrix[i][j] =
+              std::min(m_matrix[i][j], m_matrix[i - 2][j - 2] + 1 /*Transposition*/);
         }
       }
     }
@@ -250,19 +253,27 @@ using ResultList = std::vector<ResultEntry>;
 template <typename Metric>
 class BKTreeNode {
   friend class BKTree<Metric>;
-  using MetricType = Metric;
-  using NodeType = BKTreeNode<MetricType>;
+  using metric_type = Metric;
+  using node_type = BKTreeNode<metric_type>;
 
   BKTreeNode(std::string_view value) : m_word(value) {}
-  bool m_insert(std::string_view value, const MetricType &distance);
-  bool m_erase(std::string_view value, const MetricType &distance);
+  bool m_insert(std::string_view value, const metric_type &distance);
+  bool m_erase(std::string_view value, const metric_type &distance);
   void m_find(ResultList &output, std::string_view value, const int &limit,
-              const MetricType &metric) const;
+              const metric_type &metric) const;
   ResultList m_find_wrapper(std::string_view value, const int &limit,
-                            const MetricType &metric) const;
+                            const metric_type &metric) const;
 
-  std::map<int, std::unique_ptr<NodeType>> m_children;
+  std::map<int, std::unique_ptr<node_type>> m_children;
   std::string m_word;
+
+  friend std::ostream &operator<<(std::ostream &oss, const BKTreeNode &node) {
+    oss << node.m_word;
+    return oss;
+  }
+
+public:
+  std::string_view word() const noexcept { return m_word; }
 };
 
 ///
@@ -272,11 +283,62 @@ template <typename Metric>
 class BKTree {
   static_assert(std::is_base_of_v<metrics::Distance, Metric>,
                 "Metric must be of type Distance");
-  using MetricType = Metric;
-  using NodeType = typename BKTreeNode<MetricType>::NodeType;
+  using metric_type = Metric;
+  using node_type = typename BKTreeNode<metric_type>::node_type;
 
 public:
-  BKTree(const MetricType &distance = Metric())
+  class Iterator {
+    using iterator_category = std::forward_iterator_tag;
+    using difference_type = std::ptrdiff_t;
+    using value_type = std::unique_ptr<node_type>;
+    using pointer = std::unique_ptr<node_type> *;
+    using reference = std::unique_ptr<node_type> &;
+
+  public:
+    Iterator() = default;
+    Iterator(pointer ptr) : m_pointer(ptr) {}
+
+    pointer operator->() { return m_pointer; }
+
+    reference operator*() const { return *m_pointer; }
+
+    Iterator &operator++() {
+      if (m_pointer == nullptr) {
+        throw std::out_of_range("No more tree node");
+      }
+      for (auto &[_, child] : (*m_pointer)->m_children) {
+        m_queue.push(&child);
+      }
+      if (m_queue.empty()) {
+        m_pointer = nullptr;
+      } else {
+        m_pointer = m_queue.front();
+        m_queue.pop();
+      }
+      return *this;
+    }
+
+    Iterator operator++(int) {
+      Iterator tmp{*this};
+      ++(*this);
+      return tmp;
+    }
+
+    friend bool operator==(const Iterator &a, const Iterator &b) {
+      return a.m_pointer == b.m_pointer;
+    };
+
+    friend bool operator!=(const Iterator &a, const Iterator &b) {
+      return a.m_pointer != b.m_pointer;
+    };
+
+  private:
+    pointer m_pointer;
+    std::queue<pointer> m_queue;
+  };
+
+public:
+  BKTree(const metric_type &distance = Metric())
       : m_root(nullptr), m_metric(distance), m_tree_size(BK_TREE_INITIAL_SIZE) {}
 
   bool insert(std::string_view value);
@@ -285,22 +347,25 @@ public:
   bool empty() const noexcept { return m_tree_size == 0; }
   [[nodiscard]] ResultList find(std::string_view value, const int &limit) const;
 
+  Iterator begin() { return Iterator(&m_root); }
+  Iterator end() { return Iterator(); }
+
 private:
-  std::unique_ptr<NodeType> m_root;
-  const MetricType m_metric;
+  std::unique_ptr<node_type> m_root;
+  const metric_type m_metric;
   size_t m_tree_size;
 };
 
 template <typename Metric>
 bool BKTreeNode<Metric>::m_insert(std::string_view value,
-                                  const MetricType &distance_metric) {
+                                  const metric_type &distance_metric) {
   const int distance_between = distance_metric(value, m_word);
   bool inserted = false;
   if (distance_between >= 0) {
     auto it = m_children.find(distance_between);
     if (it == m_children.end()) {
       m_children.emplace(std::make_pair(
-          distance_between, std::unique_ptr<NodeType>(new NodeType(value))));
+          distance_between, std::unique_ptr<node_type>(new node_type(value))));
       inserted = true;
     } else {
       inserted = it->second->m_insert(value, distance_metric);
@@ -311,7 +376,7 @@ bool BKTreeNode<Metric>::m_insert(std::string_view value,
 
 template <typename Metric>
 bool BKTreeNode<Metric>::m_erase(std::string_view value,
-                                 const MetricType &distance_metric) {
+                                 const metric_type &distance_metric) {
   bool erased = false;
   const int distance_between = distance_metric(value, m_word);
   auto it = m_children.find(distance_between);
@@ -332,7 +397,7 @@ bool BKTreeNode<Metric>::m_erase(std::string_view value,
 
 template <typename Metric>
 void BKTreeNode<Metric>::m_find(ResultList &output, std::string_view value,
-                                const int &limit, const MetricType &metric) const {
+                                const int &limit, const metric_type &metric) const {
   const int distance = metric(value, m_word);
   if (distance <= limit) {
     output.push_back({m_word, distance});
@@ -346,7 +411,7 @@ void BKTreeNode<Metric>::m_find(ResultList &output, std::string_view value,
 
 template <typename Metric>
 ResultList BKTreeNode<Metric>::m_find_wrapper(std::string_view value, const int &limit,
-                                              const MetricType &metric) const {
+                                              const metric_type &metric) const {
   ResultList output;
   m_find(output, value, limit, metric);
   return output;
@@ -356,7 +421,7 @@ template <typename Metric>
 bool BKTree<Metric>::insert(std::string_view value) {
   bool inserted = false;
   if (m_root == nullptr) {
-    m_root = std::unique_ptr<NodeType>(new NodeType(value));
+    m_root = std::unique_ptr<node_type>(new node_type(value));
     ++m_tree_size;
     inserted = true;
   } else if (m_root->m_insert(value, m_metric)) {

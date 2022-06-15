@@ -18,7 +18,7 @@ protected:
     // pre-destruction
   }
 
-  void set_alphabet_size(bk_tree::IntegerType size) {
+  void set_alphabet_size(bk_tree::integer_type size) {
     dist = bk_tree::metrics::LeeDistance(size);
   }
 
@@ -27,8 +27,8 @@ protected:
 };
 
 TEST_F(Distance_Lee_TEST, LeeDistances) {
-  EXPECT_TRUE(dist("peter", "") == std::numeric_limits<bk_tree::IntegerType>::max());
-  EXPECT_TRUE(dist("", "peter") == std::numeric_limits<bk_tree::IntegerType>::max());
+  EXPECT_TRUE(dist("peter", "") == std::numeric_limits<bk_tree::integer_type>::max());
+  EXPECT_TRUE(dist("", "peter") == std::numeric_limits<bk_tree::integer_type>::max());
 
   EXPECT_TRUE(dist("abcde", "ace") == hamming_dist("abcde", "ace"));
   EXPECT_TRUE(dist("abcde", "abcde") == hamming_dist("abcde", "abcde"));
