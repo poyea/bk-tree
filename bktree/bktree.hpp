@@ -270,7 +270,7 @@ class BKTreeNode {
 ///
 template <typename Metric>
 class BKTree {
-  static_assert(std::is_base_of<metrics::Distance, Metric>::value,
+  static_assert(std::is_base_of_v<metrics::Distance, Metric>,
                 "Metric must be of type Distance");
   using MetricType = Metric;
   using NodeType = typename BKTreeNode<MetricType>::NodeType;
