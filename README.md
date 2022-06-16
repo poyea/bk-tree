@@ -2,11 +2,11 @@
 
 # bk-tree ![CMake](https://github.com/poyea/bk-tree/workflows/CMake/badge.svg)
 
-Header-only Burkhard-Keller tree implementation in C++, with minimal examples.
+Header-only [Burkhard-Keller tree](https://en.wikipedia.org/wiki/BK-tree) implementation in C++, with different metrics and a few useful interfaces supported.
 
 <br/>
 
-## Example
+## An Example
 
 ```cpp
 #include "bktree.hpp"
@@ -24,7 +24,7 @@ int main() {
 
   tree_t tree(temp);
 
-  // 🌟 Loop like a STL container (range-based optional)
+  // 🌟 Loop like a STL container (e.g. range-based)
   for (auto const &node : tree) {
     std::cout << *node << ' ';        // tall tell teel feel
     std::cout << node->word() << ' '; // tall tell teel feel
@@ -33,16 +33,14 @@ int main() {
 
   std::cout << "Tree size: " << tree.size() << std::endl; // Tree size: 4
 
-  auto result = tree.find("tale", 1);
-
   // 🌟 Find all possible results
+  auto result = tree.find("tale", 1);
   for (auto &p : result) {
     std::cout << p.first << " " << p.second << std::endl; // tall 1
   }
 
   // 🌟 Erase a node by word
   tree.erase("tall");
-
   result = tree.find("tale", 1);
   std::cout << result.size() << std::endl; // 0
 }
