@@ -422,12 +422,27 @@ bool BKTreeNode<Metric>::m_erase(std::string_view value,
     if (it->second->m_word == value) {
       auto node = std::move(it->second);
       m_children.erase(it);
+      std::queue<std::unique_ptr<node_type> const *> bq;
       for (auto const &[_, child_node] : node->m_children) {
-        m_insert(child_node->m_word, distance_metric);
+        bq.push(&child_node);
+      }
+      while (!bq.empty()) {
+        auto *node = bq.front();
+        bq.pop();
+        for (auto const &[_, child_node] : (*node)->m_children) {
+          bq.push(&child_node);
+        }
+        m_insert((*node)->m_word, distance_metric);
       }
       erased = true;
     } else {
       erased = it->second->m_erase(value, distance_metric);
+    }
+  } else {
+    for (auto const &[_, child] : m_children) {
+      if (child->m_erase(value, distance_metric)) {
+        return true;
+      }
     }
   }
   return erased;
@@ -477,12 +492,21 @@ bool BKTree<Metric>::erase(std::string_view value) {
   } else if (m_root->m_word == value) {
     if (m_tree_size > 1) {
       auto &replacement_node = m_root->m_children.begin()->second;
+      std::queue<std::unique_ptr<node_type> const *> bq;
       for (bool first = true; auto const &[_, node] : m_root->m_children) {
         if (first) {
           first = false;
           continue;
         }
-        replacement_node->m_insert(node->m_word, m_metric);
+        bq.push(&node);
+      }
+      while (!bq.empty()) {
+        auto node = bq.front();
+        bq.pop();
+        for (auto const &[_, child] : (*node)->m_children) {
+          bq.push(&child);
+        }
+        replacement_node->m_insert((*node)->m_word, m_metric);
       }
       m_root = std::move(replacement_node);
     } else {
@@ -499,7 +523,7 @@ bool BKTree<Metric>::erase(std::string_view value) {
 
 template <typename Metric>
 ResultList BKTree<Metric>::find(std::string_view value, const int &limit) const {
-  if (!m_root) {
+  if (m_root == nullptr) {
     return ResultList{};
   }
   return m_root->m_find_wrapper(value, limit, m_metric);
