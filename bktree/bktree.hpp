@@ -257,11 +257,11 @@ class BKTreeNode {
   using node_type = BKTreeNode<metric_type>;
 
   BKTreeNode(std::string_view value) : m_word(value) {}
-  bool m_insert(std::string_view value, const metric_type &distance);
-  bool m_erase(std::string_view value, const metric_type &distance);
-  void m_find(ResultList &output, std::string_view value, const int &limit,
+  bool _insert(std::string_view value, const metric_type &distance);
+  bool _erase(std::string_view value, const metric_type &distance);
+  void _find(ResultList &output, std::string_view value, const int &limit,
               const metric_type &metric) const;
-  ResultList m_find_wrapper(std::string_view value, const int &limit,
+  ResultList _find_wrapper(std::string_view value, const int &limit,
                             const metric_type &metric) const;
 
   std::map<int, std::unique_ptr<node_type>> m_children;
@@ -395,7 +395,7 @@ private:
 };
 
 template <typename Metric>
-bool BKTreeNode<Metric>::m_insert(std::string_view value,
+bool BKTreeNode<Metric>::_insert(std::string_view value,
                                   const metric_type &distance_metric) {
   const int distance_between = distance_metric(value, m_word);
   bool inserted = false;
@@ -406,14 +406,14 @@ bool BKTreeNode<Metric>::m_insert(std::string_view value,
           distance_between, std::unique_ptr<node_type>(new node_type(value))));
       inserted = true;
     } else {
-      inserted = it->second->m_insert(value, distance_metric);
+      inserted = it->second->_insert(value, distance_metric);
     }
   }
   return inserted;
 }
 
 template <typename Metric>
-bool BKTreeNode<Metric>::m_erase(std::string_view value,
+bool BKTreeNode<Metric>::_erase(std::string_view value,
                                  const metric_type &distance_metric) {
   bool erased = false;
   const int distance_between = distance_metric(value, m_word);
@@ -432,15 +432,15 @@ bool BKTreeNode<Metric>::m_erase(std::string_view value,
         for (auto const &[_, child_node] : (*node)->m_children) {
           bq.push(&child_node);
         }
-        m_insert((*node)->m_word, distance_metric);
+        _insert((*node)->m_word, distance_metric);
       }
       erased = true;
     } else {
-      erased = it->second->m_erase(value, distance_metric);
+      erased = it->second->_erase(value, distance_metric);
     }
   } else {
     for (auto const &[_, child] : m_children) {
-      if (child->m_erase(value, distance_metric)) {
+      if (child->_erase(value, distance_metric)) {
         return true;
       }
     }
@@ -449,7 +449,7 @@ bool BKTreeNode<Metric>::m_erase(std::string_view value,
 }
 
 template <typename Metric>
-void BKTreeNode<Metric>::m_find(ResultList &output, std::string_view value,
+void BKTreeNode<Metric>::_find(ResultList &output, std::string_view value,
                                 const int &limit, const metric_type &metric) const {
   const int distance = metric(value, m_word);
   if (distance <= limit) {
@@ -457,16 +457,16 @@ void BKTreeNode<Metric>::m_find(ResultList &output, std::string_view value,
   }
   for (auto const &[dist, node] : m_children) {
     if (std::abs(dist - distance) <= limit) {
-      node->m_find(output, value, limit, metric);
+      node->_find(output, value, limit, metric);
     }
   }
 }
 
 template <typename Metric>
-ResultList BKTreeNode<Metric>::m_find_wrapper(std::string_view value, const int &limit,
+ResultList BKTreeNode<Metric>::_find_wrapper(std::string_view value, const int &limit,
                                               const metric_type &metric) const {
   ResultList output;
-  m_find(output, value, limit, metric);
+  _find(output, value, limit, metric);
   return output;
 }
 
@@ -477,7 +477,7 @@ bool BKTree<Metric>::insert(std::string_view value) {
     m_root = std::unique_ptr<node_type>(new node_type(value));
     ++m_tree_size;
     inserted = true;
-  } else if (m_root->m_insert(value, m_metric)) {
+  } else if (m_root->_insert(value, m_metric)) {
     ++m_tree_size;
     inserted = true;
   }
@@ -506,7 +506,7 @@ bool BKTree<Metric>::erase(std::string_view value) {
         for (auto const &[_, child] : (*node)->m_children) {
           bq.push(&child);
         }
-        replacement_node->m_insert((*node)->m_word, m_metric);
+        replacement_node->_insert((*node)->m_word, m_metric);
       }
       m_root = std::move(replacement_node);
     } else {
@@ -514,7 +514,7 @@ bool BKTree<Metric>::erase(std::string_view value) {
     }
     --m_tree_size;
     erased = true;
-  } else if (m_root->m_erase(value, m_metric)) {
+  } else if (m_root->_erase(value, m_metric)) {
     --m_tree_size;
     erased = true;
   }
@@ -526,7 +526,7 @@ ResultList BKTree<Metric>::find(std::string_view value, const int &limit) const 
   if (m_root == nullptr) {
     return ResultList{};
   }
-  return m_root->m_find_wrapper(value, limit, m_metric);
+  return m_root->_find_wrapper(value, limit, m_metric);
 }
 
 } // namespace bk_tree
