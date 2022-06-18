@@ -349,13 +349,11 @@ public:
     std::queue<std::unique_ptr<node_type> const *> bq;
     bq.push(&(other.m_root));
     while (!bq.empty()) {
-      for (std::size_t $ = 0, N = bq.size(); $ < N; ++$) {
-        auto *nptr = bq.front();
-        bq.pop();
-        this->insert((*nptr)->m_word);
-        for (auto &[_, child_node] : (*nptr)->m_children) {
-          bq.push(&child_node);
-        }
+      auto *nptr = bq.front();
+      bq.pop();
+      this->insert((*nptr)->m_word);
+      for (auto &[_, child_node] : (*nptr)->m_children) {
+        bq.push(&child_node);
       }
     }
   }
