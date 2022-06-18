@@ -288,6 +288,7 @@ class BKTree {
 
 public:
   class Iterator {
+  public:
     using iterator_category = std::forward_iterator_tag;
     using difference_type = std::ptrdiff_t;
     using value_type = std::unique_ptr<node_type>;
