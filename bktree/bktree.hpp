@@ -260,9 +260,9 @@ class BKTreeNode {
   bool _insert(std::string_view value, const metric_type &distance);
   bool _erase(std::string_view value, const metric_type &distance);
   void _find(ResultList &output, std::string_view value, const int &limit,
-              const metric_type &metric) const;
+             const metric_type &metric) const;
   ResultList _find_wrapper(std::string_view value, const int &limit,
-                            const metric_type &metric) const;
+                           const metric_type &metric) const;
 
   std::map<int, std::unique_ptr<node_type>> m_children;
   std::string m_word;
@@ -396,7 +396,7 @@ private:
 
 template <typename Metric>
 bool BKTreeNode<Metric>::_insert(std::string_view value,
-                                  const metric_type &distance_metric) {
+                                 const metric_type &distance_metric) {
   const int distance_between = distance_metric(value, m_word);
   bool inserted = false;
   if (distance_between >= 0) {
@@ -414,7 +414,7 @@ bool BKTreeNode<Metric>::_insert(std::string_view value,
 
 template <typename Metric>
 bool BKTreeNode<Metric>::_erase(std::string_view value,
-                                 const metric_type &distance_metric) {
+                                const metric_type &distance_metric) {
   bool erased = false;
   const int distance_between = distance_metric(value, m_word);
   auto it = m_children.find(distance_between);
@@ -450,7 +450,7 @@ bool BKTreeNode<Metric>::_erase(std::string_view value,
 
 template <typename Metric>
 void BKTreeNode<Metric>::_find(ResultList &output, std::string_view value,
-                                const int &limit, const metric_type &metric) const {
+                               const int &limit, const metric_type &metric) const {
   const int distance = metric(value, m_word);
   if (distance <= limit) {
     output.push_back({m_word, distance});
@@ -464,7 +464,7 @@ void BKTreeNode<Metric>::_find(ResultList &output, std::string_view value,
 
 template <typename Metric>
 ResultList BKTreeNode<Metric>::_find_wrapper(std::string_view value, const int &limit,
-                                              const metric_type &metric) const {
+                                             const metric_type &metric) const {
   ResultList output;
   _find(output, value, limit, metric);
   return output;
