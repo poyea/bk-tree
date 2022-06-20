@@ -15,11 +15,9 @@ Header-only [Burkhard-Keller tree](https://en.wikipedia.org/wiki/BK-tree) implem
 int main() {
   using metric_t = bk_tree::metrics::DamerauLevenshteinDistance;
   using tree_t = bk_tree::BKTree<metric_t>;
-  tree_t temp;
 
-  temp.insert("tall");
-  temp.insert("tell");
-  temp.insert("teel");
+  // 🌟 Initializer list syntax
+  tree_t temp{"tall", "tell", "teel"};
   temp.insert("feel");
 
   tree_t tree(temp);

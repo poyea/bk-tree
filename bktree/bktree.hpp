@@ -342,6 +342,13 @@ public:
   BKTree(const metric_type &distance = Metric())
       : m_root(nullptr), m_metric(distance), m_tree_size(BK_TREE_INITIAL_SIZE) {}
 
+  BKTree(std::initializer_list<std::string_view> list)
+      : m_root(nullptr), m_metric(Metric()), m_tree_size(BK_TREE_INITIAL_SIZE) {
+    for (auto &str : list) {
+      insert(str);
+    }
+  }
+
   BKTree(const BKTree &other) : BKTree(other.m_metric) {
     if (other.m_root == nullptr) {
       return;

@@ -30,6 +30,11 @@ TEST_F(BKTree_Base_TEST, TreeFind) {
   EXPECT_TRUE(results.empty());
 }
 
+TEST_F(BKTree_Base_TEST, TreeWithList) {
+  tree = {"word", "tree", "wordy", "stuff"};
+  EXPECT_TRUE(tree.size() == 4);
+}
+
 TEST_F(BKTree_Base_TEST, TreeEraseSingle) {
   tree.insert("word");
   tree.erase("word");
