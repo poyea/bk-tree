@@ -61,7 +61,7 @@ public:
 class UniformDistance : Distance {
 public:
   explicit UniformDistance(){};
-  integer_type operator()(std::string_view, std::string_view) const override {
+  integer_type operator()(std::string_view, std::string_view) const final {
     return integer_type{1};
   }
 };
@@ -77,7 +77,7 @@ class LeeDistance : Distance {
 
 public:
   explicit LeeDistance(integer_type alphabet_size) : m_alphabet_size(alphabet_size){};
-  integer_type operator()(std::string_view s, std::string_view t) const override {
+  integer_type operator()(std::string_view s, std::string_view t) const final {
     const integer_type M = s.size(), N = t.size();
     if (M != N) {
       return std::numeric_limits<integer_type>::max();
@@ -107,7 +107,7 @@ class LCSDistance : Distance {
 public:
   explicit LCSDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
-  integer_type operator()(std::string_view s, std::string_view t) const override {
+  integer_type operator()(std::string_view s, std::string_view t) const final {
     const integer_type M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return 0;
@@ -138,7 +138,7 @@ public:
 class HammingDistance : Distance {
 public:
   explicit HammingDistance() = default;
-  integer_type operator()(std::string_view s, std::string_view t) const override {
+  integer_type operator()(std::string_view s, std::string_view t) const final {
     const integer_type M = s.size(), N = t.size();
     if (M != N) {
       return std::numeric_limits<integer_type>::max();
@@ -170,7 +170,7 @@ class EditDistance : Distance {
 public:
   explicit EditDistance(size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
-  integer_type operator()(std::string_view s, std::string_view t) const override {
+  integer_type operator()(std::string_view s, std::string_view t) const final {
     const integer_type M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return N + M;
@@ -206,7 +206,7 @@ class DamerauLevenshteinDistance : Distance {
 public:
   explicit DamerauLevenshteinDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
-  integer_type operator()(std::string_view s, std::string_view t) const override {
+  integer_type operator()(std::string_view s, std::string_view t) const final {
     const integer_type M = s.size(), N = t.size();
     if (M == 0 || N == 0) {
       return N + M;
