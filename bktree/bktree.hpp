@@ -27,6 +27,9 @@
 #ifndef BK_ED_MATRIX_INITIAL_SIZE
 #define BK_ED_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE
 #endif
+#ifndef BK_LEE_ALPHABET_SIZE
+#define BK_LEE_ALPHABET_SIZE 26
+#endif
 #ifndef BK_TREE_INITIAL_SIZE
 #define BK_TREE_INITIAL_SIZE 0
 #endif
@@ -49,7 +52,7 @@ namespace metrics {
 /// Metric interface for string distances
 ///
 class Distance {
-public:
+protected:
   virtual ~Distance() = default;
   virtual integer_type operator()(std::string_view, std::string_view) const = 0;
 };
@@ -58,10 +61,10 @@ public:
 /// Uniform metric
 /// d(x, y) = 1 for any x, y
 ///
-class UniformDistance : Distance {
+class UniformDistance final : Distance {
 public:
   explicit UniformDistance(){};
-  integer_type operator()(std::string_view, std::string_view) const final {
+  integer_type operator()(std::string_view, std::string_view) const override {
     return integer_type{1};
   }
 };
@@ -72,13 +75,14 @@ public:
 /// where m is the alphabet size, x and y are of the same length.
 /// When m = 2 or m = 3, Lee Distance is the same as Hamming Distance.
 ///
-class LeeDistance : Distance {
+class LeeDistance final : Distance {
   integer_type m_alphabet_size;
 
 public:
-  explicit LeeDistance(integer_type alphabet_size) : m_alphabet_size(alphabet_size){};
-  integer_type operator()(std::string_view s, std::string_view t) const final {
-    const integer_type M = s.size(), N = t.size();
+  explicit LeeDistance(integer_type alphabet_size = BK_LEE_ALPHABET_SIZE)
+      : m_alphabet_size(alphabet_size){};
+  integer_type operator()(std::string_view s, std::string_view t) const override {
+    const integer_type M = s.length(), N = t.length();
     if (M != N) {
       return std::numeric_limits<integer_type>::max();
     }
@@ -101,14 +105,14 @@ public:
 ///     =               d(x_{i-1}, y_{j-1}) + 1 , if x_i == y_j
 ///     = \max(d(x_{i-1}, y_j), d(x_i, y_{j-1})), if x_i != y_j
 ///
-class LCSDistance : Distance {
+class LCSDistance final : Distance {
   mutable std::vector<std::vector<integer_type>> m_matrix;
 
 public:
   explicit LCSDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
-  integer_type operator()(std::string_view s, std::string_view t) const final {
-    const integer_type M = s.size(), N = t.size();
+  integer_type operator()(std::string_view s, std::string_view t) const override {
+    const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
       return 0;
     }
@@ -135,11 +139,11 @@ public:
 /// d(x, y) = sum_{i=1}^{n} x_i ^ y_i
 /// where ^ is the XOR operator, x and y are of the same length.
 ///
-class HammingDistance : Distance {
+class HammingDistance final : Distance {
 public:
   explicit HammingDistance() = default;
-  integer_type operator()(std::string_view s, std::string_view t) const final {
-    const integer_type M = s.size(), N = t.size();
+  integer_type operator()(std::string_view s, std::string_view t) const override {
+    const integer_type M = s.length(), N = t.length();
     if (M != N) {
       return std::numeric_limits<integer_type>::max();
     }
@@ -164,14 +168,14 @@ public:
 ///         d(x_{i-1}, y_{j-1}) + (x_i != y_j)
 ///     )
 ///
-class EditDistance : Distance {
+class EditDistance final : Distance {
   mutable std::vector<std::vector<integer_type>> m_matrix;
 
 public:
   explicit EditDistance(size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
-  integer_type operator()(std::string_view s, std::string_view t) const final {
-    const integer_type M = s.size(), N = t.size();
+  integer_type operator()(std::string_view s, std::string_view t) const override {
+    const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
       return N + M;
     }
@@ -200,14 +204,14 @@ public:
 ///
 /// Damerau–Levenshtein metric
 ///
-class DamerauLevenshteinDistance : Distance {
+class DamerauLevenshteinDistance final : Distance {
   mutable std::vector<std::vector<integer_type>> m_matrix;
 
 public:
   explicit DamerauLevenshteinDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
-  integer_type operator()(std::string_view s, std::string_view t) const final {
-    const integer_type M = s.size(), N = t.size();
+  integer_type operator()(std::string_view s, std::string_view t) const override {
+    const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
       return N + M;
     }
