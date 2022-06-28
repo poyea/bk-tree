@@ -6,22 +6,21 @@
 
 constexpr static const std::string_view word = "word";
 
-void TreeEditInsert(benchmark::State &state) {
-  bk_tree::BKTree<bk_tree::metrics::EditDistance> tree_edit;
-  for (auto _ : state) {
-    benchmark::DoNotOptimize(tree_edit.insert(word));
-  }
-}
+#define BKTREE_BENCHMARK_CASE(F, N)                                                    \
+  void Bench_##F(benchmark::State &state) {                                            \
+    bk_tree::BKTree<bk_tree::metrics::N> tree;                                         \
+    for (auto _ : state) {                                                             \
+      benchmark::DoNotOptimize(tree.insert(word));                                     \
+    }                                                                                  \
+  }                                                                                    \
+  BENCHMARK(Bench_##F)->Iterations(1000)->Unit(benchmark::kMicrosecond);
 
-void TreeHammingInsert(benchmark::State &state) {
-  bk_tree::BKTree<bk_tree::metrics::HammingDistance> tree_hamming;
-  for (auto _ : state) {
-    benchmark::DoNotOptimize(tree_hamming.insert(word));
-  }
-}
-
-BENCHMARK(TreeEditInsert)->Unit(benchmark::kMicrosecond);
-BENCHMARK(TreeHammingInsert)->Unit(benchmark::kMicrosecond);
+BKTREE_BENCHMARK_CASE(TreeUniformInsert, UniformDistance)
+BKTREE_BENCHMARK_CASE(TreeHammingInsert, HammingDistance)
+BKTREE_BENCHMARK_CASE(TreeLeeInsert, LeeDistance)
+BKTREE_BENCHMARK_CASE(TreeLCSInsert, LCSDistance)
+BKTREE_BENCHMARK_CASE(TreeEditInsert, EditDistance)
+BKTREE_BENCHMARK_CASE(TreeDamerauLevenshteinInsert, DamerauLevenshteinDistance)
 
 int main(int argc, char **argv) {
   benchmark::Initialize(&argc, argv);
