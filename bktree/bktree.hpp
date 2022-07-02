@@ -245,6 +245,16 @@ public:
 
 } // namespace metrics
 
+namespace helpers {
+std::false_type is_metric_impl(...);
+
+template <typename Metric>
+std::true_type is_metric_impl(const volatile metrics::Distance<Metric> &);
+
+template <typename Metric>
+using is_metric = decltype(is_metric_impl(std::declval<Metric &>()));
+} // namespace helpers
+
 template <typename Metric>
 class BKTree;
 template <typename Metric>
@@ -281,16 +291,6 @@ class BKTreeNode {
 public:
   std::string_view word() const noexcept { return m_word; }
 };
-
-namespace helpers {
-std::false_type is_metric_impl(...);
-
-template <typename T>
-std::true_type is_metric_impl(const volatile metrics::Distance<T> &);
-
-template <typename T>
-using is_metric = decltype(is_metric_impl(std::declval<T &>()));
-} // namespace helpers
 
 ///
 /// Template class for BK-tree

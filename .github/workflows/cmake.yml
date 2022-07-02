@@ -55,9 +55,10 @@ jobs:
         CXX=clang++ cmake . -DBENCHMARKS=ON
         make -sj
 
-    # - name: Docs    # To be migrated to release build
-    #   working-directory: ${{runner.workspace}}/build
-    #   shell: bash
-    #   run: |
-    #     CXX=clang++ cmake . -DDOCS=ON
-    #     make -sj
+    - name: Docs    # To be migrated to release build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: |
+        sudo apt update -y && sudo apt install -y doxygen
+        CXX=clang++ cmake . -DDOCS=ON
+        make -sj
