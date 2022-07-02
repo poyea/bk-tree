@@ -45,7 +45,7 @@ jobs:
       shell: bash
       run: |
         CXX=clang++ cmake . -DTESTS=ON
-        make
+        make -sj
         ctest -C $BUILD_TYPE
     
     - name: Benchmarks
@@ -53,4 +53,11 @@ jobs:
       shell: bash
       run: |
         CXX=clang++ cmake . -DBENCHMARKS=ON
-        make
+        make -sj
+
+    - name: Docs    # To be migrated to release build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: |
+        CXX=clang++ cmake . -DDOCS=ON
+        make -sj
