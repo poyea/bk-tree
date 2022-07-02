@@ -44,6 +44,9 @@ int main() {
 }
 ```
 
+## Contributing
+See [CONTRIBUTING.md](Contribution Guidelines).
+
 ## License
 This repository is licensed under The GNU General Public License v3.0. See also [LICENSE](LICENSE) for details.
 

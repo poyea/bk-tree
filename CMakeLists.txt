@@ -42,3 +42,21 @@ if(BENCHMARKS)
     message("-- Building Benchmarks")
     add_subdirectory(benchmarks)
 endif()
+
+# For BK tree documentation build
+find_package(Doxygen)
+
+option(DOCS "Create and install API documentation with Doxygen" ${DOXYGEN_FOUND})
+
+if(DOCS)
+    if(NOT DOXYGEN_FOUND)
+        message(FATAL_ERROR "Doxygen is needed to build the documentation")
+    endif()
+
+    doxygen_add_docs(Documentation
+        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bktree
+        COMMENT "Generating API documentation with Doxygen"
+    )
+
+    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html DESTINATION documentation)
+endif()
