@@ -51,20 +51,22 @@ namespace metrics {
 ///
 /// Metric interface for string distances
 ///
+template <typename Metric>
 class Distance {
-protected:
-  virtual ~Distance() = default;
-  virtual integer_type operator()(std::string_view, std::string_view) const = 0;
+public:
+  integer_type operator()(std::string_view s, std::string_view t) const {
+    return (static_cast<Metric const *>(this))->compute_distance(s, t);
+  }
 };
 
 ///
 /// Uniform metric
 /// d(x, y) = 1 for any x, y
 ///
-class UniformDistance final : Distance {
+class UniformDistance final : public Distance<UniformDistance> {
 public:
   explicit UniformDistance(){};
-  integer_type operator()(std::string_view, std::string_view) const override {
+  integer_type compute_distance(std::string_view, std::string_view) const {
     return integer_type{1};
   }
 };
@@ -75,13 +77,13 @@ public:
 /// where m is the alphabet size, x and y are of the same length.
 /// When m = 2 or m = 3, Lee Distance is the same as Hamming Distance.
 ///
-class LeeDistance final : Distance {
+class LeeDistance final : public Distance<LeeDistance> {
   integer_type m_alphabet_size;
 
 public:
   explicit LeeDistance(integer_type alphabet_size = BK_LEE_ALPHABET_SIZE)
       : m_alphabet_size(alphabet_size){};
-  integer_type operator()(std::string_view s, std::string_view t) const override {
+  integer_type compute_distance(std::string_view s, std::string_view t) const {
     const integer_type M = s.length(), N = t.length();
     if (M != N) {
       return std::numeric_limits<integer_type>::max();
@@ -105,13 +107,13 @@ public:
 ///     =               d(x_{i-1}, y_{j-1}) + 1 , if x_i == y_j
 ///     = \max(d(x_{i-1}, y_j), d(x_i, y_{j-1})), if x_i != y_j
 ///
-class LCSDistance final : Distance {
+class LCSDistance final : public Distance<LCSDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;
 
 public:
   explicit LCSDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
-  integer_type operator()(std::string_view s, std::string_view t) const override {
+  integer_type compute_distance(std::string_view s, std::string_view t) const {
     const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
       return 0;
@@ -139,10 +141,10 @@ public:
 /// d(x, y) = sum_{i=1}^{n} x_i ^ y_i
 /// where ^ is the XOR operator, x and y are of the same length.
 ///
-class HammingDistance final : Distance {
+class HammingDistance final : public Distance<HammingDistance> {
 public:
   explicit HammingDistance() = default;
-  integer_type operator()(std::string_view s, std::string_view t) const override {
+  integer_type compute_distance(std::string_view s, std::string_view t) const {
     const integer_type M = s.length(), N = t.length();
     if (M != N) {
       return std::numeric_limits<integer_type>::max();
@@ -168,13 +170,13 @@ public:
 ///         d(x_{i-1}, y_{j-1}) + (x_i != y_j)
 ///     )
 ///
-class EditDistance final : Distance {
+class EditDistance final : public Distance<EditDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;
 
 public:
   explicit EditDistance(size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
-  integer_type operator()(std::string_view s, std::string_view t) const override {
+  integer_type compute_distance(std::string_view s, std::string_view t) const {
     const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
       return N + M;
@@ -204,13 +206,13 @@ public:
 ///
 /// Damerau–Levenshtein metric
 ///
-class DamerauLevenshteinDistance final : Distance {
+class DamerauLevenshteinDistance final : public Distance<DamerauLevenshteinDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;
 
 public:
   explicit DamerauLevenshteinDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
-  integer_type operator()(std::string_view s, std::string_view t) const override {
+  integer_type compute_distance(std::string_view s, std::string_view t) const {
     const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
       return N + M;
@@ -280,13 +282,23 @@ public:
   std::string_view word() const noexcept { return m_word; }
 };
 
+namespace helpers {
+std::false_type is_metric_impl(...);
+
+template <typename T>
+std::true_type is_metric_impl(const volatile metrics::Distance<T> &);
+
+template <typename T>
+using is_metric = decltype(is_metric_impl(std::declval<T &>()));
+} // namespace helpers
+
 ///
 /// Template class for BK-tree
 ///
 template <typename Metric>
 class BKTree {
-  static_assert(std::is_base_of_v<metrics::Distance, Metric>,
-                "Metric must be of type Distance");
+  static_assert(helpers::is_metric<Metric>::value, "Metric must be of type Distance");
+
   using metric_type = Metric;
   using node_type = typename BKTreeNode<metric_type>::node_type;
 
