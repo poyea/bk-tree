@@ -49,7 +49,7 @@ using integer_type = std::uint64_t;
 namespace metrics {
 
 ///
-/// Metric interface for string distances
+/// \brief Metric interface for string distances
 ///
 template <typename Metric>
 class Distance {
@@ -60,7 +60,8 @@ public:
 };
 
 ///
-/// Uniform metric
+/// \brief Uniform metric
+///
 /// d(x, y) = 1 for any x, y
 ///
 class UniformDistance final : public Distance<UniformDistance> {

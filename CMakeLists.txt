@@ -54,6 +54,7 @@ if(DOCS)
     endif()
 
     doxygen_add_docs(Documentation
+        ${PROJECT_SOURCE_DIR}/bktree
         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bktree
         COMMENT "Generating API documentation with Doxygen"
     )
