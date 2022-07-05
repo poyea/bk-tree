@@ -73,7 +73,8 @@ public:
 };
 
 ///
-/// Lee distance metric
+/// \brief Lee distance metric
+///
 /// d(x, y) = sum_{i=1}^{n} \min(|x_i - y_i|, m - |x_i - y_i|)
 /// where m is the alphabet size, x and y are of the same length.
 /// When m = 2 or m = 3, Lee Distance is the same as Hamming Distance.
@@ -100,7 +101,8 @@ public:
 };
 
 ///
-/// Longest Common Subsequence distance metric
+/// \brief Longest Common Subsequence distance metric
+///
 /// d(x_m, y_n) where
 /// m is the length of x, n is the length of y,
 /// d(x_i, y_j)
@@ -138,7 +140,8 @@ public:
 };
 
 ///
-/// Hamming distance metric
+/// \brief Hamming distance metric
+///
 /// d(x, y) = sum_{i=1}^{n} x_i ^ y_i
 /// where ^ is the XOR operator, x and y are of the same length.
 ///
@@ -160,7 +163,8 @@ public:
 };
 
 ///
-/// Edit distance metric
+/// \brief Edit distance metric
+///
 /// d(x_m, y_n) where
 /// m is the length of x, n is the length of y,
 /// d(x_i, y_0) = i
@@ -205,7 +209,7 @@ public:
 };
 
 ///
-/// Damerau–Levenshtein metric
+/// \brief Damerau–Levenshtein metric
 ///
 class DamerauLevenshteinDistance final : public Distance<DamerauLevenshteinDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;

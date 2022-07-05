@@ -53,6 +53,8 @@ if(DOCS)
         message(FATAL_ERROR "Doxygen is needed to build the documentation")
     endif()
 
+    set(DOXYGEN_EXCLUDE_SYMBOLS "BKTreeNode")
+
     doxygen_add_docs(Documentation
         ${PROJECT_SOURCE_DIR}/bktree
         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bktree
