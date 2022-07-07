@@ -42,10 +42,16 @@
 #include <string>
 #include <vector>
 
+///
+/// \brief BK-tree namespace
+///
 namespace bk_tree {
 
 using integer_type = std::uint64_t;
 
+///
+/// \brief Metrics namespace
+///
 namespace metrics {
 
 ///
@@ -298,7 +304,7 @@ public:
 };
 
 ///
-/// Template class for BK-tree
+/// \brief BK-tree template class
 ///
 template <typename Metric>
 class BKTree {
@@ -308,6 +314,9 @@ class BKTree {
   using node_type = typename BKTreeNode<metric_type>::node_type;
 
 public:
+  ///
+  /// \brief BK-tree class iterator
+  ///
   class Iterator {
   public:
     using iterator_category = std::forward_iterator_tag;
