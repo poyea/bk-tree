@@ -54,9 +54,11 @@ if(DOCS)
     endif()
 
     set(DOXYGEN_EXCLUDE_SYMBOLS "BKTreeNode")
+    set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${PROJECT_SOURCE_DIR}/docs/README.md")
 
     doxygen_add_docs(Documentation
         ${PROJECT_SOURCE_DIR}/bktree
+        ${PROJECT_SOURCE_DIR}/docs
         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bktree
         COMMENT "Generating API documentation with Doxygen"
     )
