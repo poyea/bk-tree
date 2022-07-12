@@ -55,6 +55,8 @@ if(DOCS)
 
     set(DOXYGEN_EXCLUDE_SYMBOLS "BKTreeNode")
     set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${PROJECT_SOURCE_DIR}/docs/README.md")
+    set(DOXYGEN_USE_MATHJAX YES)
+    set(DOXYGEN_WARN_IF_UNDOCUMENTED NO)
 
     doxygen_add_docs(Documentation
         ${PROJECT_SOURCE_DIR}/bktree

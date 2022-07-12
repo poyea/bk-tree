@@ -68,7 +68,7 @@ public:
 ///
 /// \brief Uniform metric
 ///
-/// d(x, y) = 1 for any x, y
+/// \f$d(x, y) = 1\f$ for any \f$x, y.\f$
 ///
 class UniformDistance final : public Distance<UniformDistance> {
 public:
@@ -81,9 +81,9 @@ public:
 ///
 /// \brief Lee distance metric
 ///
-/// d(x, y) = sum_{i=1}^{n} \min(|x_i - y_i|, m - |x_i - y_i|)
-/// where m is the alphabet size, x and y are of the same length.
-/// When m = 2 or m = 3, Lee Distance is the same as Hamming Distance.
+/// \f[d(x, y) = \sum_{i=1}^{n} \min(|x_i - y_i|, m - |x_i - y_i|),\f]
+/// where \f$m\f$ is the alphabet size, \f$x\f$ and \f$y\f$ are of the same length.
+/// When \f$m = 2\f$ or \f$m = 3\f$, LeeDistance is the same as HammingDistance.
 ///
 class LeeDistance final : public Distance<LeeDistance> {
   integer_type m_alphabet_size;
