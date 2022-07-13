@@ -113,13 +113,14 @@ public:
 /// \f$m\f$ is the length of \f$x\f$, \f$n\f$ is the length of \f$y\f$.
 /// \f[\begin{equation}
 /// d(x_i, y_j)=
-/// \begin{cases}
-///   0, & \text{if } i = 0 \text{ or } j = 0 \\
-///   d(x_{i-1}, y_{j-1}) + 1, & \text{if } x_i = y_j \\
-///   \max(d(x_{i-1}, y_j), d(x_i, y_{j-1})), & \text{if } x_i \neq y_j
-/// \end{cases}
+///   \begin{cases}
+///     0, & \text{if } i = 0 \text{ or } j = 0 \\
+///     d(x_{i-1}, y_{j-1}) + 1, & \text{if } x_i = y_j \\
+///     \max(d(x_{i-1}, y_j), d(x_i, y_{j-1})), & \text{if } x_i \neq y_j
+///   \end{cases}
 /// \end{equation}\f]
 /// for any \f$0\le i \le m\f$ and \f$0\le j \le n.\f$
+///
 class LCSDistance final : public Distance<LCSDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;
 
