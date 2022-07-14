@@ -181,14 +181,22 @@ public:
 ///
 /// \f$d(x_m, y_n),\f$ where
 /// \f$m\f$ is the length of \f$x\f$, \f$n\f$ is the length of \f$y\f$,
-/// \f[\begin{align}
-/// d(x_i, y_0) &= i \\
-/// d(x_0, y_j) &= j \\
-/// d(x_i, y_j) &= \min\{
-///         d(x_i, y_{j-1}) + 1,
-///         d(x_{i-1}, y_j) + 1,
-///         d(x_{i-1}, y_{j-1}) + (x_i \neq y_j)\}.
-/// \end{align}\f]
+/// \f[\begin{equation}
+/// d(x_i, y_j)=
+///   \begin{cases}
+///     i, & \text{if } j = 0 \\
+///     j, & \text{if } i = 0 \\
+///       \min\left\{
+///           d(x_i, y_{j-1}) + 1,
+///           d(x_{i-1}, y_j) + 1,
+///     \begin{cases}
+///           d(x_{i-1}, y_{j-1}) + 1, & x_i \neq y_j \\
+///           d(x_{i-1}, y_{j-1}), & \text{otherwise}
+///     \end{cases}
+///     \right\}
+///   \end{cases}
+/// \end{equation}\f]
+/// for any \f$0\le i \le m\f$ and \f$0\le j \le n.\f$
 ///
 class EditDistance final : public Distance<EditDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;
