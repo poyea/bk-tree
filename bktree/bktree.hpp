@@ -42,21 +42,21 @@
 #include <string>
 #include <vector>
 
-///
-/// @brief BK-tree namespace
-///
+/**
+ * @brief BK-tree namespace
+ */
 namespace bk_tree {
 
 using integer_type = std::uint64_t;
 
-///
-/// @brief Metrics namespace
-///
+/**
+ * @brief Metrics namespace
+ */
 namespace metrics {
 
-///
-/// @brief Metric interface for string distances
-///
+/**
+ * @brief Metric interface for string distances
+ */
 template <typename Metric>
 class Distance {
 public:
@@ -65,11 +65,11 @@ public:
   }
 };
 
-///
-/// @brief Uniform metric
-///
-/// \f$d(x, y) = 1\f$ for any \f$x, y.\f$
-///
+/**
+ * @brief Uniform metric
+ *
+ * \f$d(x, y) = 1\f$ for any \f$x, y.\f$
+ */
 class UniformDistance final : public Distance<UniformDistance> {
 public:
   explicit UniformDistance(){};
@@ -78,13 +78,13 @@ public:
   }
 };
 
-///
-/// @brief Lee distance metric
-///
-/// \f[d(x, y) = \sum_{i=1}^{n} \min\{|x_i - y_i|, m - |x_i - y_i|\},\f]
-/// where \f$m\f$ is the alphabet size, \f$x\f$ and \f$y\f$ are of the same length.
-/// When \f$m = 2\f$ or \f$m = 3\f$, LeeDistance is the same as HammingDistance.
-///
+/**
+ * @brief Lee distance metric
+ *
+ * \f[d(x, y) = \sum_{i=1}^{n} \min\{|x_i - y_i|, m - |x_i - y_i|\},\f]
+ * where \f$m\f$ is the alphabet size, \f$x\f$ and \f$y\f$ are of the same length.
+ * When \f$m = 2\f$ or \f$m = 3\f$, LeeDistance is the same as HammingDistance.
+ */
 class LeeDistance final : public Distance<LeeDistance> {
   integer_type m_alphabet_size;
 
@@ -106,21 +106,21 @@ public:
   }
 };
 
-///
-/// @brief Longest Common Subsequence distance metric
-///
-/// \f$d(x_m, y_n),\f$ where
-/// \f$m\f$ is the length of \f$x\f$, \f$n\f$ is the length of \f$y\f$.
-/// \f[\begin{equation}
-/// d(x_i, y_j)=
-///   \begin{cases}
-///     0, & \text{if } i = 0 \text{ or } j = 0 \\
-///     d(x_{i-1}, y_{j-1}) + 1, & \text{if } x_i = y_j \\
-///     \max\{d(x_{i-1}, y_j), d(x_i, y_{j-1})\}, & \text{if } x_i \neq y_j
-///   \end{cases}
-/// \end{equation}\f]
-/// for any \f$0\le i \le m\f$ and \f$0\le j \le n.\f$
-///
+/**
+ * @brief Longest Common Subsequence distance metric
+ *
+ * \f$d(x_m, y_n),\f$ where
+ * \f$m\f$ is the length of \f$x\f$, \f$n\f$ is the length of \f$y\f$.
+ * \f[\begin{equation}
+ * d(x_i, y_j)=
+ *   \begin{cases}
+ *     0, & \text{if } i = 0 \text{ or } j = 0 \\
+ *     d(x_{i-1}, y_{j-1}) + 1, & \text{if } x_i = y_j \\
+ *     \max\{d(x_{i-1}, y_j), d(x_i, y_{j-1})\}, & \text{if } x_i \neq y_j
+ *   \end{cases}
+ * \end{equation}\f]
+ * for any \f$0\le i \le m\f$ and \f$0\le j \le n.\f$
+ */
 class LCSDistance final : public Distance<LCSDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;
 
@@ -150,13 +150,13 @@ public:
   }
 };
 
-///
-/// @brief Hamming distance metric
-///
-/// \f$d(x, y) = \displaystyle\sum_{i=1}^{n} x_i \bigoplus y_i,\f$
-/// where \f$\bigoplus\f$ is the XOR operator, \f$x\f$ and \f$y\f$ are of the same
-/// length.
-///
+/**
+ * @brief Hamming distance metric
+ *
+ * \f$d(x, y) = \displaystyle\sum_{i=1}^{n} x_i \bigoplus y_i,\f$
+ * where \f$\bigoplus\f$ is the XOR operator, \f$x\f$ and \f$y\f$ are of the same
+ * length.
+ */
 class HammingDistance final : public Distance<HammingDistance> {
 public:
   explicit HammingDistance() = default;
@@ -174,30 +174,30 @@ public:
   }
 };
 
-///
-/// @brief Edit distance metric
-///
-/// Related to DamerauLevenshteinDistance.
-///
-/// \f$d(x_m, y_n),\f$ where
-/// \f$m\f$ is the length of \f$x\f$, \f$n\f$ is the length of \f$y\f$,
-/// \f[\begin{equation}
-/// d(x_i, y_j)=
-///   \begin{cases}
-///     i, & \text{if } j = 0 \\
-///     j, & \text{if } i = 0 \\
-///       \min\left\{
-///           d(x_i, y_{j-1}) + 1,
-///           d(x_{i-1}, y_j) + 1,
-///     \begin{cases}
-///           d(x_{i-1}, y_{j-1}) + 1, & x_i \neq y_j \\
-///           d(x_{i-1}, y_{j-1}), & \text{otherwise}
-///     \end{cases}
-///     \right\}
-///   \end{cases}
-/// \end{equation}\f]
-/// for any \f$0\le i \le m\f$ and \f$0\le j \le n.\f$
-///
+/**
+ * @brief Edit distance metric
+ *
+ * Related to DamerauLevenshteinDistance.
+ *
+ * \f$d(x_m, y_n),\f$ where
+ * \f$m\f$ is the length of \f$x\f$, \f$n\f$ is the length of \f$y\f$,
+ * \f[\begin{equation}
+ * d(x_i, y_j)=
+ *   \begin{cases}
+ *     i, & \text{if } j = 0 \\
+ *     j, & \text{if } i = 0 \\
+ *       \min\left\{
+ *           d(x_i, y_{j-1}) + 1,
+ *           d(x_{i-1}, y_j) + 1,
+ *     \begin{cases}
+ *           d(x_{i-1}, y_{j-1}) + 1, & x_i \neq y_j \\
+ *           d(x_{i-1}, y_{j-1}), & \text{otherwise}
+ *     \end{cases}
+ *     \right\}
+ *   \end{cases}
+ * \end{equation}\f]
+ * for any \f$0\le i \le m\f$ and \f$0\le j \le n.\f$
+ */
 class EditDistance final : public Distance<EditDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;
 
@@ -231,11 +231,11 @@ public:
   }
 };
 
-///
-/// @brief Damerau–Levenshtein metric
-///
-/// Similar to EditDistance, but with transposition.
-///
+/**
+ * @brief Damerau–Levenshtein metric
+ *
+ * Similar to EditDistance, but with transposition.
+ */
 class DamerauLevenshteinDistance final : public Distance<DamerauLevenshteinDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;
 
@@ -293,9 +293,9 @@ class BKTreeNode;
 using ResultEntry = std::pair<std::string, int>;
 using ResultList = std::vector<ResultEntry>;
 
-///
-/// Template class for BK-tree node
-///
+/**
+ * Template class for BK-tree node
+ */
 template <typename Metric>
 class BKTreeNode {
   friend class BKTree<Metric>;
@@ -322,9 +322,9 @@ public:
   std::string_view word() const noexcept { return m_word; }
 };
 
-///
-/// @brief BK-tree template class
-///
+/**
+ * @brief BK-tree template class
+ */
 template <typename Metric>
 class BKTree {
   static_assert(helpers::is_metric<Metric>::value, "Metric must be of type Distance");
@@ -333,9 +333,9 @@ class BKTree {
   using node_type = typename BKTreeNode<metric_type>::node_type;
 
 public:
-  ///
-  /// @brief BK-tree class iterator
-  ///
+  /**
+   * @brief BK-tree class iterator
+   */
   class Iterator {
   public:
     using iterator_category = std::forward_iterator_tag;
