@@ -43,19 +43,19 @@
 #include <vector>
 
 ///
-/// \brief BK-tree namespace
+/// @brief BK-tree namespace
 ///
 namespace bk_tree {
 
 using integer_type = std::uint64_t;
 
 ///
-/// \brief Metrics namespace
+/// @brief Metrics namespace
 ///
 namespace metrics {
 
 ///
-/// \brief Metric interface for string distances
+/// @brief Metric interface for string distances
 ///
 template <typename Metric>
 class Distance {
@@ -66,7 +66,7 @@ public:
 };
 
 ///
-/// \brief Uniform metric
+/// @brief Uniform metric
 ///
 /// \f$d(x, y) = 1\f$ for any \f$x, y.\f$
 ///
@@ -79,9 +79,9 @@ public:
 };
 
 ///
-/// \brief Lee distance metric
+/// @brief Lee distance metric
 ///
-/// \f[d(x, y) = \sum_{i=1}^{n} \min(|x_i - y_i|, m - |x_i - y_i|),\f]
+/// \f[d(x, y) = \sum_{i=1}^{n} \min\{|x_i - y_i|, m - |x_i - y_i|\},\f]
 /// where \f$m\f$ is the alphabet size, \f$x\f$ and \f$y\f$ are of the same length.
 /// When \f$m = 2\f$ or \f$m = 3\f$, LeeDistance is the same as HammingDistance.
 ///
@@ -107,7 +107,7 @@ public:
 };
 
 ///
-/// \brief Longest Common Subsequence distance metric
+/// @brief Longest Common Subsequence distance metric
 ///
 /// \f$d(x_m, y_n),\f$ where
 /// \f$m\f$ is the length of \f$x\f$, \f$n\f$ is the length of \f$y\f$.
@@ -116,7 +116,7 @@ public:
 ///   \begin{cases}
 ///     0, & \text{if } i = 0 \text{ or } j = 0 \\
 ///     d(x_{i-1}, y_{j-1}) + 1, & \text{if } x_i = y_j \\
-///     \max(d(x_{i-1}, y_j), d(x_i, y_{j-1})), & \text{if } x_i \neq y_j
+///     \max\{d(x_{i-1}, y_j), d(x_i, y_{j-1})\}, & \text{if } x_i \neq y_j
 ///   \end{cases}
 /// \end{equation}\f]
 /// for any \f$0\le i \le m\f$ and \f$0\le j \le n.\f$
@@ -151,10 +151,10 @@ public:
 };
 
 ///
-/// \brief Hamming distance metric
+/// @brief Hamming distance metric
 ///
-/// d(x, y) = sum_{i=1}^{n} x_i ^ y_i
-/// where ^ is the XOR operator, x and y are of the same length.
+/// \f$d(x, y) = \displaystyle\sum_{i=1}^{n} x_i \bigoplus y_i,\f$
+/// where \f$\bigoplus\f$ is the XOR operator, \f$x\f$ and \f$y\f$ are of the same length.
 ///
 class HammingDistance final : public Distance<HammingDistance> {
 public:
@@ -174,17 +174,20 @@ public:
 };
 
 ///
-/// \brief Edit distance metric
+/// @brief Edit distance metric
 ///
-/// d(x_m, y_n) where
-/// m is the length of x, n is the length of y,
-/// d(x_i, y_0) = i
-/// d(x_0, y_j) = j
-/// d(x_i, y_j) = \min(
+/// Related to DamerauLevenshteinDistance.
+///
+/// \f$d(x_m, y_n),\f$ where
+/// \f$m\f$ is the length of \f$x\f$, \f$n\f$ is the length of \f$y\f$,
+/// \f[\begin{align}
+/// d(x_i, y_0) &= i \\
+/// d(x_0, y_j) &= j \\
+/// d(x_i, y_j) &= \min\{
 ///         d(x_i, y_{j-1}) + 1,
 ///         d(x_{i-1}, y_j) + 1,
-///         d(x_{i-1}, y_{j-1}) + (x_i != y_j)
-///     )
+///         d(x_{i-1}, y_{j-1}) + (x_i \neq y_j)\}.
+/// \end{align}\f]
 ///
 class EditDistance final : public Distance<EditDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;
@@ -220,7 +223,9 @@ public:
 };
 
 ///
-/// \brief Damerau–Levenshtein metric
+/// @brief Damerau–Levenshtein metric
+///
+/// Similar to EditDistance, but with transposition.
 ///
 class DamerauLevenshteinDistance final : public Distance<DamerauLevenshteinDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;
@@ -309,7 +314,7 @@ public:
 };
 
 ///
-/// \brief BK-tree template class
+/// @brief BK-tree template class
 ///
 template <typename Metric>
 class BKTree {
@@ -320,7 +325,7 @@ class BKTree {
 
 public:
   ///
-  /// \brief BK-tree class iterator
+  /// @brief BK-tree class iterator
   ///
   class Iterator {
   public:
