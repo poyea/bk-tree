@@ -63,7 +63,8 @@ jobs:
         CXX=clang++ cmake . -DDOCS=ON
         make -sj
         doxygen Doxyfile.Documentation
-    - name: Deploy 🚀
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: build/html
+
+    # - name: Deploy 🚀
+    #   uses: JamesIves/github-pages-deploy-action@v4
+    #   with:
+    #     folder: build/html
