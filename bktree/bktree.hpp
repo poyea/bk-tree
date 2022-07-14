@@ -154,7 +154,8 @@ public:
 /// @brief Hamming distance metric
 ///
 /// \f$d(x, y) = \displaystyle\sum_{i=1}^{n} x_i \bigoplus y_i,\f$
-/// where \f$\bigoplus\f$ is the XOR operator, \f$x\f$ and \f$y\f$ are of the same length.
+/// where \f$\bigoplus\f$ is the XOR operator, \f$x\f$ and \f$y\f$ are of the same
+/// length.
 ///
 class HammingDistance final : public Distance<HammingDistance> {
 public:
