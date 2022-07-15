@@ -40,7 +40,8 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
         sudo apt update -y && sudo apt install -y doxygen
-        CXX=clang++ cmake --build . --config $BUILD_TYPE -DTESTS=ON -DBENCHMARKS=ON -DDOCS=ON
+        CXX=clang++ cmake --build . --config $BUILD_TYPE
+        CXX=clang++ cmake . -DTESTS=ON -DBENCHMARKS=ON -DDOCS=ON
         make -sj
 
     - name: Test
