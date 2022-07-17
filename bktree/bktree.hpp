@@ -293,9 +293,6 @@ class BKTreeNode;
 using ResultEntry = std::pair<std::string, int>;
 using ResultList = std::vector<ResultEntry>;
 
-/**
- * Template class for BK-tree node
- */
 template <typename Metric>
 class BKTreeNode {
   friend class BKTree<Metric>;
