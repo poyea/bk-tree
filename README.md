@@ -2,7 +2,7 @@
 
 # bk-tree ![CMake](https://github.com/poyea/bk-tree/workflows/CMake/badge.svg)
 
-Header-only [Burkhard-Keller tree](https://en.wikipedia.org/wiki/BK-tree) implementation in C++, with different metrics and a few useful interfaces supported.
+Header-only [Burkhard-Keller tree](https://en.wikipedia.org/wiki/BK-tree) implementation in C++, with different metrics and a few useful interfaces supported. Documentation can be found [here](https://poyea.github.io/bk-tree/).
 
 <br/>
 
