@@ -122,31 +122,32 @@ public:
  * for any \f$0\le i \le m\f$ and \f$0\le j \le n.\f$
  */
 class LCSDistance final : public Distance<LCSDistance> {
-  mutable std::vector<std::vector<integer_type>> m_matrix;
+  mutable std::vector<integer_type> m_current, m_previous;
 
 public:
   explicit LCSDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
-      : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
+      : m_current(initial_size), m_previous(initial_size){};
   integer_type compute_distance(std::string_view s, std::string_view t) const {
     const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
       return 0;
     }
-    if (m_matrix.size() <= M || m_matrix[0].size() <= N) {
-      std::vector<std::vector<integer_type>> a_matrix(M + 1,
-                                                      std::vector<integer_type>(N + 1));
-      m_matrix.swap(a_matrix);
+    if (m_current.size() <= N || m_previous.size() <= N) {
+      m_current.resize(N + 1);
+      m_previous.resize(N + 1);
     }
+    std::fill(m_previous.begin(), m_previous.end(), 0);
     for (integer_type i = 1; i <= M; ++i) {
       for (integer_type j = 1; j <= N; ++j) {
         if (s[i - 1] == t[j - 1]) {
-          m_matrix[i][j] = m_matrix[i - 1][j - 1] + 1;
+          m_current[j] = m_previous[j - 1] + 1;
         } else {
-          m_matrix[i][j] = std::max(m_matrix[i - 1][j], m_matrix[i][j - 1]);
+          m_current[j] = std::max(m_previous[j], m_current[j - 1]);
         }
       }
+      m_previous = m_current;
     }
-    return m_matrix[M][N];
+    return m_previous[N];
   }
 };
 
