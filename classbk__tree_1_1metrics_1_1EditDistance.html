@@ -115,7 +115,7 @@ integer_type&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b
 <p>\(d(x_m, y_n),\) where \(m\) is the length of \(x\), \(n\) is the length of \(y\), </p><p class="formulaDsp">
 \[\begin{equation} d(x_i, y_j)= \begin{cases} i, &amp; \text{if } j = 0 \\ j, &amp; \text{if } i = 0 \\ \min\left\{ d(x_i, y_{j-1}) + 1, d(x_{i-1}, y_j) + 1, \begin{cases} d(x_{i-1}, y_{j-1}) + 1, &amp; x_i \neq y_j \\ d(x_{i-1}, y_{j-1}), &amp; \text{otherwise} \end{cases} \right\} \end{cases} \end{equation}\]
 </p>
-<p> for any \(0\le i \le m\) and \(0\le j \le n.\) </p>
+<p> for any \(0\le i &lt; m\) and \(0\le j &lt; n.\) </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/runner/work/bk-tree/bk-tree/bktree/<a class="el" href="bktree_8hpp_source.html">bktree.hpp</a></li>
 </ul>

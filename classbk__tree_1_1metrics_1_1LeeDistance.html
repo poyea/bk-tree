@@ -112,9 +112,9 @@ integer_type&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Lee distance metric. </p>
 <p class="formulaDsp">
-\[d(x, y) = \sum_{i=1}^{n} \min\{|x_i - y_i|, m - |x_i - y_i|\},\]
+\[d(x, y) = \sum_{i=0}^{n-1} \min\{|x_i - y_i|, m - |x_i - y_i|\},\]
 </p>
-<p> where \(m\) is the alphabet size, \(x\) and \(y\) are of the same length. When \(m = 2\) or \(m = 3\), <a class="el" href="classbk__tree_1_1metrics_1_1LeeDistance.html" title="Lee distance metric.">LeeDistance</a> is the same as <a class="el" href="classbk__tree_1_1metrics_1_1HammingDistance.html" title="Hamming distance metric.">HammingDistance</a>. </p>
+<p> where \(m\) is the alphabet size, and \(x\) and \(y\) are of the same length. When \(m = 2\) or \(m = 3\), <a class="el" href="classbk__tree_1_1metrics_1_1LeeDistance.html" title="Lee distance metric.">LeeDistance</a> is the same as <a class="el" href="classbk__tree_1_1metrics_1_1HammingDistance.html" title="Hamming distance metric.">HammingDistance</a>. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/runner/work/bk-tree/bk-tree/bktree/<a class="el" href="bktree_8hpp_source.html">bktree.hpp</a></li>
 </ul>
