@@ -81,8 +81,8 @@ public:
 /**
  * @brief Lee distance metric
  *
- * \f[d(x, y) = \sum_{i=1}^{n} \min\{|x_i - y_i|, m - |x_i - y_i|\},\f]
- * where \f$m\f$ is the alphabet size, \f$x\f$ and \f$y\f$ are of the same length.
+ * \f[d(x, y) = \sum_{i=0}^{n-1} \min\{|x_i - y_i|, m - |x_i - y_i|\},\f]
+ * where \f$m\f$ is the alphabet size, and \f$x\f$ and \f$y\f$ are of the same length.
  * When \f$m = 2\f$ or \f$m = 3\f$, LeeDistance is the same as HammingDistance.
  */
 class LeeDistance final : public Distance<LeeDistance> {
@@ -119,7 +119,7 @@ public:
  *     \max\{d(x_{i-1}, y_j), d(x_i, y_{j-1})\}, & \text{if } x_i \neq y_j
  *   \end{cases}
  * \end{equation}\f]
- * for any \f$0\le i \le m\f$ and \f$0\le j \le n.\f$
+ * for any \f$0\le i < m\f$ and \f$0\le j < n.\f$
  */
 class LCSubseqDistance final : public Distance<LCSubseqDistance> {
   mutable std::vector<integer_type> m_current, m_previous;
@@ -154,9 +154,9 @@ public:
 /**
  * @brief Hamming distance metric
  *
- * \f$d(x, y) = \displaystyle\sum_{i=1}^{n} x_i \bigoplus y_i,\f$
- * where \f$\bigoplus\f$ is the XOR operator, \f$x\f$ and \f$y\f$ are of the same
- * length.
+ * \f$d(x, y) = \displaystyle\sum_{i=0}^{n-1} x_i \bigoplus y_i,\f$
+ * where \f$\bigoplus\f$ is the XOR operator, and \f$x\f$ and \f$y\f$
+ * are of the same length.
  */
 class HammingDistance final : public Distance<HammingDistance> {
 public:
@@ -197,7 +197,7 @@ public:
  *     \right\}
  *   \end{cases}
  * \end{equation}\f]
- * for any \f$0\le i \le m\f$ and \f$0\le j \le n.\f$
+ * for any \f$0\le i < m\f$ and \f$0\le j < n.\f$
  */
 class EditDistance final : public Distance<EditDistance> {
   mutable std::vector<std::vector<integer_type>> m_matrix;
