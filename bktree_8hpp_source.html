@@ -101,8 +101,8 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifndef BK_MATRIX_INITIAL_SIZE</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define BK_MATRIX_INITIAL_SIZE 0</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#ifndef BK_LCS_MATRIX_INITIAL_SIZE</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define BK_LCS_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#ifndef BK_LCSubseq_MATRIX_INITIAL_SIZE</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define BK_LCSubseq_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#ifndef BK_ED_MATRIX_INITIAL_SIZE</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define BK_ED_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE</span></div>
@@ -165,11 +165,11 @@ $(function() {
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  }</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;};</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="classbk__tree_1_1metrics_1_1LCSDistance.html">  124</a></span>&#160;<span class="keyword">class </span><a class="code" href="classbk__tree_1_1metrics_1_1LCSDistance.html">LCSDistance</a> final : <span class="keyword">public</span> <a class="code" href="classbk__tree_1_1metrics_1_1Distance.html">Distance</a>&lt;LCSDistance&gt; {</div>
+<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="classbk__tree_1_1metrics_1_1LCSubseqDistance.html">  124</a></span>&#160;<span class="keyword">class </span><a class="code" href="classbk__tree_1_1metrics_1_1LCSubseqDistance.html">LCSubseqDistance</a> final : <span class="keyword">public</span> <a class="code" href="classbk__tree_1_1metrics_1_1Distance.html">Distance</a>&lt;LCSubseqDistance&gt; {</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  <span class="keyword">mutable</span> std::vector&lt;integer_type&gt; m_current, m_previous;</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classbk__tree_1_1metrics_1_1LCSDistance.html">LCSDistance</a>(<span class="keywordtype">size_t</span> initial_size = BK_LCS_MATRIX_INITIAL_SIZE)</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classbk__tree_1_1metrics_1_1LCSubseqDistance.html">LCSubseqDistance</a>(<span class="keywordtype">size_t</span> initial_size = BK_LCSubseq_MATRIX_INITIAL_SIZE)</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      : m_current(initial_size), m_previous(initial_size){};</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  integer_type compute_distance(std::string_view s, std::string_view t)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keyword">const</span> integer_type M = s.length(), N = t.length();</div>
@@ -587,13 +587,13 @@ $(function() {
 <div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160; </div>
 <div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;} <span class="comment">// namespace bk_tree</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassbk__tree_1_1metrics_1_1LCSDistance_html"><div class="ttname"><a href="classbk__tree_1_1metrics_1_1LCSDistance.html">bk_tree::metrics::LCSDistance</a></div><div class="ttdoc">Longest Common Subsequence distance metric.</div><div class="ttdef"><b>Definition:</b> bktree.hpp:124</div></div>
 <div class="ttc" id="aclassbk__tree_1_1metrics_1_1UniformDistance_html"><div class="ttname"><a href="classbk__tree_1_1metrics_1_1UniformDistance.html">bk_tree::metrics::UniformDistance</a></div><div class="ttdoc">Uniform metric.</div><div class="ttdef"><b>Definition:</b> bktree.hpp:73</div></div>
 <div class="ttc" id="aclassbk__tree_1_1metrics_1_1LeeDistance_html"><div class="ttname"><a href="classbk__tree_1_1metrics_1_1LeeDistance.html">bk_tree::metrics::LeeDistance</a></div><div class="ttdoc">Lee distance metric.</div><div class="ttdef"><b>Definition:</b> bktree.hpp:88</div></div>
 <div class="ttc" id="aclassbk__tree_1_1metrics_1_1HammingDistance_html"><div class="ttname"><a href="classbk__tree_1_1metrics_1_1HammingDistance.html">bk_tree::metrics::HammingDistance</a></div><div class="ttdoc">Hamming distance metric.</div><div class="ttdef"><b>Definition:</b> bktree.hpp:161</div></div>
 <div class="ttc" id="aclassbk__tree_1_1metrics_1_1EditDistance_html"><div class="ttname"><a href="classbk__tree_1_1metrics_1_1EditDistance.html">bk_tree::metrics::EditDistance</a></div><div class="ttdoc">Edit distance metric.</div><div class="ttdef"><b>Definition:</b> bktree.hpp:202</div></div>
 <div class="ttc" id="aclassbk__tree_1_1metrics_1_1DamerauLevenshteinDistance_html"><div class="ttname"><a href="classbk__tree_1_1metrics_1_1DamerauLevenshteinDistance.html">bk_tree::metrics::DamerauLevenshteinDistance</a></div><div class="ttdoc">Damerau–Levenshtein metric.</div><div class="ttdef"><b>Definition:</b> bktree.hpp:240</div></div>
 <div class="ttc" id="aclassbk__tree_1_1BKTree_html"><div class="ttname"><a href="classbk__tree_1_1BKTree.html">bk_tree::BKTree</a></div><div class="ttdoc">BK-tree template class.</div><div class="ttdef"><b>Definition:</b> bktree.hpp:290</div></div>
+<div class="ttc" id="aclassbk__tree_1_1metrics_1_1LCSubseqDistance_html"><div class="ttname"><a href="classbk__tree_1_1metrics_1_1LCSubseqDistance.html">bk_tree::metrics::LCSubseqDistance</a></div><div class="ttdoc">Longest Common Subsequence distance metric.</div><div class="ttdef"><b>Definition:</b> bktree.hpp:124</div></div>
 <div class="ttc" id="anamespacebk__tree_html"><div class="ttname"><a href="namespacebk__tree.html">bk_tree</a></div><div class="ttdoc">BK-tree namespace.</div><div class="ttdef"><b>Definition:</b> bktree.hpp:48</div></div>
 <div class="ttc" id="aclassbk__tree_1_1metrics_1_1Distance_html"><div class="ttname"><a href="classbk__tree_1_1metrics_1_1Distance.html">bk_tree::metrics::Distance</a></div><div class="ttdoc">Metric interface for string distances.</div><div class="ttdef"><b>Definition:</b> bktree.hpp:61</div></div>
 <div class="ttc" id="aclassbk__tree_1_1BKTree_1_1Iterator_html"><div class="ttname"><a href="classbk__tree_1_1BKTree_1_1Iterator.html">bk_tree::BKTree::Iterator</a></div><div class="ttdoc">BK-tree class iterator.</div><div class="ttdef"><b>Definition:</b> bktree.hpp:337</div></div>
