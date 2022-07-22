@@ -21,8 +21,8 @@
 #ifndef BK_MATRIX_INITIAL_SIZE
 #define BK_MATRIX_INITIAL_SIZE 0
 #endif
-#ifndef BK_LCS_MATRIX_INITIAL_SIZE
-#define BK_LCS_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE
+#ifndef BK_LCSubseq_MATRIX_INITIAL_SIZE
+#define BK_LCSubseq_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE
 #endif
 #ifndef BK_ED_MATRIX_INITIAL_SIZE
 #define BK_ED_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE
@@ -121,11 +121,11 @@ public:
  * \end{equation}\f]
  * for any \f$0\le i \le m\f$ and \f$0\le j \le n.\f$
  */
-class LCSDistance final : public Distance<LCSDistance> {
+class LCSubseqDistance final : public Distance<LCSubseqDistance> {
   mutable std::vector<integer_type> m_current, m_previous;
 
 public:
-  explicit LCSDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
+  explicit LCSubseqDistance(size_t initial_size = BK_LCSubseq_MATRIX_INITIAL_SIZE)
       : m_current(initial_size), m_previous(initial_size){};
   integer_type compute_distance(std::string_view s, std::string_view t) const {
     const integer_type M = s.length(), N = t.length();

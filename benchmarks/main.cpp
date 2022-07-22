@@ -18,7 +18,7 @@ constexpr static const std::string_view word = "word";
 BKTREE_BENCHMARK_CASE(TreeUniformInsert, UniformDistance)
 BKTREE_BENCHMARK_CASE(TreeHammingInsert, HammingDistance)
 BKTREE_BENCHMARK_CASE(TreeLeeInsert, LeeDistance)
-BKTREE_BENCHMARK_CASE(TreeLCSInsert, LCSDistance)
+BKTREE_BENCHMARK_CASE(TreeLCSubseqInsert, LCSubseqDistance)
 BKTREE_BENCHMARK_CASE(TreeEditInsert, EditDistance)
 BKTREE_BENCHMARK_CASE(TreeDamerauLevenshteinInsert, DamerauLevenshteinDistance)
 

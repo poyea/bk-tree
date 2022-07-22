@@ -4,11 +4,11 @@
 
 namespace bk_tree_test {
 
-class Distance_LCS_TEST : public ::testing::Test {
+class Distance_LCSubseq_TEST : public ::testing::Test {
 protected:
-  Distance_LCS_TEST() {}
+  Distance_LCSubseq_TEST() {}
 
-  virtual ~Distance_LCS_TEST() {}
+  virtual ~Distance_LCSubseq_TEST() {}
 
   virtual void SetUp() {
     // post-construction
@@ -18,11 +18,11 @@ protected:
     // pre-destruction
   }
 
-  bk_tree::metrics::LCSDistance dist;
+  bk_tree::metrics::LCSubseqDistance dist;
   bk_tree::metrics::EditDistance edit_dist;
 };
 
-TEST_F(Distance_LCS_TEST, LCSDistances) {
+TEST_F(Distance_LCSubseq_TEST, LCSubseqDistances) {
   EXPECT_TRUE(dist("ABCD", "ACBAD") == 3);
   EXPECT_TRUE(dist("ABCD", "AEFG") == 1);
   EXPECT_TRUE(dist("", "") == 0);
