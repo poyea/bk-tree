@@ -66,6 +66,22 @@ public:
 };
 
 /**
+ * @brief Length metric
+ *
+ * \f$d(x, y) = |m - n|\f$ where
+ * \f$m\f$ is the length of \f$x\f$, and \f$n\f$ is the length of \f$y\f$, for any \f$x,
+ * y.\f$
+ */
+class LengthDistance final : public Distance<LengthDistance> {
+public:
+  explicit LengthDistance(){};
+  integer_type compute_distance(std::string_view s, std::string_view t) const {
+    std::int64_t const d = s.length() - t.length();
+    return d >= 0 ? d : -d;
+  }
+};
+
+/**
  * @brief Identity metric
  *
  * \f$d(x, y) = 1\f$ for any \f$x, y.\f$
