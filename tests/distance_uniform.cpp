@@ -4,11 +4,11 @@
 
 namespace bk_tree_test {
 
-class Distance_Uniform_TEST : public ::testing::Test {
+class Distance_Identity_TEST : public ::testing::Test {
 protected:
-  Distance_Uniform_TEST() {}
+  Distance_Identity_TEST() {}
 
-  virtual ~Distance_Uniform_TEST() {}
+  virtual ~Distance_Identity_TEST() {}
 
   virtual void SetUp() {
     // post-construction
@@ -18,10 +18,10 @@ protected:
     // pre-destruction
   }
 
-  bk_tree::metrics::UniformDistance dist;
+  bk_tree::metrics::IdentityDistance dist;
 };
 
-TEST_F(Distance_Uniform_TEST, UniformDistances) {
+TEST_F(Distance_Identity_TEST, IdentityDistances) {
   EXPECT_TRUE(dist("peter", "piter") == 1);
   EXPECT_TRUE(dist("peter", "pitar") == 1);
   EXPECT_TRUE(dist("peter", "pitat") == 1);

@@ -66,13 +66,13 @@ public:
 };
 
 /**
- * @brief Uniform metric
+ * @brief Identity metric
  *
  * \f$d(x, y) = 1\f$ for any \f$x, y.\f$
  */
-class UniformDistance final : public Distance<UniformDistance> {
+class IdentityDistance final : public Distance<IdentityDistance> {
 public:
-  explicit UniformDistance(){};
+  explicit IdentityDistance(){};
   integer_type compute_distance(std::string_view, std::string_view) const {
     return integer_type{1};
   }

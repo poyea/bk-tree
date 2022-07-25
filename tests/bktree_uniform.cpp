@@ -5,11 +5,11 @@
 
 namespace bk_tree_test {
 
-class BKTree_Uniform_TEST : public ::testing::Test {
+class BKTree_Identity_TEST : public ::testing::Test {
 protected:
-  BKTree_Uniform_TEST() = default;
+  BKTree_Identity_TEST() = default;
 
-  virtual ~BKTree_Uniform_TEST() {}
+  virtual ~BKTree_Identity_TEST() {}
 
   virtual void SetUp() {
     // post-construction
@@ -19,24 +19,24 @@ protected:
     // pre-destruction
   }
 
-  bk_tree::BKTree<bk_tree::metrics::UniformDistance> tree;
+  bk_tree::BKTree<bk_tree::metrics::IdentityDistance> tree;
   bk_tree::ResultList results;
 };
 
-TEST_F(BKTree_Uniform_TEST, TreeSize) { EXPECT_EQ(tree.size(), 0); }
+TEST_F(BKTree_Identity_TEST, TreeSize) { EXPECT_EQ(tree.size(), 0); }
 
-TEST_F(BKTree_Uniform_TEST, TreeFind) {
+TEST_F(BKTree_Identity_TEST, TreeFind) {
   results = tree.find("word", 1);
   EXPECT_TRUE(results.empty());
 }
 
-TEST_F(BKTree_Uniform_TEST, TreeEraseSingle) {
+TEST_F(BKTree_Identity_TEST, TreeEraseSingle) {
   tree.insert("word");
   tree.erase("word");
   EXPECT_TRUE(tree.empty());
 }
 
-TEST_F(BKTree_Uniform_TEST, TreeEraseRoot) {
+TEST_F(BKTree_Identity_TEST, TreeEraseRoot) {
   tree.insert("word");
   tree.insert("wordy");
   tree.erase("word");
@@ -50,7 +50,7 @@ TEST_F(BKTree_Uniform_TEST, TreeEraseRoot) {
   EXPECT_TRUE(results.size() == 0);
 }
 
-TEST_F(BKTree_Uniform_TEST, TreeEraseRootNary) {
+TEST_F(BKTree_Identity_TEST, TreeEraseRootNary) {
   tree.insert("word");
   tree.insert("wordy");
   tree.insert("wordo");

@@ -15,7 +15,7 @@ constexpr static const std::string_view word = "word";
   }                                                                                    \
   BENCHMARK(Bench_##F)->Iterations(1000)->Unit(benchmark::kMicrosecond);
 
-BKTREE_BENCHMARK_CASE(TreeUniformInsert, UniformDistance)
+BKTREE_BENCHMARK_CASE(TreeIdentityInsert, IdentityDistance)
 BKTREE_BENCHMARK_CASE(TreeHammingInsert, HammingDistance)
 BKTREE_BENCHMARK_CASE(TreeLeeInsert, LeeDistance)
 BKTREE_BENCHMARK_CASE(TreeLCSubseqInsert, LCSubseqDistance)
