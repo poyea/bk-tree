@@ -5,7 +5,7 @@ var searchData=
   ['distance_3c_20dameraulevenshteindistance_20_3e_5',['Distance&lt; DamerauLevenshteinDistance &gt;',['../classbk__tree_1_1metrics_1_1Distance.html',1,'bk_tree::metrics']]],
   ['distance_3c_20editdistance_20_3e_6',['Distance&lt; EditDistance &gt;',['../classbk__tree_1_1metrics_1_1Distance.html',1,'bk_tree::metrics']]],
   ['distance_3c_20hammingdistance_20_3e_7',['Distance&lt; HammingDistance &gt;',['../classbk__tree_1_1metrics_1_1Distance.html',1,'bk_tree::metrics']]],
-  ['distance_3c_20lcsubseqdistance_20_3e_8',['Distance&lt; LCSubseqDistance &gt;',['../classbk__tree_1_1metrics_1_1Distance.html',1,'bk_tree::metrics']]],
-  ['distance_3c_20leedistance_20_3e_9',['Distance&lt; LeeDistance &gt;',['../classbk__tree_1_1metrics_1_1Distance.html',1,'bk_tree::metrics']]],
-  ['distance_3c_20uniformdistance_20_3e_10',['Distance&lt; UniformDistance &gt;',['../classbk__tree_1_1metrics_1_1Distance.html',1,'bk_tree::metrics']]]
+  ['distance_3c_20identitydistance_20_3e_8',['Distance&lt; IdentityDistance &gt;',['../classbk__tree_1_1metrics_1_1Distance.html',1,'bk_tree::metrics']]],
+  ['distance_3c_20lcsubseqdistance_20_3e_9',['Distance&lt; LCSubseqDistance &gt;',['../classbk__tree_1_1metrics_1_1Distance.html',1,'bk_tree::metrics']]],
+  ['distance_3c_20leedistance_20_3e_10',['Distance&lt; LeeDistance &gt;',['../classbk__tree_1_1metrics_1_1Distance.html',1,'bk_tree::metrics']]]
 ];
