@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hammingdistance_12',['HammingDistance',['../classbk__tree_1_1metrics_1_1HammingDistance.html',1,'bk_tree::metrics']]]
+  ['hammingdistance_13',['HammingDistance',['../classbk__tree_1_1metrics_1_1HammingDistance.html',1,'bk_tree::metrics']]]
 ];
