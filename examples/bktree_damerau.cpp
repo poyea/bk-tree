@@ -5,10 +5,12 @@
 
 void example() {
   bk_tree::BKTree<bk_tree::metrics::DamerauLevenshteinDistance> tree;
-  std::vector<std::string> input{"tall", "tell",  "teel",  "feel", "tally",
-                                 "tuck", "belly", "kelly", "kill", "tal"};
-  for (auto &s : input) {
-    tree.insert(s);
+  {
+    std::vector<std::string> input{"tall", "tell",  "teel",  "feel", "tally",
+                                  "tuck", "belly", "kelly", "kill", "tal"};
+    for (auto &s : input) {
+      tree.insert(s);
+    }
   }
 
   for (auto const &node : tree) {

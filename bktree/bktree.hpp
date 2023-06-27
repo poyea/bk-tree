@@ -1,6 +1,8 @@
 //
 // bk-tree   Header-only Burkhard-Keller tree library
-// Copyright (C) 2020-2022  John Law
+// Copyright (C) 2020-2023  John Law
+//
+// This file is part of bk-tree.
 //
 // bk-tree is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,8 +23,8 @@
 #ifndef BK_MATRIX_INITIAL_SIZE
 #define BK_MATRIX_INITIAL_SIZE 0
 #endif
-#ifndef BK_LCSubseq_MATRIX_INITIAL_SIZE
-#define BK_LCSubseq_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE
+#ifndef BK_LCS_MATRIX_INITIAL_SIZE
+#define BK_LCS_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE
 #endif
 #ifndef BK_ED_MATRIX_INITIAL_SIZE
 #define BK_ED_MATRIX_INITIAL_SIZE BK_MATRIX_INITIAL_SIZE
@@ -36,6 +38,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <iterator>
+#include <limits>
 #include <map>
 #include <memory>
 #include <queue>
@@ -141,7 +144,7 @@ class LCSubseqDistance final : public Distance<LCSubseqDistance> {
   mutable std::vector<integer_type> m_current, m_previous;
 
 public:
-  explicit LCSubseqDistance(size_t initial_size = BK_LCSubseq_MATRIX_INITIAL_SIZE)
+  explicit LCSubseqDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
       : m_current(initial_size), m_previous(initial_size){};
   integer_type compute_distance(std::string_view s, std::string_view t) const {
     const integer_type M = s.length(), N = t.length();
