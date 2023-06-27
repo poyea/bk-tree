@@ -43,12 +43,12 @@ if(BENCHMARKS)
     add_subdirectory(benchmarks)
 endif()
 
-# For BK tree documentation build
-find_package(Doxygen)
-
 option(DOCS "Create and install API documentation with Doxygen" ${DOXYGEN_FOUND})
 
 if(DOCS)
+    # For BK tree documentation build
+    find_package(Doxygen)
+
     if(NOT DOXYGEN_FOUND)
         message(FATAL_ERROR "Doxygen is needed to build the documentation")
     endif()
