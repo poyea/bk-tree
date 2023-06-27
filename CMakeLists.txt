@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.16..3.23)
 
 project(bk-tree
-    VERSION 0.1.3
+    VERSION 0.1.4
     LANGUAGES CXX
     DESCRIPTION "Header-only Burkhard-Keller tree library"
     HOMEPAGE_URL "https://github.com/poyea/bk-tree")
