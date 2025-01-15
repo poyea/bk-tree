@@ -566,7 +566,8 @@ bool BKTree<Metric>::erase(std::string_view value) {
     if (m_tree_size > 1) {
       auto &replacement_node = m_root->m_children.begin()->second;
       std::queue<std::unique_ptr<node_type> const *> bq;
-      for (bool first = true; auto const &[_, node] : m_root->m_children) {
+      bool first = true;
+      for (auto const &[_, node] : m_root->m_children) {
         if (first) {
           first = false;
           continue;
