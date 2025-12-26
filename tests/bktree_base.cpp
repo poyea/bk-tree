@@ -35,9 +35,13 @@ TEST_F(BKTree_Base_TEST, TreeWithList) {
   EXPECT_TRUE(tree.size() == 4);
 }
 
+TEST_F(BKTree_Base_TEST, TreeEraseEmpty) {
+  EXPECT_FALSE(tree.erase("nonexistentrandomword"));
+}
+
 TEST_F(BKTree_Base_TEST, TreeEraseSingle) {
   tree.insert("word");
-  tree.erase("word");
+  EXPECT_TRUE(tree.erase("word"));
   EXPECT_TRUE(tree.empty());
 }
 

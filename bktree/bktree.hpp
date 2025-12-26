@@ -562,7 +562,7 @@ template <typename Metric>
 bool BKTree<Metric>::erase(std::string_view value) {
   bool erased = false;
   if (m_root == nullptr) {
-    erased = true;
+    erased = false;
   } else if (m_root->m_word == value) {
     if (m_tree_size > 1) {
       auto &replacement_node = m_root->m_children.begin()->second;
