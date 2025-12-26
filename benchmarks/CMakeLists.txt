@@ -12,6 +12,9 @@ FetchContent_Declare(
     GIT_TAG        v1.6.1
 )
 
+set(BENCHMARK_ENABLE_WERROR OFF CACHE BOOL "" FORCE)
+set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
+
 FetchContent_MakeAvailable(googletest googlebenchmark)
 
 add_executable(main main.cpp)
