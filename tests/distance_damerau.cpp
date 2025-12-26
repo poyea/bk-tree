@@ -30,6 +30,9 @@ TEST_F(Distance_DamerauLevenshtein_TEST, DamerauLevenshteinDistances) {
   EXPECT_TRUE(dist("peter", "") == 5);
   EXPECT_TRUE(dist("", "peter") == 5);
   EXPECT_TRUE(dist("", "") == 0);
+  EXPECT_TRUE(dist("abc", "bac") == 1);
+  EXPECT_TRUE(dist("abc", "acb") == 1);
+  EXPECT_TRUE(dist("abcd", "abdc") == 1);
 }
 
 } // namespace bk_tree_test

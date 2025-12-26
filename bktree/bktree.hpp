@@ -79,7 +79,7 @@ public:
 class LengthDistance final : public Distance<LengthDistance> {
 public:
   explicit LengthDistance(){};
-  integer_type compute_distance(std::string_view s, std::string_view t) const {
+  integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     return s.length() > t.length() ? s.length() - t.length() : t.length() - s.length();
   }
 };
@@ -92,7 +92,7 @@ public:
 class IdentityDistance final : public Distance<IdentityDistance> {
 public:
   explicit IdentityDistance(){};
-  integer_type compute_distance(std::string_view, std::string_view) const {
+  integer_type compute_distance(std::string_view, std::string_view) const noexcept {
     return integer_type{1};
   }
 };
@@ -110,14 +110,14 @@ class LeeDistance final : public Distance<LeeDistance> {
 public:
   explicit LeeDistance(integer_type alphabet_size = BK_LEE_ALPHABET_SIZE)
       : m_alphabet_size(alphabet_size){};
-  integer_type compute_distance(std::string_view s, std::string_view t) const {
+  integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     const integer_type M = s.length(), N = t.length();
     if (M != N) {
       return std::numeric_limits<integer_type>::max();
     }
-    const integer_type m_comparsion_size = M;
+    const integer_type m_comparison_size = M;
     integer_type counter = 0, diff;
-    for (integer_type i = 0; i < m_comparsion_size; ++i) {
+    for (integer_type i = 0; i < m_comparison_size; ++i) {
       diff = std::abs(s[i] - t[i]);
       counter += std::min(diff, m_alphabet_size - diff);
     }
@@ -146,7 +146,7 @@ class LCSubseqDistance final : public Distance<LCSubseqDistance> {
 public:
   explicit LCSubseqDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
       : m_current(initial_size), m_previous(initial_size){};
-  integer_type compute_distance(std::string_view s, std::string_view t) const {
+  integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
       return 0;
@@ -180,14 +180,14 @@ public:
 class HammingDistance final : public Distance<HammingDistance> {
 public:
   explicit HammingDistance() = default;
-  integer_type compute_distance(std::string_view s, std::string_view t) const {
+  integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     const integer_type M = s.length(), N = t.length();
     if (M != N) {
       return std::numeric_limits<integer_type>::max();
     }
-    const integer_type m_comparsion_size = M;
+    const integer_type m_comparison_size = M;
     integer_type counter = 0;
-    for (integer_type i = 0; i < m_comparsion_size; ++i) {
+    for (integer_type i = 0; i < m_comparison_size; ++i) {
       counter += (s[i] != t[i]);
     }
     return counter;
@@ -224,7 +224,7 @@ class EditDistance final : public Distance<EditDistance> {
 public:
   explicit EditDistance(size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
-  integer_type compute_distance(std::string_view s, std::string_view t) const {
+  integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
       return N + M;
@@ -262,7 +262,7 @@ class DamerauLevenshteinDistance final : public Distance<DamerauLevenshteinDista
 public:
   explicit DamerauLevenshteinDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
       : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
-  integer_type compute_distance(std::string_view s, std::string_view t) const {
+  integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
       return N + M;
@@ -322,9 +322,9 @@ class BKTreeNode {
   BKTreeNode(std::string_view value) : m_word(value) {}
   bool _insert(std::string_view value, const metric_type &distance);
   bool _erase(std::string_view value, const metric_type &distance);
-  void _find(ResultList &output, std::string_view value, const int &limit,
+  void _find(ResultList &output, std::string_view value, int limit,
              const metric_type &metric) const;
-  ResultList _find_wrapper(std::string_view value, const int &limit,
+  ResultList _find_wrapper(std::string_view value, int limit,
                            const metric_type &metric) const;
 
   std::map<int, std::unique_ptr<node_type>> m_children;
@@ -456,7 +456,7 @@ public:
   bool erase(std::string_view value);
   size_t size() const noexcept { return m_tree_size; }
   bool empty() const noexcept { return m_tree_size == 0; }
-  [[nodiscard]] ResultList find(std::string_view value, const int &limit) const;
+  [[nodiscard]] ResultList find(std::string_view value, int limit) const;
 
   Iterator begin() { return Iterator(&m_root); }
   Iterator end() { return Iterator(); }
@@ -523,7 +523,7 @@ bool BKTreeNode<Metric>::_erase(std::string_view value,
 
 template <typename Metric>
 void BKTreeNode<Metric>::_find(ResultList &output, std::string_view value,
-                               const int &limit, const metric_type &metric) const {
+                               int limit, const metric_type &metric) const {
   const int distance = metric(value, m_word);
   if (distance <= limit) {
     output.push_back({m_word, distance});
@@ -536,7 +536,7 @@ void BKTreeNode<Metric>::_find(ResultList &output, std::string_view value,
 }
 
 template <typename Metric>
-ResultList BKTreeNode<Metric>::_find_wrapper(std::string_view value, const int &limit,
+ResultList BKTreeNode<Metric>::_find_wrapper(std::string_view value, int limit,
                                              const metric_type &metric) const {
   ResultList output;
   _find(output, value, limit, metric);
@@ -595,7 +595,7 @@ bool BKTree<Metric>::erase(std::string_view value) {
 }
 
 template <typename Metric>
-ResultList BKTree<Metric>::find(std::string_view value, const int &limit) const {
+ResultList BKTree<Metric>::find(std::string_view value, int limit) const {
   if (m_root == nullptr) {
     return ResultList{};
   }
