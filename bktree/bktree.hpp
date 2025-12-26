@@ -284,7 +284,7 @@ public:
         m_matrix[i][j] = std::min(
             {m_matrix[i][j - 1] + 1 /*Insertion*/, m_matrix[i - 1][j] + 1 /*Deletion*/,
              m_matrix[i - 1][j - 1] + (s[i - 1] == t[j - 1] ? 0 : 1) /*Substitution*/});
-        if (i > 1 && j > 1 && s[i] == t[j - 1] && s[i - 1] == t[j]) {
+        if (i > 1 && j > 1 && s[i - 1] == t[j - 2] && s[i - 2] == t[j - 1]) {
           m_matrix[i][j] =
               std::min(m_matrix[i][j], m_matrix[i - 2][j - 2] + 1 /*Transposition*/);
         }

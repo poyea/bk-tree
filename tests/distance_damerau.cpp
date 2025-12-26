@@ -26,6 +26,7 @@ TEST_F(Distance_DamerauLevenshtein_TEST, DamerauLevenshteinDistances) {
   EXPECT_TRUE(dist("peter", "pitar") == 2);
   EXPECT_TRUE(dist("peter", "pitat") == 3);
   EXPECT_TRUE(dist("ca", "abc") == 3);
+  EXPECT_TRUE(dist("ab", "ba") == 1);
   EXPECT_TRUE(dist("peter", "") == 5);
   EXPECT_TRUE(dist("", "peter") == 5);
   EXPECT_TRUE(dist("", "") == 0);
