@@ -7,7 +7,7 @@ void example() {
   bk_tree::BKTree<bk_tree::metrics::LCSubseqDistance> tree;
   {
     std::vector<std::string> input{"tall",  "tell",  "teel", "feel", "tally",
-                                  "belly", "kelly", "kill", "tal",  "tuck"};
+                                   "belly", "kelly", "kill", "tal",  "tuck"};
     for (auto &s : input) {
       tree.insert(s);
     }

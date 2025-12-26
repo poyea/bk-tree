@@ -80,8 +80,7 @@ class LengthDistance final : public Distance<LengthDistance> {
 public:
   explicit LengthDistance(){};
   integer_type compute_distance(std::string_view s, std::string_view t) const {
-    std::int64_t const d = s.length() - t.length();
-    return d >= 0 ? d : -d;
+    return s.length() > t.length() ? s.length() - t.length() : t.length() - s.length();
   }
 };
 
