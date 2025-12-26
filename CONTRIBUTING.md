@@ -6,29 +6,25 @@ We are under development! Feel free to make our Contribution Guidelines better!
 ```bash
 $ cmake --version 
 cmake version 3.16.3
-$ mkdir build && cd build
-$ CXX=clang++ cmake ..
-$ make -sj
+$ CXX=clang++ cmake -B build
+$ cmake --build build -j
 ```
 
 ## Building the tests
 ```bash
-$ mkdir build && cd build
-$ CXX=clang++ cmake .. -DTESTS=ON
-$ make -sj
-$ make test
+$ CXX=clang++ cmake -B build -DTESTS=ON
+$ cmake --build build -j
+$ ctest --test-dir build
 ```
 
 ## Building the benchmarks
 ```bash
-$ mkdir build && cd build
-$ CXX=clang++ cmake .. -DBENCHMARKS=ON
-$ make -sj
+$ CXX=clang++ cmake -B build -DBENCHMARKS=ON
+$ cmake --build build -j
 ```
 
 ## Building the documentation
 ```bash
-$ mkdir build && cd build
-$ CXX=clang++ cmake .. -DDOCS=ON
-$ doxygen Doxyfile.Documentation
+$ CXX=clang++ cmake -B build -DDOCS=ON
+$ doxygen build/Doxyfile.Documentation
 ```
