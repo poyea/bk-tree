@@ -1,6 +1,6 @@
 //
 // bk-tree   Header-only Burkhard-Keller tree library
-// Copyright (C) 2020-2023  John Law
+// Copyright (C) 2020-2026  John Law
 //
 // This file is part of bk-tree.
 //
