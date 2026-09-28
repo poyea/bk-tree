@@ -32,10 +32,10 @@ TEST_F(BKTree_Damerau_TEST, TreeSize) { EXPECT_EQ(tree.size(), 10); }
 
 TEST_F(BKTree_Damerau_TEST, TreeFind) {
   const std::string &word = "tale";
-  for (int limit = 1; limit <= 3; limit++) {
+  for (bk_tree::integer_type limit = 1; limit <= 3; limit++) {
     results = tree.find(word, limit);
     for (auto &p : results) {
-      EXPECT_TRUE(1 <= p.second && p.second <= limit);
+      EXPECT_TRUE(bk_tree::integer_type{1} <= p.second && p.second <= limit);
     }
   }
 }

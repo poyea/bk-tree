@@ -5,6 +5,14 @@
 
 namespace bk_tree_test {
 
+class LargeDistance final : public bk_tree::metrics::Distance<LargeDistance> {
+public:
+  bk_tree::integer_type compute_distance(std::string_view s,
+                                         std::string_view t) const noexcept {
+    return s == t ? 0 : (bk_tree::integer_type{1} << 40);
+  }
+};
+
 class BKTree_Base_TEST : public ::testing::Test {
 protected:
   BKTree_Base_TEST() = default;
@@ -28,6 +36,21 @@ TEST_F(BKTree_Base_TEST, TreeSize) { EXPECT_EQ(tree.size(), 0); }
 TEST_F(BKTree_Base_TEST, TreeFind) {
   results = tree.find("word", 1);
   EXPECT_TRUE(results.empty());
+}
+
+TEST_F(BKTree_Base_TEST, TreeFindLargeDistance) {
+  constexpr bk_tree::integer_type large_distance = bk_tree::integer_type{1} << 40;
+  bk_tree::BKTree<LargeDistance> large_tree;
+  EXPECT_TRUE(large_tree.insert("root"));
+  EXPECT_TRUE(large_tree.insert("leaf"));
+
+  results = large_tree.find("leaf", large_distance);
+  ASSERT_EQ(results.size(), 2);
+  EXPECT_EQ(results[0].first, "root");
+  EXPECT_EQ(results[0].second, large_distance);
+  EXPECT_EQ(results[1].first, "leaf");
+  EXPECT_EQ(results[1].second, 0);
+  EXPECT_TRUE(large_tree.find("leaf", -1).empty());
 }
 
 TEST_F(BKTree_Base_TEST, TreeWithList) {
