@@ -1,0 +1,5 @@
+{
+  "name": "bk-tree",
+  "image": "mcr.microsoft.com/devcontainers/cpp:1-ubuntu-24.04",
+  "postCreateCommand": "bash .devcontainer/install-clang-format.sh"
+}
