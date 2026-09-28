@@ -117,13 +117,13 @@ integer_type&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Longest Common Subsequence distance metric. </p>
-<p>\(d(x_m, y_n),\) where \(m\) is the length of \(x\), \(n\) is the length of \(y\).  </p><p class="formulaDsp">
+<p>\(d(x, y) = |x| + |y| - 2\operatorname{LCS}(x, y),\) where \(\operatorname{LCS}(x, y)\) is the length of the longest common subsequence.  </p><p class="formulaDsp">
 \[\begin{equation}
-d(x_i, y_j)=
+L(i, j)=
   \begin{cases}
     0, &amp; \text{if } i = 0 \text{ or } j = 0 \\
-    d(x_{i-1}, y_{j-1}) + 1, &amp; \text{if } x_i = y_j \\
-    \max\{d(x_{i-1}, y_j), d(x_i, y_{j-1})\}, &amp; \text{if } x_i \neq y_j
+    L(i-1, j-1) + 1, &amp; \text{if } x_i = y_j \\
+    \max\{L(i-1, j), L(i, j-1)\}, &amp; \text{if } x_i \neq y_j
   \end{cases}
 \end{equation}\]
 </p>
