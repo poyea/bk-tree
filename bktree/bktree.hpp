@@ -79,7 +79,7 @@ public:
  */
 class LengthDistance final : public Distance<LengthDistance> {
 public:
-  explicit LengthDistance(){};
+  explicit LengthDistance() {};
   integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     return s.length() > t.length() ? s.length() - t.length() : t.length() - s.length();
   }
@@ -92,7 +92,7 @@ public:
  */
 class IdentityDistance final : public Distance<IdentityDistance> {
 public:
-  explicit IdentityDistance(){};
+  explicit IdentityDistance() {};
   integer_type compute_distance(std::string_view, std::string_view) const noexcept {
     return integer_type{1};
   }
@@ -110,7 +110,7 @@ class LeeDistance final : public Distance<LeeDistance> {
 
 public:
   explicit LeeDistance(integer_type alphabet_size = BK_LEE_ALPHABET_SIZE)
-      : m_alphabet_size(alphabet_size){};
+      : m_alphabet_size(alphabet_size) {};
   integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     const integer_type M = s.length(), N = t.length();
     if (M != N) {
@@ -146,7 +146,7 @@ class LCSubseqDistance final : public Distance<LCSubseqDistance> {
 
 public:
   explicit LCSubseqDistance(size_t initial_size = BK_LCS_MATRIX_INITIAL_SIZE)
-      : m_current(initial_size), m_previous(initial_size){};
+      : m_current(initial_size), m_previous(initial_size) {};
   integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
@@ -224,7 +224,7 @@ class EditDistance final : public Distance<EditDistance> {
 
 public:
   explicit EditDistance(size_t initial_size = BK_ED_MATRIX_INITIAL_SIZE)
-      : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
+      : m_matrix(initial_size, std::vector<integer_type>(initial_size)) {};
   integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
@@ -262,7 +262,7 @@ class DamerauLevenshteinDistance final : public Distance<DamerauLevenshteinDista
 
 public:
   explicit DamerauLevenshteinDistance(size_t initial_size = BK_MATRIX_INITIAL_SIZE)
-      : m_matrix(initial_size, std::vector<integer_type>(initial_size)){};
+      : m_matrix(initial_size, std::vector<integer_type>(initial_size)) {};
   integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
@@ -547,8 +547,7 @@ void BKTreeNode<Metric>::_find(ResultList &output, std::string_view value,
 }
 
 template <typename Metric>
-ResultList BKTreeNode<Metric>::_find_wrapper(std::string_view value,
-                                             integer_type limit,
+ResultList BKTreeNode<Metric>::_find_wrapper(std::string_view value, integer_type limit,
                                              const metric_type &metric) const {
   ResultList output;
   _find(output, value, limit, metric);
