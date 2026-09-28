@@ -159,7 +159,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="foldopen" id="foldopen00080" data-start="{" data-end="};">
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classbk__tree_1_1metrics_1_1LengthDistance.html">   80</a></span><span class="keyword">class </span><a class="code hl_class" href="classbk__tree_1_1metrics_1_1LengthDistance.html">LengthDistance</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classbk__tree_1_1metrics_1_1Distance.html">Distance</a>&lt;LengthDistance&gt; {</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbk__tree_1_1metrics_1_1LengthDistance.html">LengthDistance</a>(){};</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbk__tree_1_1metrics_1_1LengthDistance.html">LengthDistance</a>() {};</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  integer_type compute_distance(std::string_view s, std::string_view t) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordflow">return</span> s.length() &gt; t.length() ? s.length() - t.length() : t.length() - s.length();</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  }</div>
@@ -169,7 +169,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="foldopen" id="foldopen00093" data-start="{" data-end="};">
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="classbk__tree_1_1metrics_1_1IdentityDistance.html">   93</a></span><span class="keyword">class </span><a class="code hl_class" href="classbk__tree_1_1metrics_1_1IdentityDistance.html">IdentityDistance</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classbk__tree_1_1metrics_1_1Distance.html">Distance</a>&lt;IdentityDistance&gt; {</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbk__tree_1_1metrics_1_1IdentityDistance.html">IdentityDistance</a>(){};</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbk__tree_1_1metrics_1_1IdentityDistance.html">IdentityDistance</a>() {};</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  integer_type compute_distance(std::string_view, std::string_view) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordflow">return</span> integer_type{1};</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  }</div>
@@ -182,7 +182,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbk__tree_1_1metrics_1_1LeeDistance.html">LeeDistance</a>(integer_type alphabet_size = BK_LEE_ALPHABET_SIZE)</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>      : m_alphabet_size(alphabet_size){};</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>      : m_alphabet_size(alphabet_size) {};</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  integer_type compute_distance(std::string_view s, std::string_view t) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keyword">const</span> integer_type M = s.length(), N = t.length();</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordflow">if</span> (M != N) {</div>
@@ -205,7 +205,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbk__tree_1_1metrics_1_1LCSubseqDistance.html">LCSubseqDistance</a>(<span class="keywordtype">size_t</span> initial_size = BK_LCS_MATRIX_INITIAL_SIZE)</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>      : m_current(initial_size), m_previous(initial_size){};</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>      : m_current(initial_size), m_previous(initial_size) {};</div>
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>  integer_type compute_distance(std::string_view s, std::string_view t) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keyword">const</span> integer_type M = s.length(), N = t.length();</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="keywordflow">if</span> (M == 0 || N == 0) {</div>
@@ -256,7 +256,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
 <div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbk__tree_1_1metrics_1_1EditDistance.html">EditDistance</a>(<span class="keywordtype">size_t</span> initial_size = BK_ED_MATRIX_INITIAL_SIZE)</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>      : m_matrix(initial_size, std::vector&lt;integer_type&gt;(initial_size)){};</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>      : m_matrix(initial_size, std::vector&lt;integer_type&gt;(initial_size)) {};</div>
 <div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>  integer_type compute_distance(std::string_view s, std::string_view t) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    <span class="keyword">const</span> integer_type M = s.length(), N = t.length();</div>
 <div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    <span class="keywordflow">if</span> (M == 0 || N == 0) {</div>
@@ -291,7 +291,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbk__tree_1_1metrics_1_1DamerauLevenshteinDistance.html">DamerauLevenshteinDistance</a>(<span class="keywordtype">size_t</span> initial_size = BK_MATRIX_INITIAL_SIZE)</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>      : m_matrix(initial_size, std::vector&lt;integer_type&gt;(initial_size)){};</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>      : m_matrix(initial_size, std::vector&lt;integer_type&gt;(initial_size)) {};</div>
 <div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>  integer_type compute_distance(std::string_view s, std::string_view t) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    <span class="keyword">const</span> integer_type M = s.length(), N = t.length();</div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    <span class="keywordflow">if</span> (M == 0 || N == 0) {</div>
@@ -576,82 +576,81 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span>}</div>
 <div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span> </div>
 <div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Metric&gt;</div>
-<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span>ResultList BKTreeNode&lt;Metric&gt;::_find_wrapper(std::string_view value,</div>
-<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>                                             integer_type limit,</div>
-<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>                                             <span class="keyword">const</span> metric_type &amp;metric)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>  ResultList output;</div>
-<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>  _find(output, value, limit, metric);</div>
-<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>  <span class="keywordflow">return</span> output;</div>
-<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>}</div>
-<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span> </div>
-<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Metric&gt;</div>
-<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span><span class="keywordtype">bool</span> BKTree&lt;Metric&gt;::insert(std::string_view value) {</div>
-<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span>  <span class="keywordtype">bool</span> inserted = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span>  <span class="keywordflow">if</span> (m_root == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span>    m_root = std::unique_ptr&lt;node_type&gt;(<span class="keyword">new</span> node_type(value));</div>
-<div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span>    ++m_tree_size;</div>
-<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span>    inserted = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m_root-&gt;_insert(value, m_metric)) {</div>
-<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>    ++m_tree_size;</div>
-<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>    inserted = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>  }</div>
-<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>  <span class="keywordflow">return</span> inserted;</div>
-<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span>}</div>
-<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span> </div>
-<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Metric&gt;</div>
-<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span><span class="keywordtype">bool</span> BKTree&lt;Metric&gt;::erase(std::string_view value) {</div>
-<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span>  <span class="keywordtype">bool</span> erased = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span>  <span class="keywordflow">if</span> (m_root == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>    erased = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m_root-&gt;m_word == value) {</div>
-<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span>    <span class="keywordflow">if</span> (m_tree_size &gt; 1) {</div>
-<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>      <span class="keyword">auto</span> &amp;replacement_node = m_root-&gt;m_children.begin()-&gt;second;</div>
-<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>      std::queue&lt;std::unique_ptr&lt;node_type&gt; <span class="keyword">const</span> *&gt; bq;</div>
-<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span>      <span class="keywordflow">for</span> (<span class="keywordtype">bool</span> first = <span class="keyword">true</span>; <span class="keyword">auto</span> <span class="keyword">const</span> &amp;[_, node] : m_root-&gt;m_children) {</div>
-<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span>        <span class="keywordflow">if</span> (first) {</div>
-<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>          first = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span>          <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span>        }</div>
-<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>        bq.push(&amp;node);</div>
-<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span>      }</div>
-<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>      <span class="keywordflow">while</span> (!bq.empty()) {</div>
-<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span>        <span class="keyword">auto</span> node = bq.front();</div>
-<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>        bq.pop();</div>
-<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span> &amp;[_, child] : (*node)-&gt;m_children) {</div>
-<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>          bq.push(&amp;child);</div>
-<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>        }</div>
-<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>        replacement_node-&gt;_insert((*node)-&gt;m_word, m_metric);</div>
-<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>      }</div>
-<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span>      m_root = std::move(replacement_node);</div>
-<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span>      m_root.reset(<span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span>    }</div>
-<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>    --m_tree_size;</div>
-<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>    erased = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m_root-&gt;_erase(value, m_metric)) {</div>
-<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>    --m_tree_size;</div>
-<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>    erased = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>  }</div>
-<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>  <span class="keywordflow">return</span> erased;</div>
-<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>}</div>
-<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span> </div>
-<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Metric&gt;</div>
-<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>ResultList BKTree&lt;Metric&gt;::find(std::string_view value, integer_type limit)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>  <span class="keywordflow">if</span> (m_root == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    <span class="keywordflow">return</span> ResultList{};</div>
-<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>  }</div>
-<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>  <span class="keywordflow">return</span> m_root-&gt;_find_wrapper(value, limit, m_metric);</div>
-<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>}</div>
-<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span> </div>
-<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Metric&gt;</div>
-<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>ResultList BKTree&lt;Metric&gt;::find(std::string_view value, <span class="keywordtype">int</span> limit)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>  <span class="keywordflow">if</span> (limit &lt; 0) {</div>
-<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>    <span class="keywordflow">return</span> ResultList{};</div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>  }</div>
-<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>  <span class="keywordflow">return</span> find(value, <span class="keyword">static_cast&lt;</span>integer_type<span class="keyword">&gt;</span>(limit));</div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>}</div>
-<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span> </div>
-<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>} <span class="comment">// namespace bk_tree</span></div>
+<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span>ResultList BKTreeNode&lt;Metric&gt;::_find_wrapper(std::string_view value, integer_type limit,</div>
+<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>                                             <span class="keyword">const</span> metric_type &amp;metric)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>  ResultList output;</div>
+<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>  _find(output, value, limit, metric);</div>
+<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>  <span class="keywordflow">return</span> output;</div>
+<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>}</div>
+<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span> </div>
+<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Metric&gt;</div>
+<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span><span class="keywordtype">bool</span> BKTree&lt;Metric&gt;::insert(std::string_view value) {</div>
+<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span>  <span class="keywordtype">bool</span> inserted = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span>  <span class="keywordflow">if</span> (m_root == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span>    m_root = std::unique_ptr&lt;node_type&gt;(<span class="keyword">new</span> node_type(value));</div>
+<div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span>    ++m_tree_size;</div>
+<div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span>    inserted = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span>  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m_root-&gt;_insert(value, m_metric)) {</div>
+<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>    ++m_tree_size;</div>
+<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>    inserted = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>  }</div>
+<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>  <span class="keywordflow">return</span> inserted;</div>
+<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>}</div>
+<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span> </div>
+<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Metric&gt;</div>
+<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span><span class="keywordtype">bool</span> BKTree&lt;Metric&gt;::erase(std::string_view value) {</div>
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>  <span class="keywordtype">bool</span> erased = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span>  <span class="keywordflow">if</span> (m_root == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span>    erased = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m_root-&gt;m_word == value) {</div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>    <span class="keywordflow">if</span> (m_tree_size &gt; 1) {</div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span>      <span class="keyword">auto</span> &amp;replacement_node = m_root-&gt;m_children.begin()-&gt;second;</div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>      std::queue&lt;std::unique_ptr&lt;node_type&gt; <span class="keyword">const</span> *&gt; bq;</div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>      <span class="keywordflow">for</span> (<span class="keywordtype">bool</span> first = <span class="keyword">true</span>; <span class="keyword">auto</span> <span class="keyword">const</span> &amp;[_, node] : m_root-&gt;m_children) {</div>
+<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span>        <span class="keywordflow">if</span> (first) {</div>
+<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span>          first = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>          <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span>        }</div>
+<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span>        bq.push(&amp;node);</div>
+<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>      }</div>
+<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span>      <span class="keywordflow">while</span> (!bq.empty()) {</div>
+<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>        <span class="keyword">auto</span> node = bq.front();</div>
+<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span>        bq.pop();</div>
+<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span> &amp;[_, child] : (*node)-&gt;m_children) {</div>
+<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>          bq.push(&amp;child);</div>
+<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>        }</div>
+<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>        replacement_node-&gt;_insert((*node)-&gt;m_word, m_metric);</div>
+<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>      }</div>
+<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>      m_root = std::move(replacement_node);</div>
+<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span>      m_root.reset(<span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span>    }</div>
+<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span>    --m_tree_size;</div>
+<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>    erased = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (m_root-&gt;_erase(value, m_metric)) {</div>
+<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>    --m_tree_size;</div>
+<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>    erased = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>  }</div>
+<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>  <span class="keywordflow">return</span> erased;</div>
+<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>}</div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span> </div>
+<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Metric&gt;</div>
+<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>ResultList BKTree&lt;Metric&gt;::find(std::string_view value, integer_type limit)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>  <span class="keywordflow">if</span> (m_root == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>    <span class="keywordflow">return</span> ResultList{};</div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>  }</div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>  <span class="keywordflow">return</span> m_root-&gt;_find_wrapper(value, limit, m_metric);</div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>}</div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span> </div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Metric&gt;</div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>ResultList BKTree&lt;Metric&gt;::find(std::string_view value, <span class="keywordtype">int</span> limit)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>  <span class="keywordflow">if</span> (limit &lt; 0) {</div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>    <span class="keywordflow">return</span> ResultList{};</div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>  }</div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>  <span class="keywordflow">return</span> find(value, <span class="keyword">static_cast&lt;</span>integer_type<span class="keyword">&gt;</span>(limit));</div>
+<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>}</div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span> </div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>} <span class="comment">// namespace bk_tree</span></div>
 </div>
 <div class="ttc" id="aclassbk__tree_1_1BKTree_1_1Iterator_html"><div class="ttname"><a href="classbk__tree_1_1BKTree_1_1Iterator.html">bk_tree::BKTree::Iterator</a></div><div class="ttdoc">BK-tree class iterator.</div><div class="ttdef"><b>Definition</b> bktree.hpp:357</div></div>
 <div class="ttc" id="aclassbk__tree_1_1BKTree_html"><div class="ttname"><a href="classbk__tree_1_1BKTree.html">bk_tree::BKTree</a></div><div class="ttdoc">BK-tree template class.</div><div class="ttdef"><b>Definition</b> bktree.hpp:347</div></div>
