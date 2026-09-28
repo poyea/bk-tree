@@ -24,17 +24,22 @@ protected:
 
 TEST_F(Distance_LCSubseq_TEST, LCSubseqDistances) {
   EXPECT_TRUE(dist("ABCD", "ACBAD") == 3);
-  EXPECT_TRUE(dist("ABCD", "AEFG") == 1);
+  EXPECT_TRUE(dist("ABCD", "AEFG") == 6);
   EXPECT_TRUE(dist("", "") == 0);
-  EXPECT_TRUE(dist("a", "a") == 1);
-  EXPECT_TRUE(dist("abcde", "ace") == 3);
-  EXPECT_TRUE(dist("abcde", "abcde") == 5);
-  EXPECT_TRUE(dist("peter", "") == 0);
-  EXPECT_TRUE(dist("abcde", "fghij") == 0);
-  EXPECT_TRUE(dist("a", "b") == 0);
+  EXPECT_TRUE(dist("a", "a") == 0);
+  EXPECT_TRUE(dist("abcde", "ace") == 2);
+  EXPECT_TRUE(dist("abcde", "abcde") == 0);
+  EXPECT_TRUE(dist("peter", "") == 5);
+  EXPECT_TRUE(dist("abcde", "fghij") == 10);
+  EXPECT_TRUE(dist("a", "b") == 2);
 
-  EXPECT_TRUE(3 + 5 - 2 * dist("abcde", "ace") == edit_dist("abcde", "ace"));
-  EXPECT_TRUE(5 + 5 - 2 * dist("abcde", "abcde") == edit_dist("abcde", "abcde"));
+  EXPECT_EQ(dist("abcde", "ace"), edit_dist("abcde", "ace"));
+  EXPECT_EQ(dist("abcde", "abcde"), edit_dist("abcde", "abcde"));
+
+  bk_tree::BKTree<bk_tree::metrics::LCSubseqDistance> tree;
+  tree.insert("same");
+  tree.insert("some");
+  EXPECT_EQ(tree.find("same", 0).size(), 1);
 }
 
 } // namespace bk_tree_test

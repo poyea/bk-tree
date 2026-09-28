@@ -128,14 +128,14 @@ public:
 /**
  * @brief Longest Common Subsequence distance metric
  *
- * \f$d(x_m, y_n),\f$ where
- * \f$m\f$ is the length of \f$x\f$, \f$n\f$ is the length of \f$y\f$.
+ * \f$d(x, y) = |x| + |y| - 2\operatorname{LCS}(x, y),\f$ where
+ * \f$\operatorname{LCS}(x, y)\f$ is the length of the longest common subsequence.
  * \f[\begin{equation}
- * d(x_i, y_j)=
+ * L(i, j)=
  *   \begin{cases}
  *     0, & \text{if } i = 0 \text{ or } j = 0 \\
- *     d(x_{i-1}, y_{j-1}) + 1, & \text{if } x_i = y_j \\
- *     \max\{d(x_{i-1}, y_j), d(x_i, y_{j-1})\}, & \text{if } x_i \neq y_j
+ *     L(i-1, j-1) + 1, & \text{if } x_i = y_j \\
+ *     \max\{L(i-1, j), L(i, j-1)\}, & \text{if } x_i \neq y_j
  *   \end{cases}
  * \end{equation}\f]
  * for any \f$0\le i < m\f$ and \f$0\le j < n.\f$
@@ -149,7 +149,7 @@ public:
   integer_type compute_distance(std::string_view s, std::string_view t) const noexcept {
     const integer_type M = s.length(), N = t.length();
     if (M == 0 || N == 0) {
-      return 0;
+      return M + N;
     }
     if (m_current.size() <= N || m_previous.size() <= N) {
       m_current.resize(N + 1);
@@ -166,7 +166,7 @@ public:
       }
       m_previous = m_current;
     }
-    return m_previous[N];
+    return M + N - 2 * m_previous[N];
   }
 };
 
