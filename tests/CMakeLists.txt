@@ -15,10 +15,4 @@ foreach(file ${TEST_SRC_FILES})
         NAME BKTree_TEST_${FILE_NAME}
         COMMAND test_${FILE_NAME}
     )
-    add_custom_command(
-        TARGET test_${FILE_NAME}
-        COMMENT "Running the test ${FILE_NAME}"
-        POST_BUILD
-        COMMAND test_${FILE_NAME}
-    )
 endforeach()

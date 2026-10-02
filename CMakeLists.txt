@@ -1,5 +1,5 @@
 # For BK tree build
-cmake_minimum_required(VERSION 3.16..3.23)
+cmake_minimum_required(VERSION 3.25)
 
 project(bk-tree
     VERSION 0.1.4
@@ -14,7 +14,9 @@ else()
     add_link_options(-fsanitize=address)
 endif()
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 26)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/bktree

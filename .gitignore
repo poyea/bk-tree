@@ -36,3 +36,5 @@ build
 
 # dev
 .vscode
+
+build-docs/
